@@ -1,5 +1,5 @@
 -- Active: 1700477906003@@127.0.0.1@5432@fullstack
-CREATE DATABASE IF NOT EXISTS fullstack(TABLE users);
+CREATE DATABASE fullstack;
 
 CREATE TABLE IF NOT EXISTS users(
     user_id TEXT

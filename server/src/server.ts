@@ -40,11 +40,8 @@ const port = 3000;
 app.listen(port, async () => {
   const pool = new Pool()
   const res = await pool.connect()
-  const query = 'CREATE DATABASE fullstack'
-  const query1 = 'CREATE TABLE IF NOT EXISTS users'
-  pool.query(query1, (err) => {
-    console.log(err);
-  } )
   console.log("res:", res)
+  res.release()
   console.log(`server is running at port ${port}`);
+  console.log(`Database connection test completed successfully`);
 });
