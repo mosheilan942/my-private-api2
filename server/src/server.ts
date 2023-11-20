@@ -9,11 +9,18 @@ import userRoutes from './routes/userRoutes.js';
 import productRoutes from './routes/productsRoutes.js';
 import categoryRoutes from './routes/categoryRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
+import pg from "pg";
+const { Pool } = pg;
+import { config } from 'dotenv';
+console.log(config());
+
+
+
 
 const app = express();
 
 // APP CONFIGS
-dotenv.config();
+// console.log(process.env);
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
@@ -26,10 +33,18 @@ app.use('/api/category', categoryRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-const port = process.env.PORT ;
+const port = 3000;
 
-await connectDB();
+// await connectDB();
 
-app.listen(port, () => {
+app.listen(port, async () => {
+  const pool = new Pool()
+  const res = await pool.connect()
+  const query = 'CREATE DATABASE fullstack'
+  const query1 = 'CREATE TABLE IF NOT EXISTS users'
+  pool.query(query1, (err) => {
+    console.log(err);
+  } )
+  console.log("res:", res)
   console.log(`server is running at port ${port}`);
 });
