@@ -21,11 +21,11 @@ const addUser = async (user: User) => {
 	return newUser;
 }
 
-const getUser = async (userId: Types.ObjectId) => {
+const getUser = async (userId: string) => {
 	const user = await userDal.getUser(userId);
-	if(!user)
-		throw new RequestError('User not found', STATUS_CODES.NOT_FOUND);
-	return user;
+	if(user) return user;
+	throw new RequestError('User not found', STATUS_CODES.NOT_FOUND);
+	
 }
 
 export default { addUser, getUser };

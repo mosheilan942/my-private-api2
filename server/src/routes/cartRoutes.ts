@@ -4,7 +4,7 @@ import cartController from '../controllers/cartController.js';
 
 const cartRouter = express.Router();
 
-cartRouter.use(authHandler);
+// cartRouter.use(authHandler);
 
 cartRouter.get('/', cartController.getCart);
 cartRouter.post('/', cartController.updateCart);

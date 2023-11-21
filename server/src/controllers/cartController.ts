@@ -6,7 +6,8 @@ import cartService from '../services/cartService.js';
 // @route   GET /api/users/cart
 // @access  Private
 const getCart = asyncHandler(async (req, res) => {
-  const cart = await cartService.getCart(req.userId);
+  const { userId } = req.body
+  const cart = await cartService.getCart(userId);
   res.json(cart);
 });
 
@@ -14,7 +15,10 @@ const getCart = asyncHandler(async (req, res) => {
 // @route   PUT /api/users/cart
 // @access  Private
 const updateCart = asyncHandler(async (req, res) => {
-  const cart = await cartService.updateAmount(req.userId, req.body);
+  console.log("hi from update cart");
+  
+  const {userId, itemId, quantity} = req.body
+  const cart = await cartService.updateCart(userId, itemId, quantity);
   res.status(STATUS_CODES.CREATED).json(cart);
 });
 

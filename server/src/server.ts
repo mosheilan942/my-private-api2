@@ -12,7 +12,7 @@ import cartRoutes from './routes/cartRoutes.js';
 import pg from "pg";
 const { Pool } = pg;
 import { config } from 'dotenv';
-console.log(config());
+config();
 
 
 
@@ -40,7 +40,6 @@ const port = 3000;
 app.listen(port, async () => {
   const pool = new Pool()
   const res = await pool.connect()
-  console.log("res:", res)
   res.release()
   console.log(`server is running at port ${port}`);
   console.log(`Database connection test completed successfully`);

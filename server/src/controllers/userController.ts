@@ -4,6 +4,7 @@ import STATUS_CODES from "../utils/StatusCodes.js";
 import RequestError from "../types/errors/RequestError.js";
 import userService from "../services/userService.js";
 import userValidation from "../utils/validations/userValidation.js";
+import { string } from "joi";
 
 
 // @desc    Register a new user
@@ -26,13 +27,13 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
 // @desc    Get user
 // @route   GET /api/users
 // @access  Private
-const getUser = asyncHandler(async (req, res) => {  
-  const user = await userService.getUser(req.userId);
-
-  res.json({
-    _id: user._id,
-    email: user.email,
-  });
+const getUser = asyncHandler(async (req, res) => { 
+  const user = await userService.getUser(req.body.userId);
+  res.json(user)
+  // res.json({
+  //   _id: user._id,
+  //   email: user.email,
+  // });
 });
 
 export default { registerUser, getUser };
