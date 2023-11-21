@@ -18,6 +18,12 @@ const updateCart = asyncHandler(async (req, res) => {
   res.status(STATUS_CODES.CREATED).json(cart);
 });
 
+//OMS
+const sendCart = asyncHandler(async (req, res) => {
+  const cart = await cartService.sendToOms(req.body);
+  res.status(STATUS_CODES.CREATED).json(cart);
+});
+
 // @desc    Delete shopping cart
 // @route   DELETE /api/users/cart
 // @access  Private
@@ -42,4 +48,6 @@ const patchAmount = asyncHandler(async (req, res) => {
   res.json(cart);
 });
 
-export default { getCart, updateCart, deleteCart, patchAmount, deleteCartItem };
+export default { getCart, updateCart, deleteCart, patchAmount, deleteCartItem,
+  sendCart
+ };

@@ -20,15 +20,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/api/users', userRoutes);
-app.use('/api/users/cart', cartRoutes);
+app.use('/api', cartRoutes);
 app.use('/api/products', productRoutes);
-app.use('/api/category', categoryRoutes);
+app.use('/api', categoryRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
 const port = process.env.PORT ;
 
-await connectDB();
+//await connectDB();
 
 app.listen(port, () => {
   console.log(`server is running at port ${port}`);

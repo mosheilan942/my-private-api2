@@ -2,6 +2,7 @@ import { Types } from 'mongoose';
 import cartModel from '../models/cartModel.js';
 import productModel from '../models/productModel.js';
 import Cart from '../types/Cart.js';
+import axios from 'axios';
 
 const b = productModel.find();
 
@@ -32,6 +33,12 @@ const updateAmount = async (userId: Types.ObjectId, product_id: string, amount: 
     { new: true }
   );
 };
+const sendToOms = async (cart:Cart) => {
+ const res = await axios.post('/localhost:3000/api/cart',cart)
+ console.log(await res);
+ return res
+};
+
 const deleteCart = async (userId: Types.ObjectId) => {
   return await cartModel.findOneAndUpdate(
     { user: userId },
@@ -74,4 +81,5 @@ export default {
   deleteCartItem,
   incAmount,
   decAmount,
+  sendToOms
 };
