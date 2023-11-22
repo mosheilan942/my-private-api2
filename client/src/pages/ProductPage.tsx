@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Grid, Typography, Button, IconButton, Box, Paper, CircularProgress } from "@mui/material";
+import { Grid, Typography, Button, IconButton, Box, Paper, CircularProgress} from "@mui/material";
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import { useNavigate, useParams } from "react-router-dom";
@@ -11,8 +11,14 @@ import * as localstorage from "../utils/cartLocalStorageUtils.ts";
 import CartItem from "../types/CartItem.ts";
 import { toastError, toastSuccess } from "../utils/toastUtils.ts";
 import { UserContext } from "../UserContext.tsx";
+import Rating from "../components/Rating.tsx";
+import DialogReview from "../components/DialogReview.tsx";
+import ProductReviews from "../components/ProductReviews .tsx";
 
-
+const reviews = [
+    { title: 'Great Product', author: 'John Doe', body: 'Lorem ipsum...', rating: 5 },
+    // Add more reviews as needed
+  ];
 
 const ProductPage = () => {
     const navigate = useNavigate();
@@ -106,12 +112,20 @@ const ProductPage = () => {
               <Button style={{ margin: 5 }} variant="contained" color="primary" onClick={handleCompareProducts}>
                 Compare similar products
               </Button>
+              <Rating />
             </div>
           </Grid>
         </Grid>
       </Paper>
+      <Paper style={{margin: '10px 50px',height:400}}>
+        <br />
+      <ProductReviews reviews={reviews} /> 
+      </Paper>
+      <br/> 
+ 
       <Paper style={{margin: '10px 50px',height:500}}>
-        <StoreMap />
+
+    <StoreMap />
       </Paper>
     </>
   );
