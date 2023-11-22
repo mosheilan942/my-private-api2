@@ -1,8 +1,10 @@
 import Product from "../types/Product";
 import handleApiRes from "./apiResHandler";
+// import dotenv from "dotenv";
+// dotenv.config();
 
 async function getTop5Products(): Promise<Product[]> {
-    const response = await fetch('/api/products/top5');
+    const response = await fetch(`/api/products/top5`);
     return await handleApiRes(response);
 }
 
