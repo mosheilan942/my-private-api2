@@ -2,6 +2,7 @@ import UserInfo from "../types/UserInfo";
 import handleApiRes from "./apiResHandler";
 
 async function loginUser(email: string, password: string): Promise<UserInfo> {
+    console.log("hi", email, password);
     const response = await fetch("/api/users/auth/login", {
         method: "POST",
         headers: {
@@ -23,7 +24,7 @@ async function getUser(): Promise<UserInfo> {
 }
 
 async function register(email: string, password: string):Promise<UserInfo> {
-    const response = await fetch("/api/users/register/", {
+    const response = await fetch("api/users/register", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
