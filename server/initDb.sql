@@ -17,7 +17,7 @@ CREATE DATABASE fullstack;
 CREATE TABLE
     IF NOT EXISTS users(
         user_id uuid PRIMARY KEY DEFAULT gen_random_uuid (),
-        name TEXT NOT NULL,
+        name TEXT,
         email TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL,
         created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
@@ -52,18 +52,33 @@ DROP Table users ;
 DROP Table cartitems ;
 DROP Table reviews ;
 
+INSERT INTO
+    cartitems (product_id, user_id, quantity)
+VALUES (
+        'dbdd2ff6-c240-4e2a-b1a2-51be8724f5ca',
+        'dbdd2ff6-c240-4e2a-b1a2-51be8724f0ca',
+        '11'
+    )
+
+    INSERT INTO
+    users (name, email, password)
+VALUES (
+        'moshe',
+        'ilan',
+        '11'
+    )
 
 UPDATE users
 SET
-address = jsonb_set(
-        address
+add = jsonb_set(
+        add
 ,
             '{country}',
             '"israel"'
     );
 
 jsonb_set(
-    address
+    add
         jsonb,
         "{country}",
         '{0,country}',
@@ -73,14 +88,22 @@ jsonb_set(
 
 UPDATE users
 SET
-address = jsonb_set(
-        address
+add = jsonb_set(
+        add
 ,
             '{country}',
             '"israel"',
             false
     );
 
+INSERT INTO
+    cartitems (name, email, password, payment)
+VALUES (
+        'm',
+        'moisi6510@gmail.com',
+        '11',
+        'Payment Method'
+    )
 
 UPDATE users
 SET
@@ -93,5 +116,6 @@ add = jsonb_set(
 
 SELECT add ->> 'country' AS Feeling FROM users;
 
+SELECT add FROM users 
 
-
+CREATE TABLE cartitmes 

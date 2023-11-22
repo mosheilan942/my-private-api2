@@ -4,18 +4,19 @@ import User from "../types/User.js";
 import pg from "pg";
 const { Pool } = pg;
 
-const addUser = async (userId: string) => {
+const addUser = async (user: User) => {
     const query = `INSERT INTO
-    cartitems (name, email, password, payment)
+    users (email, password)
     VALUES (
             $1,
-            $2,
-            $3,
-            $4'
-    )`;
-    const values = [userId];
-    const res = sendQueryToDatabase(query, values)
-    return res;
+            $2)`;
+    const values = [user.email, user.password];
+    console.log("values", values);
+    const res = await sendQueryToDatabase(query, values)
+    const { rowCount } = res
+    console.log(rowCount);
+    
+    return rowCount;
 }
 
 const getUser = async (userId: string) => {
@@ -26,16 +27,18 @@ const getUser = async (userId: string) => {
 }
 
 const getUserByEmail = async (email: string) => {
-    return await UserModel.findOne({email});
+    const query = 'SELECT * FROM users WHERE email = $1';
+    const values = [email];
+    const { rows } = await sendQueryToDatabase(query, values)
+    return rows;
 }
 
 const sendQueryToDatabase = async (query:string, values:any[]) => {
     const pool = new Pool()
     const res = await pool.connect()
-    const { rows } = await res.query(query, values);
-    console.log('Query result:', rows);
+    const data = await res.query(query, values);
     res.release()
-    return rows
+    return data
     
 }
 

@@ -5,9 +5,10 @@ import { authHandler } from "../middlewares/authMiddleware.js";
 
 const userRouter = express.Router();
 
-userRouter.use("/auth", authRoutes);
+// userRouter.use("/auth", authRoutes);
 
-userRouter.get("/", userController.getUser);
+userRouter.post("/auth/login", userController.getUser);
+userRouter.post("/auth/logout", userController.getUser);
 userRouter.post("/register", userController.registerUser);
 
 export default userRouter;

@@ -12,7 +12,9 @@ const createCart = async (userId: string) => {
 };
 
 const getCart = async (userId: string) => {
+
   const query = 'SELECT * FROM cartitems WHERE user_id ::text = $1';
+  
   const values = [userId];
   const res = await sendQueryToDatabase(query, values)
   const { rows } = res
@@ -35,6 +37,7 @@ const updateCart = async (userId: string, itemId: string, quantity: number) => {
   ON CONFLICT (user_id, product_id) DO UPDATE
   SET quantity = $3
   RETURNING *`
+
   const values = [userId, itemId, quantity];
   const res = await sendQueryToDatabase(query, values)
   const { rowCount } = res
