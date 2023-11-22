@@ -4,8 +4,18 @@ import User from "../types/User.js";
 import pg from "pg";
 const { Pool } = pg;
 
-const addUser = async (user: User) => {
-    return await UserModel.create(user);
+const addUser = async (userId: string) => {
+    const query = `INSERT INTO
+    cartitems (name, email, password, payment)
+    VALUES (
+            $1,
+            $2,
+            $3,
+            $4'
+    )`;
+    const values = [userId];
+    const res = sendQueryToDatabase(query, values)
+    return res;
 }
 
 const getUser = async (userId: string) => {

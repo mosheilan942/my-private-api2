@@ -23,11 +23,11 @@ CREATE TABLE
         created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
         contactNumber NUMERIC,
         payment TEXT,
-        add JSONB DEFAULT '{"country": "", "city": "", "street":"", "zip_code":""}'
+        address JSONB DEFAULT '{"country": "", "city": "", "street":"", "zip_code":""}'
     );
 
 CREATE TABLE IF NOT EXISTS cartitems (
-    product_id UUID,
+    product_id UUID PRIMARY KEY,
     user_id UUID,
     quantity NUMERIC,
     UNIQUE(product_id, user_id),
@@ -52,25 +52,18 @@ DROP Table users ;
 DROP Table cartitems ;
 DROP Table reviews ;
 
-INSERT INTO
-    cartitems (product_id, user_id, quantity)
-VALUES (
-        'dbdd2ff6-c240-4e2a-b1a2-51be8724f5ca',
-        'dbdd2ff6-c240-4e2a-b1a2-51be8724f0ca',
-        '11'
-    )
 
 UPDATE users
 SET
-add = jsonb_set(
-        add
+address = jsonb_set(
+        address
 ,
             '{country}',
             '"israel"'
     );
 
 jsonb_set(
-    add
+    address
         jsonb,
         "{country}",
         '{0,country}',
@@ -80,22 +73,14 @@ jsonb_set(
 
 UPDATE users
 SET
-add = jsonb_set(
-        add
+address = jsonb_set(
+        address
 ,
             '{country}',
             '"israel"',
             false
     );
 
-INSERT INTO
-    cartitems (name, email, password, payment)
-VALUES (
-        'm',
-        'moisi6510@gmail.com',
-        '11',
-        'Payment Method'
-    )
 
 UPDATE users
 SET
@@ -108,6 +93,5 @@ add = jsonb_set(
 
 SELECT add ->> 'country' AS Feeling FROM users;
 
-SELECT add FROM users 
 
-CREATE TABLE cartitmes 
+
