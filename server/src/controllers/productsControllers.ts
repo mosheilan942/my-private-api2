@@ -22,5 +22,7 @@ const getTop5Products = async (_req :Request, res:Response) => {
     console.log('controll');
     res.json(top5Products);
   }
+  const reviews = asyncHandler(async (req: Request, res: Response) => {
+    console.log('this is review',req.body)} )
 
-export default { getProductByID, getTop5Products}
+export default { getProductByID, getTop5Products,reviews}
