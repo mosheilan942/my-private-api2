@@ -30,6 +30,7 @@ const getUserByEmail = async (email: string) => {
     const query = 'SELECT * FROM users WHERE email = $1';
     const values = [email];
     const { rows } = await sendQueryToDatabase(query, values)
+    console.log(rows);
     return rows;
 }
 
