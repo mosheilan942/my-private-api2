@@ -24,12 +24,10 @@ const getProductByID = async (id:string) => {
 
 
 const getTop5Products =  async () => {
-    const data = foo
-    return data
 
-    // const res = await axios.get('https://store-test.free.mockoapp.net/api/topFiveCategories')
-    // console.log(res.data,'tov')
-    // return res.data
+    const res = await axios.get(`${process.env.BANNER_BASE_URI}/api/topFiveCategories`)
+    console.log(res.data,'tov')
+    return res.data
 };
 
 export default {getProductByID, getTop5Products }

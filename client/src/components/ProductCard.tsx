@@ -16,7 +16,7 @@ export default function ProductCard({ product, navigateToOnClick }: props) {
   const navigate = useNavigate();
   const handleCLick = async () => {
     try {
-      navigate(navigateToOnClick || `/product/${product._id}`);
+      navigate(navigateToOnClick || `/product/${product.id}`);
       // await productsAPI.patchProductClick(product._id);
     } catch (err) {
       console.error((err as Error).message);
@@ -38,7 +38,7 @@ export default function ProductCard({ product, navigateToOnClick }: props) {
       <CardActionArea >
         <CardMedia
           component="img"
-          image={product.imageUrl}
+          image={product.image}
           alt={product.name}
         />
         <CardContent>
@@ -49,9 +49,9 @@ export default function ProductCard({ product, navigateToOnClick }: props) {
             {product.description}
           </Typography>
           <br />
-          <Typography variant="body2" color="text.secondary">
+          {/* <Typography variant="body2" color="text.secondary">
             price: {product.price}
-          </Typography>
+          </Typography> */}
         </CardContent>
       </CardActionArea>
     </Card>

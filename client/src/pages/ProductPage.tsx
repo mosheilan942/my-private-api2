@@ -26,6 +26,7 @@ const ProductPage = () => {
     const getProduct = async (pid: string) => {
         try {
             const product = await productsAPI.getProduct(pid!);
+            console.log(product);
             setProduct(product);
         } catch (error) {
             console.error('Failed to fetch');
@@ -52,7 +53,7 @@ const ProductPage = () => {
         };
         if (userInfo) {
             try {
-                const cart = await cartsAPI.addToCart(product!._id, quantity.toString());
+                const cart = await cartsAPI.addToCart(product!.id, quantity.toString());
                 toastSuccess('Added to cart!');
                 setQuantity(1);
                 setProductsInCart(cart.items.length);
@@ -88,12 +89,12 @@ const ProductPage = () => {
       <Paper style={{ margin: 50 }}>
         <Grid container spacing={3} alignItems='center' justifyContent='center'>
           <Grid item xs={6} justifyContent='center' alignItems='center'>
-            <img src={product?.imageUrl} alt={product?.name} height={200} />
+            <img src={product?.image} alt={product?.name} height={200} />
           </Grid>
           <Grid item xs={6} >
             <Typography variant="h3">{product?.name}</Typography>
             <Typography variant="body1">{product?.description}</Typography>
-            <Typography variant="h6">${product?.price}</Typography>
+            {/* <Typography variant="h6">${product?.price}</Typography> */}
             <div style={{ display: "flex", alignItems: "center" }}>
               <IconButton onClick={decrementQuantity}><RemoveCircleRoundedIcon ></RemoveCircleRoundedIcon></IconButton>
               <Box>{quantity}</Box>

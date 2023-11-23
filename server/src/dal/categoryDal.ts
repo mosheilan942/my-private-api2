@@ -1,7 +1,9 @@
 import axios from "axios";
 import CategoryModel from "../models/categoryModel.js";
 import productModel from "../models/productModel.js";
+import {  } from "../../";
 
+const bannerBaseUrl = pro.env
 //OMS
 const getCategories = async () => {
    const res = await axios.get('https://655c7c6a25b76d9884fd5cd1.mockapi.io/product')
