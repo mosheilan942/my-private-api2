@@ -27,7 +27,7 @@ tags: {
   tag: string
   tag1: string
  }
-}
+
 
 
 interface Category {
