@@ -26,7 +26,7 @@ app.use('/api', categoryRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-const port = process.env.PORT ;
+const port = 5000 ;
 
 //await connectDB();
 

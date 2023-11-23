@@ -52,10 +52,8 @@ const updateCart = async (userId: Types.ObjectId, item: CartItem) => {
 };
 
 const sendToOms = async ( cart: Cart) => {
-  // const dbCart: Cart | null = await cartDal.sendToOms(cart);
-  // if (!dbCart)
-
-  // return dbCart;
+  const omsCart = await cartDal.sendToOms(cart);
+  return omsCart;
 };
 
 const deleteCart = async (userId: Types.ObjectId) => {

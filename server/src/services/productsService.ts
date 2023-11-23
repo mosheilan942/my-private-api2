@@ -17,9 +17,10 @@ const getProductByID  = async (ID:string) => {
 
 
 const getTop5Products = async () => {
-    const Top5Products= await productsDal.getTop5Products();
-    if (!Top5Products)
-        throw new RequestError('Top5Products not found', STATUS_CODES.NOT_FOUND);
+    const Top5Products = await productsDal.getTop5Products();
+    // if (!Top5Products)
+    //     throw new RequestError('Top5Products not found', STATUS_CODES.NOT_FOUND);
+    //     console.log( 'service');
     return Top5Products;
 }
 

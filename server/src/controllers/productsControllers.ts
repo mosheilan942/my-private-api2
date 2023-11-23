@@ -16,22 +16,11 @@ const getProductByID = asyncHandler(async (req: Request, res: Response) => {
     res.json(product)  
 })
 
-// @desc    Increase clicked count
-// @route   PATCH /api/products/:pid/click
-// @access  Public
 
-
-// @desc    Decrease quantity
-// @route   PARCH /api/products/:pid/dec
-// @access  Public
-
-
-// @desc    Get top 5 products
-// @route   GET /api/products/top5
-// @access  Public
-const getTop5Products = asyncHandler(async (_req, res) => {  
+const getTop5Products = async (_req :Request, res:Response) => {  
     const top5Products = await productsService.getTop5Products();
+    console.log('controll');
     res.json(top5Products);
-  });
+  }
 
 export default { getProductByID, getTop5Products}

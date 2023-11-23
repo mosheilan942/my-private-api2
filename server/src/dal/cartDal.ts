@@ -34,8 +34,8 @@ const updateAmount = async (userId: Types.ObjectId, product_id: string, amount: 
   );
 };
 const sendToOms = async (cart:Cart) => {
- const res = await axios.post('/localhost:3000/api/cart',cart)
- console.log(await res);
+ const res = await axios.post('localhost:3000/api/cart',cart)
+ console.log( 'hi')
  return res
 };
 

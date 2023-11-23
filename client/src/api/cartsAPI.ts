@@ -46,7 +46,7 @@ async function deleteProductFromCart(pid: string):Promise<Cart> {
 
 //external
 async function sendCartToOms(cart:object):Promise<Cart> {
-    const response =  await fetch(`/api/checout`, {
+    const response =  await fetch(`/api/checkout`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
