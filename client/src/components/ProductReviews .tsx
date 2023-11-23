@@ -1,5 +1,7 @@
 import React from 'react';
-
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
+import { Margin } from '@mui/icons-material';
 interface Review {
   title: string;
   author: string;
@@ -83,10 +85,23 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ reviews }) => {
               <li key={index} style={reviewStyles.reviewItem}>
                 <div style={reviewStyles.reviewHeader}>
                   <h3 style={reviewStyles.reviewTitle}>{review.title}</h3>
+                  <div>
                   <p style={reviewStyles.reviewAuthor}>By: {review.author}</p>
+                  <div style={{marginTop:"10px"}}>
+                  <ThumbUpAltIcon />
+                    <ThumbDownAltIcon/>
+                  </div>
+               
+                  </div>
+                  
                 </div>
                 <p style={reviewStyles.reviewText}>{review.body}</p>
                 <p style={reviewStyles.reviewRating}>Rating: {review.rating}/5</p>
+
+                <div>
+                  <i className="fas fa-thumbs-up" style={{ marginRight: '8px', cursor: 'pointer' }} />
+                  <i className="fas fa-thumbs-down" style={{ cursor: 'pointer' }} />
+                </div>
               </li>
             ))}
           </ul>
@@ -98,5 +113,7 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ reviews }) => {
     </div>
   );
 };
+
+
 
 export default ProductReviews;

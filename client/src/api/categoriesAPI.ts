@@ -7,7 +7,7 @@ import handleApiRes from "./apiResHandler";
 
 
 async function getCategories(): Promise<Category[]> {
-    const response = await fetch(`$/api/category`);
+    const response = await fetch(`/api/category`);
     return await handleApiRes(response);
 }
 
