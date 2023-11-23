@@ -11,7 +11,6 @@ interface prod {
     discountPercentage : number,
 }
 
-console.log(foo);
 
 const getProductByID = async (id:string) => {
     const data = foo.filter((item:prod)=>{item.id===id})
