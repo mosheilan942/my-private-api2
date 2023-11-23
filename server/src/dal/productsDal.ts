@@ -13,8 +13,9 @@ interface prod {
 
 
 const getProductByID = async (id:string) => {
-    const data = foo.filter((item:prod)=>{item.id===id})
+    const data = foo.filter((item:prod) => item.id===String(id))
     return data
+
     // const res = await axios.get(`https://dummyjson.com/products${id}`)
     // console.log(await res.data)
     // return res.data
@@ -24,10 +25,8 @@ const getProductByID = async (id:string) => {
 
 const getTop5Products =  async () => {
     const data = foo
-    return data
-
-    // const res = await axios.get('https://store-test.free.mockoapp.net/api/topFiveCategories')
-    // console.log(res.data,'tov')
+    return data 
+    // const res = await axios.get(`${process.env.BANNER_BASE_URI}/api/topFiveCategories`)
     // return res.data
 };
 

@@ -31,19 +31,10 @@ const updateAmount = async (userId: string, itemId: string, quantity: number) =>
 };
 
 const updateCart = async (userId: string, itemId: string, quantity:number) => {
-  // const dbCart: Cart | null = await cartDal.getCartProducts(userId);
-  // if (!dbCart)
-  //   throw new RequestError('Cart not found', STATUS_CODES.NO_CONTENT);
-
-  // const index = dbCart.items.findIndex(
-  //   (dbItem) => dbItem.product_id.toString() === item.product_id.toString()
-  // );
-
-  // if (index === -1) dbCart.items.push(item);
-  // else dbCart.items.splice(index, 1, item);
+  
 
   const cartRes = await cartDal.updateCart(userId, itemId, quantity);
-  if (!cartRes)
+  if (cartRes.length === 0)
     throw new RequestError(
       'Cart update failed',
       STATUS_CODES.INTERNAL_SERVER_ERROR
