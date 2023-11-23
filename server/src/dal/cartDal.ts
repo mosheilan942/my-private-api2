@@ -16,7 +16,7 @@ const createCart = async (userId: string) => {
 const getCart = async (userId: string) => {
 
   const query = 'SELECT * FROM cartitems WHERE user_id ::text = $1';
-  
+
   const values = [userId];
   const res = await sendQueryToDatabase(query, values)
   const { rows } = res
@@ -30,7 +30,7 @@ const getCartProducts = async (userId: string) => {
 
 const updateCart = async (userId: string, itemId: string, quantity: number) => {
   console.log(userId);
-  
+
   const query = `INSERT
   INTO cartitems
   (user_id, product_id, quantity) 
@@ -54,10 +54,10 @@ const updateAmount = async (userId: string, product_id: string, amount: number) 
     { new: true }
   );
 };
-const sendToOms = async (cart:Cart) => {
- const res = await axios.post('localhost:3000/api/cart',cart)
- console.log( 'hi')
- return res
+const sendToOms = async (cart: Cart) => {
+  const res = await axios.post('localhost:3000/api/cart', cart)
+  console.log('hi')
+  return res
 };
 
 const deleteCart = async (userId: string) => {
@@ -92,13 +92,13 @@ const decAmount = async (userId: string, product_id: string) => {
   );
 };
 
-const sendQueryToDatabase = async (query:string, values:any[]) => {
+const sendQueryToDatabase = async (query: string, values: any[]) => {
   const pool = new Pool()
   const res = await pool.connect()
   const data = await res.query(query, values);
   res.release()
   return data
-  
+
 }
 
 export default {
