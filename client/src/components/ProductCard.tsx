@@ -16,7 +16,7 @@ export default function ProductCard({ product, navigateToOnClick }: props) {
   const navigate = useNavigate();
   const handleCLick = async () => {
     try {
-      navigate(navigateToOnClick || `/product/${product._id}`);
+      navigate(navigateToOnClick || `/product/${product.id}`);
       // await productsAPI.patchProductClick(product._id);
     } catch (err) {
       console.error((err as Error).message);
@@ -27,7 +27,7 @@ export default function ProductCard({ product, navigateToOnClick }: props) {
       maxWidth: 300, // adjust this value to change the size of the card
       margin: '5px', 
       boxSizing:'border-box',
-      boxShadow: '0 4px 8px rgba(0, 0, 0.9, 0.8)',
+      boxShadow: '0 5px 8px rgba(0, 0, 0.9, 0.8)',
       marginBlock:'10px',
       transition: 'transform 0.3s', // animate the transform property
       '&:hover': {
@@ -38,7 +38,7 @@ export default function ProductCard({ product, navigateToOnClick }: props) {
       <CardActionArea >
         <CardMedia
           component="img"
-          image={product.imageUrl}
+          image={product.image.url}
           alt={product.name}
         />
         <CardContent>
@@ -50,7 +50,7 @@ export default function ProductCard({ product, navigateToOnClick }: props) {
           </Typography>
           <br />
           <Typography variant="body2" color="text.secondary">
-            price: {product.price}
+            price: {product.salePrice}
           </Typography>
         </CardContent>
       </CardActionArea>

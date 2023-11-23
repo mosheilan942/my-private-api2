@@ -1,4 +1,4 @@
--- Active: 1700477906003@@127.0.0.1@5432@fullstack
+-- Active: 1694697545527@@127.0.0.1@5432@fullstack
 
 CREATE DATABASE fullstack;
 
