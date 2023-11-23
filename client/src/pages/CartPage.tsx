@@ -9,6 +9,9 @@ import { toastError, toastSuccess } from '../utils/toastUtils';
 import { UserContext } from '../UserContext';
 import Paypal from '../components/Paypal';
 
+import  sendCartToOms  from "../api/cartsAPI";
+
+
 const CartPage = () => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [loading, setLoading] = useState(true);

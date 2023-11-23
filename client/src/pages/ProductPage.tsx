@@ -54,7 +54,7 @@ const ProductPage = () => {
 
     //get the product after the page is rendered
     useEffect(() => {
-        getProduct(pid!);
+        getProduct('1');
     }, []);
 
     //handle decrease quantity by clicking on the minus button (when quantity shouldnt be lower then 1)

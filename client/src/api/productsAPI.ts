@@ -4,7 +4,11 @@ import handleApiRes from "./apiResHandler";
 // dotenv.config();
 
 async function getTop5Products(): Promise<Product[]> {
-    const response = await fetch(`/api/products/top5`);
+
+    const response = await fetch('/api/products/topFiveProducts');
+
+  
+
     return await handleApiRes(response);
 }
 async function reviewProduct(pid: string,title:string, review: string,rating:number,): Promise<Product> {
@@ -25,22 +29,7 @@ async function getProduct(pid: string): Promise<Product> {
     return await handleApiRes(response);
 }
 
-async function patchProductClick(pid: string): Promise<Product>  {
-    const response = await fetch(`/api/products/${pid}/click`, { method: "PATCH" });
-    return await handleApiRes(response);
-}
-
-async function checkingAndUpdatingProduct(pid: string, quantity: string): Promise<Product>  {
-    const response = await fetch(`/api/products/${pid}/dec`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ quantityToDelete: quantity }),
-      });
-  
-      return await handleApiRes(response);
-}
 
 
-export default { getTop5Products, getProduct, patchProductClick, checkingAndUpdatingProduct, reviewProduct }
+export default { getTop5Products, getProduct,reviewProduct}
+
