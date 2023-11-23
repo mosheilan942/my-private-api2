@@ -38,7 +38,7 @@ export default function ProductCard({ product, navigateToOnClick }: props) {
       <CardActionArea >
         <CardMedia
           component="img"
-          image={product.image}
+          image={product.image.url}
           alt={product.name}
         />
         <CardContent>
@@ -49,9 +49,9 @@ export default function ProductCard({ product, navigateToOnClick }: props) {
             {product.description}
           </Typography>
           <br />
-          {/* <Typography variant="body2" color="text.secondary">
-            price: {product.price}
-          </Typography> */}
+          <Typography variant="body2" color="text.secondary">
+            price: {product.salePrice}
+          </Typography>
         </CardContent>
       </CardActionArea>
     </Card>

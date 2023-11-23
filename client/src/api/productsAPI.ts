@@ -9,7 +9,7 @@ async function getTop5Products(): Promise<Product[]> {
 }
 
 //external
-async function getProduct(pid:string): Promise<Product> {
+async function getProduct(pid:string): Promise<Product[]> {
     const response = await fetch(`/api/products/${pid}`);
     console.log(response);
     

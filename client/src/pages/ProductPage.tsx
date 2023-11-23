@@ -25,8 +25,9 @@ const ProductPage = () => {
     //handle get product by id from server
     const getProduct = async (pid: string) => {
         try {
-            const product = await productsAPI.getProduct(pid!);
-            console.log(product);
+            const data = await productsAPI.getProduct(pid!);
+            console.log(data);
+            const product = data[0]
             setProduct(product);
         } catch (error) {
             console.error('Failed to fetch');
@@ -35,7 +36,7 @@ const ProductPage = () => {
 
     //get the product after the page is rendered
     useEffect(() => {
-        getProduct('1');
+        getProduct(pid!);
     }, []);
 
     //handle decrease quantity by clicking on the minus button (when quantity shouldnt be lower then 1)
@@ -89,7 +90,7 @@ const ProductPage = () => {
       <Paper style={{ margin: 50 }}>
         <Grid container spacing={3} alignItems='center' justifyContent='center'>
           <Grid item xs={6} justifyContent='center' alignItems='center'>
-            <img src={product?.image} alt={product?.name} height={200} />
+            <img src={product?.image.url} alt={product?.image.alt} height={200} />
           </Grid>
           <Grid item xs={6} >
             <Typography variant="h3">{product?.name}</Typography>
