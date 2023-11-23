@@ -3,14 +3,15 @@ import cartModel from '../models/cartModel.js';
 import productModel from '../models/productModel.js';
 import Cart from '../types/Cart.js';
 import axios from 'axios';
+import type Product from "../types/Product.js";
 import pg from "pg";
 const { Pool } = pg;
 
 
-const b = productModel.find();
+// const b = productModel.find();
 
 const createCart = async (userId: string) => {
-  return await cartModel.create({ user: userId });
+  // return await cartModel.create({ user: userId });
 };
 
 const getCart = async (userId: string) => {
@@ -21,15 +22,19 @@ const getCart = async (userId: string) => {
   const res = await sendQueryToDatabase(query, values)
   const { rows } = res
   console.log('Query result:', rows);
-  return res;
+  return rows;
 };
 
-const getCartProducts = async (userId: string) => {
-  return await cartModel.findOne({ user: userId });
+const getCartProducts = async (userId: string, itemId: string):Promise<Product[]> => {
+  const query = 'SELECT * FROM cartitems WHERE user_id ::text = $1 AND product_id = $2';
+  const values = [userId, itemId];
+  const res = await sendQueryToDatabase(query, values)
+  const { rows } = res
+  console.log('Query result:', rows);
+  return rows;
 };
 
 const updateCart = async (userId: string, itemId: string, quantity: number) => {
-  console.log(userId);
 
   const query = `INSERT
   INTO cartitems
@@ -37,7 +42,7 @@ const updateCart = async (userId: string, itemId: string, quantity: number) => {
   VALUES
   ($1, $2, $3) 
   ON CONFLICT (user_id, product_id) DO UPDATE
-  SET quantity = $3
+  SET quantity = quantity + $3
   RETURNING *`
 
   const values = [userId, itemId, quantity];
@@ -47,12 +52,22 @@ const updateCart = async (userId: string, itemId: string, quantity: number) => {
   return rows;
 };
 
-const updateAmount = async (userId: string, product_id: string, amount: number) => {
-  return await cartModel.findOneAndUpdate(
-    { user: userId, 'items.product_id': product_id },
-    { $inc: { 'items.$.quantity': amount } },
-    { new: true }
-  );
+const updateAmount = async (userId: string, product_id: string, quantity: number) => {
+  const query = `INSERT
+  INTO cartitems
+  (user_id, product_id, quantity) 
+  VALUES
+  ($1, $2, $3) 
+  ON CONFLICT (user_id, product_id) DO UPDATE
+  SET quantity = quantity + $3
+  RETURNING *`
+
+  const values = [userId, product_id, quantity];
+  const res = await sendQueryToDatabase(query, values)
+  const { rows } = res
+  console.log('Query result:', rows);
+  return rows;
+
 };
 const sendToOms = async (cart: Cart) => {
   const res = await axios.post('localhost:3000/api/cart', cart)
@@ -77,19 +92,37 @@ const deleteCartItem = async (userId: string, productId: string) => {
 };
 
 const incAmount = async (userId: string, product_id: string) => {
-  return await cartModel.findOneAndUpdate(
-    { user: userId, 'items.product_id': product_id },
-    { $inc: { 'items.$.quantity': 1 } },
-    { new: true }
-  );
+  const query = `INSERT
+  INTO cartitems
+  (user_id, product_id, quantity) 
+  VALUES
+  ($1, $2, $3) 
+  ON CONFLICT (user_id, product_id) DO UPDATE
+  SET quantity = quantity + 1
+  RETURNING *`
+
+  const values = [userId, product_id];
+  const res = await sendQueryToDatabase(query, values)
+  const { rows } = res
+  console.log('Query result:', rows);
+  return rows;
 };
 
 const decAmount = async (userId: string, product_id: string) => {
-  return await cartModel.findOneAndUpdate(
-    { user: userId, 'items.product_id': product_id },
-    { $inc: { 'items.$.quantity': -1 } },
-    { new: true }
-  );
+  const query = `INSERT
+  INTO cartitems
+  (user_id, product_id, quantity) 
+  VALUES
+  ($1, $2, $3) 
+  ON CONFLICT (user_id, product_id) DO UPDATE
+  SET quantity = quantity - 1
+  RETURNING *`
+
+  const values = [userId, product_id];
+  const res = await sendQueryToDatabase(query, values)
+  const { rows } = res
+  console.log('Query result:', rows);
+  return rows;
 };
 
 const sendQueryToDatabase = async (query: string, values: any[]) => {

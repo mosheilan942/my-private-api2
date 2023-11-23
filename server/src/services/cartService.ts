@@ -11,11 +11,11 @@ const getCart = async (userId: string) => {
   return cart;
 };
 
-const updateAmount = async (userId: string, itemId: string, quantity: number) => {
-  const cart = await cartDal.getCartProducts(userId);
+const updateAmount = async (userId: string, itemId: string, quantity:number) => {
+  const cart = await cartDal.getCartProducts(userId, itemId);
   if(!cart) throw new RequestError('No cart found', STATUS_CODES.NO_CONTENT);
   
-  const prodInCart = cart.items.find(prod => prod.product_id.toString() === itemId.toString());
+  const prodInCart = cart.find(prod => prod.product_id.toString() === itemId.toString());
   if(!prodInCart){
     // cart.items.push(itemId);
     const newItemInCart = await cartDal.updateCart(userId, itemId, quantity);
