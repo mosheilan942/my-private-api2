@@ -5,39 +5,39 @@ import RequestError from "../types/errors/RequestError.js";
 import generateToken from "../utils/jwtUtils.js";
 import authService from "../services/authService.js";
 import userValidation from "../utils/validations/userValidation.js";
+import User from "../types/User.js";
 
 // @desc    Auth user & get token
 // @route   POST /api/users/auth/login
 // @access  Public
-// const loginUser = asyncHandler(async (req: Request, res: Response) => {
-//     const { error } = userValidation(req.body);
-//     if (error)
-//         throw new RequestError(error.message, STATUS_CODES.BAD_REQUEST);
+const loginUser = asyncHandler(async (req: Request, res: Response) => {
+    const { error } = userValidation(req.body);
+    if (error)
+        throw new RequestError(error.message, STATUS_CODES.BAD_REQUEST);
 
-//     if (req.cookies.jwt)
-//         throw new RequestError('User already logged in', STATUS_CODES.BAD_REQUEST);
+    if (req.cookies.jwt)
+        throw new RequestError('User already logged in', STATUS_CODES.BAD_REQUEST);
 
-//     const { email, password } = req.body;
-//     console.log(email, password);
-//     const user = await authService.authUser(email, password);
+    const { email, password } = req.body;
+    console.log(email, password);
+    const user = await authService.authUser(email, password);
+    if (user.user_id) generateToken(res, user.user_id);
 
-//     generateToken(res, user._id);
+    res.json({
+        id: user.user_id,
+        email: user.email,
+    });
+});
 
-//     res.json({
-//         id: user.id,
-//         email: user.email,
-//     });
-// });
+// @desc    Logout user / clear cookie
+// @route   POST /api/users/auth/logout
+// @access  Public
+const logoutUser = (_req: Request, res: Response) => {
+    res.cookie('jwt', '', {
+        httpOnly: true,
+        expires: new Date(0),
+    });
+    res.status(STATUS_CODES.OK).json({ message: 'Logged out successfully' });
+};
 
-// // @desc    Logout user / clear cookie
-// // @route   POST /api/users/auth/logout
-// // @access  Public
-// const logoutUser = (_req: Request, res: Response) => {
-//     res.cookie('jwt', '', {
-//         httpOnly: true,
-//         expires: new Date(0),
-//     });
-//     res.status(STATUS_CODES.OK).json({ message: 'Logged out successfully' });
-// };
-
-// export default { loginUser, logoutUser };
+export default { loginUser, logoutUser };

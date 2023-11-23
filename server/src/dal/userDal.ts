@@ -26,7 +26,7 @@ const getUser = async (userId: string) => {
     return res;
 }
 
-const getUserByEmail = async (email: string) => {
+const getUserByEmail = async (email: string): Promise<User[]> => {
     const query = 'SELECT * FROM users WHERE email = $1';
     const values = [email];
     const { rows } = await sendQueryToDatabase(query, values)
@@ -42,6 +42,8 @@ const sendQueryToDatabase = async (query:string, values:any[]) => {
     return data
     
 }
+
+
 
 
 export default {addUser, getUser, getUserByEmail};
