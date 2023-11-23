@@ -42,9 +42,9 @@ const updateCart = async (userId: string, itemId: string, quantity: number) => {
 
   const values = [userId, itemId, quantity];
   const res = await sendQueryToDatabase(query, values)
-  const { rowCount } = res
-  console.log('Query result:', rowCount);
-  return rowCount;
+  const { rows } = res
+  console.log('Query result:', rows);
+  return rows;
 };
 
 const updateAmount = async (userId: string, product_id: string, amount: number) => {
