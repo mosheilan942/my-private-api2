@@ -51,7 +51,15 @@ const updateCart = async (userId: string, itemId: string, quantity:number) => {
   return cartRes;
 };
 
+
+const sendToOms = async ( cart: Cart) => {
+  const omsCart = await cartDal.sendToOms(cart);
+  return omsCart;
+};
+
+
 const deleteCart = async (userId: string) => {
+
   const cart = await cartDal.deleteCart(userId);
   if (!cart) throw new RequestError('No cart found', STATUS_CODES.NO_CONTENT);
   return cart;
@@ -71,4 +79,4 @@ const patchAmount = async (
   return await cartDal.decAmount(userId, metaDate.pid);
 };
 
-export default { getCart,updateAmount, updateCart, deleteCart, deleteCartItem, patchAmount };
+export default { getCart,updateAmount, updateCart, deleteCart, deleteCartItem, patchAmount,sendToOms };

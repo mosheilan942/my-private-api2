@@ -16,7 +16,6 @@ function Top5ProductsPage() {
         console.error('Error fetching top 5 products:', error);
       }
     };
-
     fetchTop5Products();
   }, []);
 

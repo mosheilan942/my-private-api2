@@ -17,7 +17,7 @@ export default function ProductCard({ product, navigateToOnClick }: props) {
   const handleCLick = async () => {
     try {
       navigate(navigateToOnClick || `/product/${product._id}`);
-      await productsAPI.patchProductClick(product._id);
+      // await productsAPI.patchProductClick(product._id);
     } catch (err) {
       console.error((err as Error).message);
     }
