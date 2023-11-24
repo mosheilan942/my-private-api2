@@ -6,6 +6,7 @@ import CartItem from '../types/CartItem.js';
 import Cart from '../types/Cart.js';
 
 const getCart = async (userId: string) => {
+  // console.log("hi from gatcart in service:", userId);
   const cart = await cartDal.getCart(userId);
   if (!cart) throw new RequestError('No cart found', STATUS_CODES.NO_CONTENT);
   return cart;
@@ -30,10 +31,10 @@ const updateAmount = async (userId: string, itemId: string, quantity:number) => 
   return updatedCart;
 };
 
-const updateCart = async (userId: string, itemId: string, quantity:number) => {
+const updateCart = async (userId: string, product_id: string, quantity:number) => {
+  console.log("hi from service updateCart:", userId, product_id, quantity);
+  const cartRes = await cartDal.updateCart(userId, product_id, quantity);
   
-
-  const cartRes = await cartDal.updateCart(userId, itemId, quantity);
   if (cartRes.length === 0)
     throw new RequestError(
       'Cart update failed',
