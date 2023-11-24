@@ -21,8 +21,10 @@ const getCart = async (userId: string) => {
   const values = [userId];
   const res = await sendQueryToDatabase(query, values)
   const { rows } = res
-  console.log('Query result:', rows);
-  return rows;
+  console.log('Query result from getCart:', rows);
+  const array = []
+  array[0] = {"items":rows}
+  return array;
 };
 
 const getCartProducts = async (userId: string, itemId: string):Promise<Product[]> => {
@@ -30,7 +32,7 @@ const getCartProducts = async (userId: string, itemId: string):Promise<Product[]
   const values = [userId, itemId];
   const res = await sendQueryToDatabase(query, values)
   const { rows } = res
-  console.log('Query result:', rows);
+  console.log('Query result from getCartProducts:', rows);
   return rows;
 };
 
@@ -48,7 +50,7 @@ const updateCart = async (userId: string, itemId: string, quantity: number) => {
   const values = [userId, itemId, quantity];
   const res = await sendQueryToDatabase(query, values)
   const { rows } = res
-  console.log('Query result:', rows);
+  console.log('Query result from updateCart:', rows);
   return rows;
 };
 
@@ -65,7 +67,7 @@ const updateAmount = async (userId: string, product_id: string, quantity: number
   const values = [userId, product_id, quantity];
   const res = await sendQueryToDatabase(query, values)
   const { rows } = res
-  console.log('Query result:', rows);
+  console.log('Query result from updateAmount:', rows);
   return rows;
 
 };
@@ -76,11 +78,9 @@ const sendToOms = async (cart: Cart) => {
 };
 
 const deleteCart = async (userId: string) => {
-  return await cartModel.findOneAndUpdate(
-    { user: userId },
-    { items: [] },
-    { new: true }
-  );
+  console.log("hello from deletecart");
+  const res = await getCart(userId)
+  if (res.length === 0) return res
 };
 
 const deleteCartItem = async (userId: string, productId: string) => {

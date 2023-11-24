@@ -16,8 +16,8 @@ const getCart = asyncHandler(async (req, res) => {
 // @access  Private
 const updateCart = asyncHandler(async (req, res) => {
   console.log("hi from update cart");
-  
-  const {userId, itemId, quantity} = req.body
+
+  const { userId, itemId, quantity } = req.body
   const cart = await cartService.updateCart(userId, itemId, quantity);
   res.status(STATUS_CODES.CREATED).json(cart);
 });
@@ -43,6 +43,7 @@ const patchAmount = asyncHandler(async (req, res) => {
   res.json(cart);
 });
 
-export default { getCart, updateCart, deleteCart, patchAmount, deleteCartItem,
+export default {
+  getCart, updateCart, deleteCart, patchAmount, deleteCartItem,
   sendCart
- };
+};

@@ -36,7 +36,7 @@ const getUserByEmail = async (email: string): Promise<User[]> => {
 
 const sendQueryToDatabase = async (query:string, values:any[]) => {
     const pool = new Pool()
-    const res = (await pool.connect())
+    const res = await pool.connect();
     const data = await res.query(query, values);
     res.release()
     return data
