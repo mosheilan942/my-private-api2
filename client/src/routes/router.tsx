@@ -9,7 +9,11 @@ import CategoryPage from "../pages/CategoryPage";
 import ProductPage from "../pages/ProductPage";
 import CartPage from "../pages/CartPage";
 import ComparePage from "../pages/ComparePage";
-import Account from "../pages/Account";
+import Account from "../profile/Account";
+import Shipment from "../profile/Shipment";
+import Orders from "../profile/Orders";
+import CustomerService from "../profile/CustomerService";
+import Addrees from "../profile/Addrees";
 
 const Router = () => {
     return (
@@ -23,10 +27,14 @@ const Router = () => {
                 <Route path={ROUTES.CART} element={<CartPage/>} />
                 <Route path={ROUTES.COMPARE} element={<ComparePage/>} />    
                 <Route path={ROUTES.ACCOUNT} element={<Account/>} />    
+                <Route path={ROUTES.SERVICE} element={<CustomerService/>} />    
+                <Route path={ROUTES.ORDERS} element={<Orders/>} />    
+                <Route path={ROUTES.SHIPMENT} element={<Shipment/>} />    
+                <Route path={ROUTES.ADDRESS} element={<Addrees/>} />    
             </Route>
             <Route path={ROUTES.DEFAULT} element={<h1>404 Not Found</h1>} />
         </Routes>
     );
-};
+}; 
 
 export default Router;

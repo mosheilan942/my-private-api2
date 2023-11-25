@@ -27,8 +27,8 @@ CREATE TABLE
     );
 
 CREATE TABLE IF NOT EXISTS cartitems (
-    product_id UUID PRIMARY KEY,
     user_id UUID,
+    product_id UUID PRIMARY KEY,
     quantity NUMERIC,
     UNIQUE(product_id, user_id),
     CONSTRAINT user_id
@@ -119,3 +119,6 @@ SELECT add ->> 'country' AS Feeling FROM users;
 SELECT add FROM users 
 
 CREATE TABLE cartitmes 
+
+
+SELECT * FROM cartitems 

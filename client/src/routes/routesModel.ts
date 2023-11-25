@@ -7,7 +7,11 @@ const ROUTES = {
     CART: '/cart',
     COMPARE: '/compare/:pid1/:pid2',
     DEFAULT: '*',
-    ACCOUNT:'/Account'
+    ACCOUNT:'/account',
+    ADDRESS:'/address',
+    SERVICE:'/service',
+    ORDERS:'/orders',
+    SHIPMENT:'/shipment'
 };
 
 export default ROUTES;
