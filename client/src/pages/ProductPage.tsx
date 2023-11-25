@@ -209,6 +209,8 @@ const ProductPage = () => {
                 <Typography variant="h5" sx={{ marginBottom: 2 }}>
                     Store Location
                 </Typography>
+
+                
                 <div style={{ height: "400px" }}>
                     <StoreMap />
                 </div>
