@@ -4,8 +4,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import { To, useNavigate } from 'react-router-dom';
-import Product from '../types/Product';
-import productsAPI from '../api/productsAPI';
+import {Product} from '../types/Product';
 
 type props = {
   product: Product;
@@ -13,6 +12,7 @@ type props = {
 };
 
 export default function ProductCard({ product, navigateToOnClick }: props) {
+  
   const navigate = useNavigate();
   const handleCLick = async () => {
     try {

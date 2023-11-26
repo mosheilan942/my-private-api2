@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import Product from '../types/Product';
+import {Product} from '../types/Product';
 import categoriesAPI from '../api/categoriesAPI';
 import ProductCard from '../components/ProductCard';
 import ProductCardsContainer from '../components/ProductCardsContainer';
@@ -9,6 +9,7 @@ import Filter from '../components/Filter';
 
 const CategoryPage = () => {
   const { cname } = useParams();
+  console.log('this is cname',cname);   
   const [products, setProducts] = useState<Product[]>([]);
 
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
@@ -20,6 +21,7 @@ const CategoryPage = () => {
     categoriesAPI
       .getProductsFromCategory(cname!)
       .then((products) => {
+        console.log('this is products',products);
         setProducts(products);
       })
       .catch((err) => {
@@ -42,16 +44,16 @@ const CategoryPage = () => {
       <Filter products={products} setProducts={setFilteredProducts} />
       <ProductCardsContainer>
         {filteredProducts.map((product) => {
-          if (isCompareMode.current && location.state._id === product._id)
+          if (isCompareMode.current && location.state._id === product.id)
             return null;
 
           return (
             <ProductCard
-              key={product._id}
+              key={product.id}
               product={product}
               navigateToOnClick={
                 isCompareMode.current
-                  ? `/compare/${location.state._id}/${product._id}`
+                  ? `/compare/${location.state._id}/${product.id}`
                   : undefined
               }
             />

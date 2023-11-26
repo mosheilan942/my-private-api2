@@ -1,304 +1,304 @@
-import React, { useState } from 'react';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Paypal from '../../components/Paypal';
-import { Box, Button, Collapse, Divider, List, ListItem, ListItemText } from '@mui/material';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ErrorIcon from '@mui/icons-material/Error';
-import { CreditCardDetails } from '../../types/creditCard';
-import { checkDebitCard } from '../../api/checkout';
+// import React, { useState } from 'react';
+// import Typography from '@mui/material/Typography';
+// import Grid from '@mui/material/Grid';
+// import TextField from '@mui/material/TextField';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import Checkbox from '@mui/material/Checkbox';
+// import Paypal from '../../components/Paypal';
+// import { Box, Button, Collapse, Divider, List, ListItem, ListItemText } from '@mui/material';
+// import { ExpandLess, ExpandMore } from '@mui/icons-material';
+// import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+// import ErrorIcon from '@mui/icons-material/Error';
+// import { CreditCardDetails } from '../../types/creditCard';
+// import { checkDebitCard } from '../../api/checkout';
 
-interface ApiResponse {
-    message: string;
-}
+// interface ApiResponse {
+//     message: string;
+// }
 
-type Props = {
-    totalAmount: number;
-    creditCard: {data: CreditCardDetails, setData: Function};
-    onNext: Function;
-    onBack: Function;
-}
+// type Props = {
+//     totalAmount: number;
+//     creditCard: {data: CreditCardDetails, setData: Function};
+//     onNext: Function;
+//     onBack: Function;
+// }
 
-const PaymentDetails = (props: Props) => {
-    const [payCurrentOpen, setPayCurrentOpen] = useState(false);
+// const PaymentDetails = (props: Props) => {
+//     const [payCurrentOpen, setPayCurrentOpen] = useState(false);
 
-    // CreditCardDetails.
-    const creditCardDetails: CreditCardDetails = props.creditCard.data;
-    const setCreditCardDetails: Function = props.creditCard.setData;
+//     // CreditCardDetails.
+//     const creditCardDetails: CreditCardDetails = props.creditCard.data;
+//     const setCreditCardDetails: Function = props.creditCard.setData;
         
-    const [errors, setErrors] = useState<Partial<CreditCardDetails>>({});
+//     const [errors, setErrors] = useState<Partial<CreditCardDetails>>({});
 
-    const [isChecking, setIsChecking] = React.useState(false);
-    const [serverResponse, setServerResponse] = React.useState('');
-    const [error, setError] = React.useState('');
+//     const [isChecking, setIsChecking] = React.useState(false);
+//     const [serverResponse, setServerResponse] = React.useState('');
+//     const [error, setError] = React.useState('');
 
-    const isCreditCardValid = (cardNumber: string) => {
-        return /^\d{16}$/.test(cardNumber);
-    };
+//     const isCreditCardValid = (cardNumber: string) => {
+//         return /^\d{16}$/.test(cardNumber);
+//     };
 
-    const isCVVValid = (cvv: string) => {
-        return /^\d{3}$/.test(cvv);
-    };
+//     const isCVVValid = (cvv: string) => {
+//         return /^\d{3}$/.test(cvv);
+//     };
 
-    const isIdValid = (id: string) => {
-        return /^\d{9}$/.test(id);
-    };
+//     const isIdValid = (id: string) => {
+//         return /^\d{9}$/.test(id);
+//     };
 
-    const isExpirationValid = (expDate: string) => {
-        const currentDate = new Date();
-        const [expMonth, expYear] = expDate.split('/').map((item) => parseInt(item));
+//     const isExpirationValid = (expDate: string) => {
+//         const currentDate = new Date();
+//         const [expMonth, expYear] = expDate.split('/').map((item) => parseInt(item));
 
-        const currentYear = currentDate.getFullYear() % 100;
-        const currentMonth = currentDate.getMonth() + 1;
+//         const currentYear = currentDate.getFullYear() % 100;
+//         const currentMonth = currentDate.getMonth() + 1;
 
-        return (
-            expYear > currentYear || (expYear === currentYear && expMonth >= currentMonth)
-        );
-    };
+//         return (
+//             expYear > currentYear || (expYear === currentYear && expMonth >= currentMonth)
+//         );
+//     };
 
-    const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setServerResponse('');
-        setError('');
+//     const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+//         setServerResponse('');
+//         setError('');
 
-        const { name, value, checked, type } = event.target;
-        const newValue = type === 'checkbox' ? checked : value;
+//         const { name, value, checked, type } = event.target;
+//         const newValue = type === 'checkbox' ? checked : value;
 
-        setCreditCardDetails({
-            ...creditCardDetails,
-            [name]: newValue,
-        });
+//         setCreditCardDetails({
+//             ...creditCardDetails,
+//             [name]: newValue,
+//         });
 
-        const newErrors = { ...errors };
-        switch (name) {
-            case 'cardholderId':
-                newErrors.cardholderId = !isIdValid(value.trim()) ? 'Please enter a valid ID (9 digits).' : '';
-                break;
-            case 'cardNumber':
-                newErrors.cardNumber = !isCreditCardValid(value.trim()) ? 'Please enter a valid 16-digit credit card number.' : '';
-                break;
-            case 'expDate':
-                newErrors.expDate = !isExpirationValid(value.trim()) ? 'Please enter a valid expiration date.' : '';
-                break;
-            case 'cvv':
-                newErrors.cvv = !isCVVValid(value.trim()) ? 'Please enter a valid 3-digit CVV.' : '';
-                break;
-            default:
-                break;
-        }
-        setErrors(newErrors);
-    };
+//         const newErrors = { ...errors };
+//         switch (name) {
+//             case 'cardholderId':
+//                 newErrors.cardholderId = !isIdValid(value.trim()) ? 'Please enter a valid ID (9 digits).' : '';
+//                 break;
+//             case 'cardNumber':
+//                 newErrors.cardNumber = !isCreditCardValid(value.trim()) ? 'Please enter a valid 16-digit credit card number.' : '';
+//                 break;
+//             case 'expDate':
+//                 newErrors.expDate = !isExpirationValid(value.trim()) ? 'Please enter a valid expiration date.' : '';
+//                 break;
+//             case 'cvv':
+//                 newErrors.cvv = !isCVVValid(value.trim()) ? 'Please enter a valid 3-digit CVV.' : '';
+//                 break;
+//             default:
+//                 break;
+//         }
+//         setErrors(newErrors);
+//     };
 
-    const handleNext = async () => {
-        setServerResponse('');
-        setError('');
+//     const handleNext = async () => {
+//         setServerResponse('');
+//         setError('');
 
-        const formErrors: Partial<CreditCardDetails> = {};
-        if (!isIdValid(creditCardDetails.cardholderId.trim())) {
-            formErrors.cardholderId = 'Please enter a valid ID (9 digits).';
-        }
-        if (!isCreditCardValid(creditCardDetails.cardNumber.trim())) {
-            formErrors.cardNumber = 'Please enter a valid 16-digit credit card number.';
-        }
-        if (!isExpirationValid(creditCardDetails.expDate.trim())) {
-            formErrors.expDate = 'Please enter a valid expiration date.';
-        }
-        if (!isCVVValid(creditCardDetails.cvv.trim())) {
-            formErrors.cvv = 'Please enter a valid 3-digit CVV.';
-        }
+//         const formErrors: Partial<CreditCardDetails> = {};
+//         if (!isIdValid(creditCardDetails.cardholderId.trim())) {
+//             formErrors.cardholderId = 'Please enter a valid ID (9 digits).';
+//         }
+//         if (!isCreditCardValid(creditCardDetails.cardNumber.trim())) {
+//             formErrors.cardNumber = 'Please enter a valid 16-digit credit card number.';
+//         }
+//         if (!isExpirationValid(creditCardDetails.expDate.trim())) {
+//             formErrors.expDate = 'Please enter a valid expiration date.';
+//         }
+//         if (!isCVVValid(creditCardDetails.cvv.trim())) {
+//             formErrors.cvv = 'Please enter a valid 3-digit CVV.';
+//         }
 
-        setErrors(formErrors);
+//         setErrors(formErrors);
 
-        const isValid = Object.keys(formErrors).length === 0;
+//         const isValid = Object.keys(formErrors).length === 0;
 
-        if (isValid) {
+//         if (isValid) {
 
-            setIsChecking(true);
+//             setIsChecking(true);
 
-            try {
-                const data = await checkDebitCard(creditCardDetails);
+//             try {
+//                 const data = await checkDebitCard(creditCardDetails);
 
-                console.log('Response from server:', data);
+//                 console.log('Response from server:', data);
 
-                setIsChecking(false);
+//                 setIsChecking(false);
 
-                if (typeof data === 'object' && 'message' in data) {
-                    setServerResponse((data as ApiResponse).message);
+//                 if (typeof data === 'object' && 'message' in data) {
+//                     setServerResponse((data as ApiResponse).message);
 
-                    setTimeout(() => {
-                        props.onNext()
-                    }, 3000);
-                } else {
-                    setError('Unknown error occurred !!!');
-                }
-            } catch (error) {
+//                     setTimeout(() => {
+//                         props.onNext()
+//                     }, 3000);
+//                 } else {
+//                     setError('Unknown error occurred !!!');
+//                 }
+//             } catch (error) {
 
-                setIsChecking(false);
-                if (typeof error === 'object' && error !== null && 'message' in error) {
-                    const errorMessage = (error as ApiResponse).message || 'Unknown error occurred';
-                    setError(`Error checking card details: ${errorMessage}`);
-                    console.log(error.message);
-                } else {
-                    setError('Unknown error occurred !!!');
-                }
-            }
-            console.log("Form data :", creditCardDetails);
-        } else {
-            setError('Form has errors or empty/invalid fields !!!');
-            console.log(error);
-        }
+//                 setIsChecking(false);
+//                 if (typeof error === 'object' && error !== null && 'message' in error) {
+//                     const errorMessage = (error as ApiResponse).message || 'Unknown error occurred';
+//                     setError(`Error checking card details: ${errorMessage}`);
+//                     console.log(error.message);
+//                 } else {
+//                     setError('Unknown error occurred !!!');
+//                 }
+//             }
+//             console.log("Form data :", creditCardDetails);
+//         } else {
+//             setError('Form has errors or empty/invalid fields !!!');
+//             console.log(error);
+//         }
 
-    };
+//     };
 
-    return (
-        <React.Fragment>
-            <Typography component="h1" variant="h6" align="center">
-                Choose a payment method
-            </Typography>
+//     return (
+//         <React.Fragment>
+//             <Typography component="h1" variant="h6" align="center">
+//                 Choose a payment method
+//             </Typography>
 
-            <hr style={{ width: '90%', color: 'gray', marginBottom: '40px' }} />
+//             <hr style={{ width: '90%', color: 'gray', marginBottom: '40px' }} />
 
-            <Paypal product={{ description: 'Payment', price: `${props.totalAmount}` }} />
+//             <Paypal product={{ description: 'Payment', price: `${props.totalAmount}` }} />
 
-            <Box sx={{ display: 'flex', alignItems: 'center', margin: '10px 0' }}>
-                <Divider sx={{ flex: 1, margin: 0 }} />
-                <Typography sx={{ padding: '0 10px' }}>or</Typography>
-                <Divider sx={{ flex: 1, margin: 0 }} />
-            </Box>
+//             <Box sx={{ display: 'flex', alignItems: 'center', margin: '10px 0' }}>
+//                 <Divider sx={{ flex: 1, margin: 0 }} />
+//                 <Typography sx={{ padding: '0 10px' }}>or</Typography>
+//                 <Divider sx={{ flex: 1, margin: 0 }} />
+//             </Box>
 
-            <List>
-                <ListItem sx={{ width: '100%', background: '#f0f0f0' }} onClick={() => setPayCurrentOpen(!payCurrentOpen)}>
-                    <ListItemText primary="Enter credit information" />
-                    {payCurrentOpen ? <ExpandLess /> : <ExpandMore />}
-                </ListItem>
-                <Collapse in={payCurrentOpen} timeout="auto" unmountOnExit>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} md={6}>
-                            <TextField
-                                required
-                                id="idCardholder"
-                                name="cardholderId"
-                                label="ID card of the cardholder"
-                                fullWidth
-                                autoComplete="cc-name"
-                                variant="standard"
-                                value={creditCardDetails.cardholderId}
-                                onChange={handleFormChange}
-                                error={!!errors.cardholderId}
-                                helperText={errors.cardholderId}
-                                inputProps={{
-                                    type: 'number'
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <TextField
-                                required
-                                id="cardNumber"
-                                name="cardNumber"
-                                label="Card number"
-                                fullWidth
-                                autoComplete="cc-number"
-                                variant="standard"
-                                value={creditCardDetails.cardNumber}
-                                onChange={handleFormChange}
-                                error={!!errors.cardNumber}
-                                helperText={errors.cardNumber}
-                                inputProps={{
-                                    type: 'number'
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <TextField
-                                required
-                                id="expDate"
-                                name="expDate"
-                                label="Expiry date"
-                                fullWidth
-                                autoComplete="cc-exp"
-                                variant="standard"
-                                value={creditCardDetails.expDate}
-                                onChange={handleFormChange}
-                                error={!!errors.expDate}
-                                helperText={errors.expDate}
-                                inputProps={{
-                                    type: 'text',
-                                    pattern: '([0-9]{2}[/]?[0-9]{2})',
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <TextField
-                                required
-                                id="cvv"
-                                name="cvv"
-                                label="CVV"
-                                fullWidth
-                                autoComplete="cc-csc"
-                                variant="standard"
-                                value={creditCardDetails.cvv}
-                                onChange={handleFormChange}
-                                error={!!errors.cvv}
-                                helperText={errors.cvv}
-                                inputProps={{
-                                    type: 'number'
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <FormControlLabel
-                                control={<Checkbox color="secondary" name="saveCard" checked={creditCardDetails.saveCard} onChange={handleFormChange} />}
-                                label="Remember credit card details for next time"
-                            />
-                        </Grid>
-                    </Grid>
-                </Collapse>
-            </List>
+//             <List>
+//                 <ListItem sx={{ width: '100%', background: '#f0f0f0' }} onClick={() => setPayCurrentOpen(!payCurrentOpen)}>
+//                     <ListItemText primary="Enter credit information" />
+//                     {payCurrentOpen ? <ExpandLess /> : <ExpandMore />}
+//                 </ListItem>
+//                 <Collapse in={payCurrentOpen} timeout="auto" unmountOnExit>
+//                     <Grid container spacing={3}>
+//                         <Grid item xs={12} md={6}>
+//                             <TextField
+//                                 required
+//                                 id="idCardholder"
+//                                 name="cardholderId"
+//                                 label="ID card of the cardholder"
+//                                 fullWidth
+//                                 autoComplete="cc-name"
+//                                 variant="standard"
+//                                 value={creditCardDetails.cardholderId}
+//                                 onChange={handleFormChange}
+//                                 error={!!errors.cardholderId}
+//                                 helperText={errors.cardholderId}
+//                                 inputProps={{
+//                                     type: 'number'
+//                                 }}
+//                             />
+//                         </Grid>
+//                         <Grid item xs={12} md={6}>
+//                             <TextField
+//                                 required
+//                                 id="cardNumber"
+//                                 name="cardNumber"
+//                                 label="Card number"
+//                                 fullWidth
+//                                 autoComplete="cc-number"
+//                                 variant="standard"
+//                                 value={creditCardDetails.cardNumber}
+//                                 onChange={handleFormChange}
+//                                 error={!!errors.cardNumber}
+//                                 helperText={errors.cardNumber}
+//                                 inputProps={{
+//                                     type: 'number'
+//                                 }}
+//                             />
+//                         </Grid>
+//                         <Grid item xs={12} md={6}>
+//                             <TextField
+//                                 required
+//                                 id="expDate"
+//                                 name="expDate"
+//                                 label="Expiry date"
+//                                 fullWidth
+//                                 autoComplete="cc-exp"
+//                                 variant="standard"
+//                                 value={creditCardDetails.expDate}
+//                                 onChange={handleFormChange}
+//                                 error={!!errors.expDate}
+//                                 helperText={errors.expDate}
+//                                 inputProps={{
+//                                     type: 'text',
+//                                     pattern: '([0-9]{2}[/]?[0-9]{2})',
+//                                 }}
+//                             />
+//                         </Grid>
+//                         <Grid item xs={12} md={6}>
+//                             <TextField
+//                                 required
+//                                 id="cvv"
+//                                 name="cvv"
+//                                 label="CVV"
+//                                 fullWidth
+//                                 autoComplete="cc-csc"
+//                                 variant="standard"
+//                                 value={creditCardDetails.cvv}
+//                                 onChange={handleFormChange}
+//                                 error={!!errors.cvv}
+//                                 helperText={errors.cvv}
+//                                 inputProps={{
+//                                     type: 'number'
+//                                 }}
+//                             />
+//                         </Grid>
+//                         <Grid item xs={12}>
+//                             <FormControlLabel
+//                                 control={<Checkbox color="secondary" name="saveCard" checked={creditCardDetails.saveCard} onChange={handleFormChange} />}
+//                                 label="Remember credit card details for next time"
+//                             />
+//                         </Grid>
+//                     </Grid>
+//                 </Collapse>
+//             </List>
 
-            {isChecking && (
-                <Typography variant="body1">
-                    Sent for testing...
-                </Typography>
-            )}
+//             {isChecking && (
+//                 <Typography variant="body1">
+//                     Sent for testing...
+//                 </Typography>
+//             )}
 
-            {serverResponse && (
-                <Box>
-                    <CheckCircleIcon sx={{ color: 'green', fontSize: 40 }} />
-                    <Typography variant="body1">
-                        {serverResponse}
-                    </Typography>
-                </Box>
-            )}
+//             {serverResponse && (
+//                 <Box>
+//                     <CheckCircleIcon sx={{ color: 'green', fontSize: 40 }} />
+//                     <Typography variant="body1">
+//                         {serverResponse}
+//                     </Typography>
+//                 </Box>
+//             )}
 
-            {error && (
-                <Box>
-                    <ErrorIcon sx={{ color: 'red', fontSize: 40 }} />
-                    <Typography variant="body1" color="error">
-                        {error}
-                    </Typography>
-                </Box>
-            )}
+//             {error && (
+//                 <Box>
+//                     <ErrorIcon sx={{ color: 'red', fontSize: 40 }} />
+//                     <Typography variant="body1" color="error">
+//                         {error}
+//                     </Typography>
+//                 </Box>
+//             )}
 
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <Button onClick={() => props.onBack()} sx={{ mt: 3, ml: 1 }}>
-                    Back
-                </Button>
+//             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+//                 <Button onClick={() => props.onBack()} sx={{ mt: 3, ml: 1 }}>
+//                     Back
+//                 </Button>
 
-                <Button
-                    variant="contained"
-                    onClick={handleNext}
-                    sx={{ mt: 3, ml: 1 }}
-                >
-                    Next
-                </Button>
-            </Box>
-        </React.Fragment>
-    );
-}
+//                 <Button
+//                     variant="contained"
+//                     onClick={handleNext}
+//                     sx={{ mt: 3, ml: 1 }}
+//                 >
+//                     Next
+//                 </Button>
+//             </Box>
+//         </React.Fragment>
+//     );
+// }
 
-export default PaymentDetails;
+// export default PaymentDetails;
 
