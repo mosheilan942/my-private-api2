@@ -89,7 +89,7 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ reviews }) => {
 
     const fetchThumbs = async (feedback: boolean) => {
         try {
-            const thumbs = await productsAPI.reviewFeedback(feedback);
+            const thumbs = await productsAPI.reviewFeedbackProduct(feedback);
             console.log("this is thumbs", thumbs);
 
             // Update the thumbs count based on the feedback type

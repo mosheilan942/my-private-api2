@@ -41,7 +41,7 @@ const DialogReview: React.FC<DialogReviewProps> = ({pid}:DialogReviewProps) => {
 
   const handleSubmit = async () => {
    try{
-    const userReview = await productsAPI.reviewProduct(pid as string, title, review, rating);
+    const userReview = await productsAPI.sendReviewProduct(pid as string, title, review, rating);
     console.log('this is user review',userReview);
     setOpen(false);   }
     catch(error){

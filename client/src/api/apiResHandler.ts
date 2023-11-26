@@ -1,4 +1,3 @@
-import { log } from "console";
 
 const handleApiRes = async (res: Response) => {
     const data = await res.json();

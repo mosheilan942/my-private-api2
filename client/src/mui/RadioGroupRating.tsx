@@ -7,7 +7,6 @@ import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
 import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfied';
 import { Dispatch } from 'react';
-import { set } from 'ol/transform';
 
 const StyledRating = styled(Rating)(({ theme }) => ({
   '& .MuiRating-iconEmpty .MuiSvgIcon-root': {
@@ -61,8 +60,8 @@ export default function RadioGroupRating({setRating}:Props){
       IconContainerComponent={IconContainer}
       getLabelText={(value: number) => customIcons[value].label}
       highlightSelectedOnly
-     onChange={(event, newValue) => {setRating(newValue as number);
-     }}
+     onChange={(event, newValue) => {setRating(newValue as number),console.log('this is new event',event)}}
+     
     />
   );
 }

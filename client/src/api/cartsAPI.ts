@@ -4,19 +4,30 @@ import handleApiRes from "./apiResHandler";
 // dotenv.config();
 //no need for change 
 
-async function getCart(): Promise<Cart> {
-    const response = await fetch(`/api/users/cart`);
-    return await handleApiRes(response);
-}
-
-async function addToCart(pid: string, quantity: string): Promise<Cart> {
-
+async function getCart(_id: string): Promise<Cart> {
     const response = await fetch(`/api/users/cart`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
+            userId: _id,
+        }),
+    }) ;
+    // console.log("hi from get cart");
+    
+    return await handleApiRes(response);
+}
+
+async function addToCart(_id:string, pid: string, quantity: string): Promise<Cart> {
+    
+    const response = await fetch(`/api/users/cart`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            _id: _id,
             product_id: pid,
             quantity: quantity
         }),
@@ -70,4 +81,4 @@ async function deleteCart():Promise<Cart> {
     return await handleApiRes(response);
 }
 
-export default { getCart, addToCart, updateQuantity, deleteProductFromCart, deleteCart }
+export default { getCart, addToCart, updateQuantity, deleteProductFromCart, deleteCart, sendCartToOms }

@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import Product from '../types/Product';
+import {Product} from '../types/Product';
 import categoriesAPI from '../api/categoriesAPI';
 import ProductCard from '../components/ProductCard';
 import ProductCardsContainer from '../components/ProductCardsContainer';
 import { Box, CircularProgress } from '@mui/material';
 import Filter from '../components/Filter';
-import { log } from 'console';
 
 const CategoryPage = () => {
   const { cname } = useParams();

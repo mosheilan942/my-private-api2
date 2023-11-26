@@ -5,7 +5,6 @@ import handleApiRes from "./apiResHandler";
 
 async function loginUser(email: string, password: string): Promise<UserInfo> {
 
-    console.log("hi", email, password);
     const response = await fetch("/api/users/auth/login", {
 
         method: "POST",
