@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import { connectDB } from './configs/db.js';
 import { errorHandler, notFound } from './middlewares/errorsMiddleware.js';
 import userRoutes from './routes/userRoutes.js';
 import productRoutes from './routes/productsRoutes.js';

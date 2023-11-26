@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS cartitems (
     user_id UUID,
     product_id UUID PRIMARY KEY,
     quantity NUMERIC,
+    price NUMERIC,
     UNIQUE(product_id, user_id),
     CONSTRAINT user_id
     FOREIGN KEY(user_id) 
@@ -40,12 +41,16 @@ CREATE TABLE IF NOT EXISTS cartitems (
 
 
 CREATE TABLE IF NOT EXISTS reviews(
-    user_id UUID NOT NULL,
-    product_id UUID NOT NULL,
-    review TEXT,
-    CONSTRAINT user_id
-    FOREIGN KEY(user_id) 
-	REFERENCES users(user_id)
+    user_id UUID NOT NULL, 
+    product_id UUID NOT NULL, 
+    author TEXT,
+    title TEXT, 
+    body TEXT, 
+    rating NUMERIC, 
+    thumbUp NUMERIC, 
+    thumbDown NUMERIC,
+    CONSTRAINT user_id FOREIGN KEY(user_id) REFERENCES users(user_id),
+    CONSTRAINT product_id FOREIGN KEY(product_id) REFERENCES cartitems(product_id)
 );
 
 DROP Table users ;
@@ -116,9 +121,11 @@ add = jsonb_set(
 
 SELECT add ->> 'country' AS Feeling FROM users;
 
-SELECT add FROM users 
+SELECT address FROM users 
 
 CREATE TABLE cartitmes 
 
+
+SELECT * FROM users 
 
 SELECT * FROM cartitems 
