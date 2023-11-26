@@ -17,10 +17,12 @@ import ErrorIcon from '@mui/icons-material/Error';
 import { Box } from '@mui/material';
 import { Address, OrderEnum, OrderInterface, OrderStatusEnum } from '../../types/order';
 
+// Interface for the response from the API
 interface ApiResponse {
   message: string;
 }
 
+// Component for copyright information
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
@@ -31,34 +33,41 @@ function Copyright() {
       {new Date().getFullYear()}
       {'.'}
     </Typography>
-  )
-};
+  );
+}
 
-
+// Checkout page component
 const CheckoutPage = () => {
+  // Get the total amount from URL params
   const { totalAmount } = useParams();
+  const totalPrice = (totalAmount && parseFloat(totalAmount)) || 0;
 
+  // State variables for checkout process management
   const [activeStep, setActiveStep] = React.useState(0);
-
   const [isChecking, setIsChecking] = React.useState(false);
   const [error, setError] = React.useState('');
-
   const [deliveryMethod, setDeliveryMethod] = React.useState<string>('pickup');
+  const [res, setRes] = React.useState<string>('');
+  const [isExpressDelivery, setIsExpressDelivery] = React.useState(false);
 
-  const [res, setRes] = React.useState<string>('')
+  // Function to determine order type based on delivery method and express option
+  const orderTypeReturn = () => {
+    if (deliveryMethod === 'pickup') return OrderEnum.SelfCollection;
+    if (isExpressDelivery) return OrderEnum.Express;
+    return OrderEnum.Regular;
+  };
 
-  // ShippingDetails.
+  // State for shipping details
   const [shippingDetails, setShippingDetails] = React.useState<Address>({
     country: '',
     city: '',
     street: '',
     cellPhone: '',
-    zipCode: '',
-    orderType: OrderEnum.Regular,
+    zipCode: ''
   });
 
-  // CreditCardDetails.
-  const [creditCardDetails, setcreditCardDetails] = React.useState<CreditCardDetails>({
+  // State for credit card details
+  const [creditCardDetails, setCreditCardDetails] = React.useState<CreditCardDetails>({
     cardholderId: '',
     cardNumber: '',
     expDate: '',
@@ -66,7 +75,7 @@ const CheckoutPage = () => {
     saveCard: false,
   });
 
-  // Order summary.
+  // Create order object with collected details
   const order: OrderInterface = {
     cartItems: [],
     orderTime: new Date(),
@@ -74,70 +83,102 @@ const CheckoutPage = () => {
     userName: 'John Doe',
     userEmail: 'www.@gmail.com',
     status: OrderStatusEnum.Waiting,
-    totalPrice: (totalAmount && parseInt(totalAmount)) || 0,
+    totalPrice: totalPrice,
     shippingDetails: {
-      address: shippingDetails,
-      orderType: deliveryMethod === 'pickup' ? OrderEnum.SelfCollection : OrderEnum.Regular,
-      contactNumber: shippingDetails.cellPhone || ''
-    }
+      address: {
+        country: shippingDetails.country,
+        city: shippingDetails.city,
+        street: shippingDetails.street,
+        zipCode: shippingDetails.zipCode,
+      },
+      orderType: orderTypeReturn(),
+      contactNumber: shippingDetails.cellPhone || '',
+    },
   };
 
-
-
+  // Function to proceed to the next step in the checkout process
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
 
+  // Function to go back to the previous step in the checkout process
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
 
+  // Function to place the order
   const handlePlaceOrder = async () => {
-    console.log("creditCardDetails :", creditCardDetails);
-    console.log("shippingDetails :", shippingDetails);
-
-    // Send order.
     setIsChecking(true);
     try {
       const response = await sendOrder(order);
-
-      console.log('Response from server:', response);
       setIsChecking(false);
 
       if (typeof response === 'object' && 'message' in response) {
-        setRes(response.message as string)
-        handleNext()
+        setRes(response.message as string);
+        handleNext();
       } else {
         setError('Unknown error occurred !!!');
       }
     } catch (error) {
-
       setIsChecking(false);
       if (typeof error === 'object' && error !== null && 'message' in error) {
         const errorMessage = (error as ApiResponse).message || 'Unknown error occurred';
         setError(errorMessage);
-        console.log(error.message);
       } else {
         setError('Unknown error occurred !!!');
       }
     }
   };
 
+  // Array of steps in the checkout process with corresponding components and labels
   const steps = [
-    { component: <ShippingDetails deliveryMethod={{ data: deliveryMethod, setData: setDeliveryMethod }} shippingDetails={{ data: shippingDetails, setData: setShippingDetails }} onNext={handleNext} />, label: 'Shipping address' },
-    { component: <PaymentDetails totalAmount={totalAmount || '0'} creditCard={{ data: creditCardDetails, setData: setcreditCardDetails }} onNext={handleNext} onBack={handleBack} />, label: 'Payment method' },
-    { component: <OrderSummary totalAmount={totalAmount || '0'} onBack={handleBack} onPlaceOrder={handlePlaceOrder} />, label: 'Summary of order details' },
+    {
+      component:
+        <ShippingDetails
+          deliveryMethod={{ data: deliveryMethod, setData: setDeliveryMethod }}
+          shippingDetails={{ data: shippingDetails, setData: setShippingDetails }}
+          isExpressDelivery={{ data: isExpressDelivery, setData: setIsExpressDelivery }}
+          onNext={handleNext} />,
+      label: 'Shipping address'
+    },
+    {
+      component:
+        <PaymentDetails
+          totalAmount={totalPrice}
+          creditCard={{ data: creditCardDetails, setData: setCreditCardDetails }}
+          onNext={handleNext} onBack={handleBack} />,
+      label: 'Payment method'
+    },
+    {
+      component:
+        <OrderSummary
+          totalAmount={totalPrice}
+          shippingDetails={shippingDetails}
+          creditCardDetails={creditCardDetails}
+          onBack={handleBack}
+          onPlaceOrder={handlePlaceOrder} />,
+      label: 'Summary of order details'
+    },
   ];
-
 
   return (
     <React.Fragment>
+
+      {/* Set up base CSS */}
       <CssBaseline />
+
+      {/* Main container for the checkout page */}
       <Container component="main" maxWidth="sm" sx={{ mb: 20 }}>
+
+        {/* Paper component for layout */}
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+
+          {/* Heading for the checkout process */}
           <Typography component="h1" variant="h4" align="center">
             Just before the product is with you
           </Typography>
+
+          {/* Stepper component to show current step */}
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((step) => (
               <Step key={step.label}>
@@ -145,28 +186,33 @@ const CheckoutPage = () => {
               </Step>
             ))}
           </Stepper>
+
+          {/* Show content based on the current step */}
           {activeStep === steps.length ? (
             <React.Fragment>
+              {/* Thank you message after completing the checkout */}
               <Typography variant="h5" gutterBottom>
-                {res}!
                 Thank you for your order.
               </Typography>
               <Typography variant="subtitle1">
-                Your order number is #2001539. We have emailed your order
-                confirmation, and will send you an update when your order has
-                shipped.
+                Your order number is #2001539. We have emailed your order confirmation, and will send you an update when your order has shipped.
               </Typography>
             </React.Fragment>
+
           ) : (
+
             <React.Fragment>
+              {/* Show the current step's component */}
               {steps[activeStep].component}
 
+              {/* Show a message while checking the order */}
               {isChecking && (
                 <Typography variant="body1">
                   The order is placed...
                 </Typography>
               )}
 
+              {/* Show error message if there's an error */}
               {error && (
                 <Box>
                   <ErrorIcon sx={{ color: 'red', fontSize: 40 }} />
@@ -177,13 +223,14 @@ const CheckoutPage = () => {
               )}
             </React.Fragment>
           )}
+
         </Paper>
+
+        {/* Copyright information */}
         <Copyright />
       </Container>
     </React.Fragment>
   );
-}
-
+};
 
 export default CheckoutPage;
-

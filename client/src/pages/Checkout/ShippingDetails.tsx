@@ -11,40 +11,38 @@ import { Box, Button, Grid } from '@mui/material';
 import ErrorIcon from '@mui/icons-material/Error';
 import { Address } from '../../types/order';
 
-
 type Props = {
     deliveryMethod: { data: string, setData: Function };
     shippingDetails: { data: Address, setData: Function };
+    isExpressDelivery: {data: boolean, setData: Function}
     onNext: Function;
 }
 
 const ShippingDetails = (props: Props) => {
-    // deliveryMethod.
     const deliveryMethod = props.deliveryMethod.data;
     const setDeliveryMethod = props.deliveryMethod.setData;
 
-    // CreditCardDetails.
     const shippingDetails: Address = props.shippingDetails.data;
     const setShippingDetails: Function = props.shippingDetails.setData;
 
+    const isExpressDelivery = props.isExpressDelivery.data;
+    const setIsExpressDelivery = props.isExpressDelivery.setData;
+
+    const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setIsExpressDelivery(event.target.checked);
+    };
 
 
     const [errors, setErrors] = useState<Partial<Address>>({});
-
-    const [error, setError] = React.useState('');
+    const [error, setError] = useState<string>('');
 
     const handleDeliveryMethodChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setDeliveryMethod(event.target.value);
     };
 
-
-
-
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setError('');
-
         const { name, value } = event.target;
-
 
         setShippingDetails({
             ...shippingDetails,
@@ -63,7 +61,7 @@ const ShippingDetails = (props: Props) => {
                 newErrors.street = value.trim() === '' ? 'Please enter your street' : '';
                 break;
             case 'cellPhone':
-                newErrors.cellPhone = value.trim() === '' ? 'Please enter your  cell phone number' : '';
+                newErrors.cellPhone = value.trim() === '' ? 'Please enter your cell phone number' : '';
                 break;
             case 'zipCode':
                 newErrors.zipCode = value.trim() === '' ? 'Please enter your postal code' : '';
@@ -102,14 +100,12 @@ const ShippingDetails = (props: Props) => {
             if (isValid) {
                 setError('');
                 props.onNext();
-
             } else {
                 setError('Please fill in all required fields !!!');
             }
         } else {
             props.onNext();
         }
-
     };
 
 
@@ -217,8 +213,16 @@ const ShippingDetails = (props: Props) => {
 
                         <Grid item xs={12}>
                             <FormControlLabel
-                                control={<Checkbox color="secondary" name="savestreet" value="yes" />}
-                                label="Use this street for payment details"
+                                control={
+                                    <Checkbox
+                                        checked={isExpressDelivery}
+                                        onChange={handleCheckboxChange}
+                                        color="secondary"
+                                        name="savestreet"
+                                        value="yes"
+                                    />
+                                }
+                                label="Express delivery"
                             />
                         </Grid>
                     </Grid>

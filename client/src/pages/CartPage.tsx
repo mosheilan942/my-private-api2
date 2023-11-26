@@ -8,7 +8,6 @@ import CartItem from '../types/CartItem';
 import { toastError, toastSuccess } from '../utils/toastUtils';
 import { UserContext } from '../UserContext';
 import { v4 as uuidv4 } from 'uuid';
-import sendCartToOms from "../api/cartsAPI";
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../routes/routesModel';
 
@@ -31,7 +30,7 @@ const CartPage = () => {
                     const cartData = await cartsAPI.getCart(userInfo.id);
                     console.log("hi from cartData in cartpage:", cartData);
 
-                    setCartItems(cartData[0].items);
+                    setCartItems(cartData.items);
                 } else {
                     const localCart = cartLocalStorageUtils.getCart();
 
@@ -99,7 +98,7 @@ const CartPage = () => {
     const buyNow = async () => {
         if (!userInfo) {
             console.log('Product purchased!');
-            navigate(`/checkout/${Math.round(totalAmount)}`);
+            navigate(`/checkout/${totalAmount || 0}`);
         } else {
             navigate(ROUTES.LOGIN)
         };
@@ -156,7 +155,7 @@ const CartPage = () => {
                             <ListItem key={`ListItem-${uuidv4()}`}>
                                 <ListItemText
                                     primary={item.product_id.name}
-                                    secondary={`Quantity: ${item.quantity} | Total Price: $${(item.quantity * item.product_id.salePrice).toFixed(3)}`}
+                                    secondary={`Quantity: ${item.quantity} | Total Price: $ ${(item.quantity * item.product_id.salePrice).toFixed(3) || 0}`}
                                 />
                                 {/* <img src={item.product_id.image.url} alt={item.product_id.name} style={{ maxWidth: '50px', maxHeight: '50px', marginRight: '1rem' }} /> */}
                             </ListItem>
@@ -164,7 +163,7 @@ const CartPage = () => {
                         <ListItem>
                             <ListItemText primary={`Subtotal (items: ):`} />
                             <Typography variant="h5" sx={{ marginLeft: '1rem' }}>
-                                ${totalAmount.toFixed(3)}
+                                $ {totalAmount.toFixed(3) || 0}
                             </Typography>
                         </ListItem>
                         <ListItem>

@@ -6,7 +6,6 @@ export interface Address {
     street: string;
     cellPhone?: string;
     zipCode: string;
-    orderType?: OrderEnum;
 }
 
 export enum OrderStatusEnum {

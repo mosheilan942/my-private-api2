@@ -17,7 +17,7 @@ interface ApiResponse {
 }
 
 type Props = {
-    totalAmount: string;
+    totalAmount: number;
     creditCard: {data: CreditCardDetails, setData: Function};
     onNext: Function;
     onBack: Function;
@@ -161,7 +161,7 @@ const PaymentDetails = (props: Props) => {
 
             <hr style={{ width: '90%', color: 'gray', marginBottom: '40px' }} />
 
-            <Paypal product={{ description: 'Payment', price: `${props.totalAmount}` }} />
+            <Paypal product={{ description: 'Payment', price: `${Math.round(props.totalAmount)}` }} />
 
             <Box sx={{ display: 'flex', alignItems: 'center', margin: '10px 0' }}>
                 <Divider sx={{ flex: 1, margin: 0 }} />

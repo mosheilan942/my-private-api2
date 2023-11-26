@@ -5,9 +5,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
 import { Box, Button } from '@mui/material';
+import { CreditCardDetails } from '../../types/creditCard';
+import { Address } from '../../types/order';
 
 type Props = {
-    totalAmount: string;
+    totalAmount: number;
+    shippingDetails: Address;
+    creditCardDetails: CreditCardDetails;
     onBack: Function;
     onPlaceOrder: Function;
 }
@@ -23,28 +27,31 @@ const products = [
         desc: 'Another thing',
         price: '$3.45',
     },
-    {
-        name: 'Product 3',
-        desc: 'Something else',
-        price: '$6.51',
-    },
-    {
-        name: 'Product 4',
-        desc: 'Best thing of all',
-        price: '$14.11',
-    },
     { name: 'Shipping', desc: '', price: 'Free' },
 ];
-const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-const payments = [
-    { name: 'Card type', detail: 'Visa' },
-    { name: 'Card holder', detail: 'Mr John Smith' },
-    { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-    { name: 'Expiry date', detail: '04/2024' },
-];
+
+
+function getLastFourDigits(creditCardNumber: string): string {
+    if (creditCardNumber.length < 4) {
+        throw new Error("Credit card number should have at least 4 digits");
+    }
+
+    return creditCardNumber.slice(-4);
+}
 
 export default function OrderSummary(props: Props) {
     const { totalAmount } = props;
+    const creditCardDetails = props.creditCardDetails;
+    const address = props.shippingDetails;
+
+    const addresses = [address.street, address.city, address.country, address.zipCode];
+
+    const payments = [
+        { name: 'Card type:', detail: 'Visa' },
+        { name: 'Card holder ID:', detail: creditCardDetails.cardholderId },
+        { name: 'Card number:', detail: `xxxx-xxxx-xxxx-${getLastFourDigits(creditCardDetails.cardNumber)}` },
+        { name: 'Expiry date:', detail: creditCardDetails.expDate },
+    ];
 
     return (
         <React.Fragment>
