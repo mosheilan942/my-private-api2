@@ -6,9 +6,11 @@ import ProductCard from '../components/ProductCard';
 import ProductCardsContainer from '../components/ProductCardsContainer';
 import { Box, CircularProgress } from '@mui/material';
 import Filter from '../components/Filter';
+import { log } from 'console';
 
 const CategoryPage = () => {
   const { cname } = useParams();
+  console.log('this is cname',cname);   
   const [products, setProducts] = useState<Product[]>([]);
 
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
@@ -20,6 +22,7 @@ const CategoryPage = () => {
     categoriesAPI
       .getProductsFromCategory(cname!)
       .then((products) => {
+        console.log('this is products',products);
         setProducts(products);
       })
       .catch((err) => {

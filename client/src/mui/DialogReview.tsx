@@ -78,6 +78,7 @@ const DialogReview: React.FC<DialogReviewProps> = ({pid}:DialogReviewProps) => {
             label="Your review"
             type="text"
             fullWidth
+            multiline
             rows={4}
             variant="standard"
             value={review}
