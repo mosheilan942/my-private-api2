@@ -9,41 +9,32 @@ import handleApiRes from "./apiResHandler";
 async function getTop5Products(): Promise<Product[]> {
 
     const response = await fetch('/api/products/topFiveProducts');
-  return await handleApiRes(response);
+    return await handleApiRes(response);
 }
 
 //external
-async function getProduct(pid:string): Promise<Product[]> {
-    const response = await fetch(`/api/products/${pid}`);
-    console.log(response);
-    
-    return await handleApiRes(response);
-}
 
-export default { getTop5Products, getProduct }
 
-  
-
-    return await handleApiRes(response);
-}
-async function reviewProduct(pid: string,title:string, review: string,rating:number,): Promise<Product> {
+async function reviewProduct(pid: string, title: string, review: string, rating: number,): Promise<Product> {
     const response = await fetch(`/api/products/${pid}/review`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+            "Content-Type": "application/json",
         },
-        body: JSON.stringify({ review: review 
-            ,rating:rating,
-            title:title}),
-      });
-  
-      return await handleApiRes(response);
+        body: JSON.stringify({
+            review: review
+            , rating: rating,
+            title: title
+        }),
+    });
+
+    return await handleApiRes(response);
 }
-async function getProduct(pid: string): Promise<Product> {
+async function getProductAndreview(pid: string): Promise<Product[]> {
     const response = await fetch(`/api/products/${pid}`);
     return await handleApiRes(response);
 }
 
 
 
-export default { getTop5Products, getProduct,reviewProduct}
+export default { getTop5Products, getProductAndreview, reviewProduct }
