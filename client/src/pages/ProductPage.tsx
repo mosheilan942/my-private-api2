@@ -23,21 +23,12 @@ import Rating from "../components/Rating.tsx";
 // import DialogReview from "../mui/DialogReview.tsx";
 import ProductReviews from "../components/ProductReviews .tsx";
 import DialogReview from "../mui/DialogReview.tsx";
-const reviews = [
-    {
-        title: "Great Product",
-        author: "John Doe",
-        body: "Lorem ipsum...",
-        rating: 5,
-        thumbUp: 10,
-        thumbDown: 2,
-    },
-    // Add more reviews as needed
-];
+
 const ProductPage = () => {
     const navigate = useNavigate();
     const [product, setProduct] = useState<null | Product | any>(null);
     const [quantity, setQuantity] = useState<number>(1);
+    const [reviews, setReviews] = useState<any>([]);
     const context = useContext(UserContext)!;
     const { userInfo, setProductsInCart } = context;
     const { pid } = useParams();
@@ -45,38 +36,12 @@ const ProductPage = () => {
     //handle get product by id from server
     const getProductAndReview = async (pid: string) => {
         try {
-            const data = await productsAPI.getReviewsAndProduct(pid!);
+            const data = await productsAPI.getProductById(pid!);
+            const reviews = await productsAPI.getReviewsByProductIdFromDB(pid!);
+            setProduct(data[0])
+            setReviews(reviews)
             console.log("hi from productpage, data:", data);
-            const product = {
-                id: "a86eaf9c-9ebe-4393-a52f-82c159cc1afe",
-                name: "Product 1",
-                salePrice: 29.99,
-                quantity: 10,
-                description: "Description for Product 1.",
-                category: "Category A",
-                discountPercentage: 10,
-                rating: 4.5,
-                click: 100,
-                coordinate: {
-                    longitude1: 40.7128,
-                    longitude2: -74.006,
-                    longitude3: 45.5122,
-                    latitude1: -74.006,
-                    latitude2: 40.7128,
-                    latitude3: -122.6795,
-                },
-                image: {
-                    url: "https://example.com/product1.jpg",
-                    alt: "Product 1 Image",
-                },
-                tags: {
-                    tag1: "Tag A",
-                    tag2: "Tag B",
-                },
-            };
-            // console.log("hi from productpage, product:", product);
-            setProduct(product);
-            // console.log("hi from productPage, product:", product);
+            // setProduct(data);
         } catch (error) {
             console.error("Failed to fetch");
         }
@@ -84,7 +49,7 @@ const ProductPage = () => {
 
     //get the product after the page is rendered
     useEffect(() => {
-        getProductAndReview("1");
+        getProductAndReview(pid!)
     }, []);
 
     //handle decrease quantity by clicking on the minus button (when quantity shouldnt be lower then 1)
@@ -130,6 +95,7 @@ const ProductPage = () => {
     //Navigate the user to choose another product to compare them
     const handleCompareProducts = () => {
         navigate(`/category/${product!.category}`, { state: product });
+        console.log('this compere',product.category)
     };
     //If the the product isn't loaded yet, show "Loading product..."
     if (!product) {

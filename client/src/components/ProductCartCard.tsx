@@ -81,13 +81,13 @@ const ProductCartCard = ({ product, quantity, removeFromCart, totalAmount, setTo
           </Box>
   
           <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-            <IconButton onClick={() => increaseQuantity(product._id)}>+</IconButton>
+            <IconButton onClick={() => increaseQuantity(product.id)}>+</IconButton>
             <Typography variant="body1">{cartQuantity}</Typography>
-            <IconButton onClick={() => decreaseQuantity(product._id)}>-</IconButton>
+            <IconButton onClick={() => decreaseQuantity(product.id)}>-</IconButton>
           </Box>
   
           <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-            <IconButton onClick={() => deleteFromCart(product._id)}>
+            <IconButton onClick={() => deleteFromCart(product.id)}>
               <DeleteForeverIcon />
             </IconButton>
           </Box>

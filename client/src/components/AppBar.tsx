@@ -79,7 +79,7 @@ const AppBar = () => {
       try {
         if (userInfo) {
           const cartData = await cartsAPI.getCart('1');
-          setProductsInCart(cartData.items.length);
+          setProductsInCart(cartData[0].items.length);
         } else {
           const localCart = cartLocalStorageUtils.getCart();
 

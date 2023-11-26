@@ -44,16 +44,16 @@ const CategoryPage = () => {
       <Filter products={products} setProducts={setFilteredProducts} />
       <ProductCardsContainer>
         {filteredProducts.map((product) => {
-          if (isCompareMode.current && location.state._id === product._id)
+          if (isCompareMode.current && location.state._id === product.id)
             return null;
 
           return (
             <ProductCard
-              key={product._id}
+              key={product.id}
               product={product}
               navigateToOnClick={
                 isCompareMode.current
-                  ? `/compare/${location.state._id}/${product._id}`
+                  ? `/compare/${location.state._id}/${product.id}`
                   : undefined
               }
             />

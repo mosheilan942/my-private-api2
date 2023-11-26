@@ -14,6 +14,7 @@ import Shipment from "../profile/Shipment";
 import Orders from "../profile/Orders";
 import CustomerService from "../profile/CustomerService";
 import Addrees from "../profile/Addrees";
+// import CheckoutPage from "../pages/Checkout/CheckoutPage";
 
 const Router = () => {
     return (
@@ -30,7 +31,8 @@ const Router = () => {
                 <Route path={ROUTES.SERVICE} element={<CustomerService/>} />    
                 <Route path={ROUTES.ORDERS} element={<Orders/>} />    
                 <Route path={ROUTES.SHIPMENT} element={<Shipment/>} />    
-                <Route path={ROUTES.ADDRESS} element={<Addrees/>} />    
+                <Route path={ROUTES.ADDRESS} element={<Addrees/>} />
+                {/* <Route path={ROUTES.CHECKOUT} element={<CheckoutPage/>} />      */}
             </Route>
             <Route path={ROUTES.DEFAULT} element={<h1>404 Not Found</h1>} />
         </Routes>

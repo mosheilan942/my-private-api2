@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import productsAPI from "../api/productsAPI";
+//add user id and product id to review
 
 interface Review {
     title: string;

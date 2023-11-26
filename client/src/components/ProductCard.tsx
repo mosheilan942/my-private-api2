@@ -12,10 +12,11 @@ type props = {
 };
 
 export default function ProductCard({ product, navigateToOnClick }: props) {
+  
   const navigate = useNavigate();
   const handleCLick = async () => {
     try {
-      navigate(navigateToOnClick || `/product/${product._id}`);
+      navigate(navigateToOnClick || `/product/${product.id}`);
       // await productsAPI.patchProductClick(product._id);
     } catch (err) {
       console.error((err as Error).message);

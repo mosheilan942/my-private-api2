@@ -11,7 +11,9 @@ function Top5ProductsPage() {
     const fetchTop5Products = async () => {
       try {
         const top5Products = await productsAPI.getTop5Products();
+        console.log('top5Products:', top5Products);
         setTop5Products(top5Products);
+
       } catch (error) {
         console.error('Error fetching top 5 products:', error);
       }
@@ -37,8 +39,8 @@ function Top5ProductsPage() {
         alignItems="center"
       >
         {top5Products.map((product) => (
-          <Grid item xs key={product._id}>
-            <ProductCard key={product._id} product={product} />
+          <Grid item xs key={product.id}>
+            <ProductCard key={product.id} product={product} />
           </Grid>
         ))}
       </Grid>

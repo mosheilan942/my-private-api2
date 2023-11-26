@@ -20,7 +20,7 @@ const ComparePage = () => {
         };
         if (userInfo) {
             try {
-                const cart = await cartsAPI.addToCart(userInfo.id ,product._id, '1');
+                const cart = await cartsAPI.addToCart(userInfo.id ,product.id, '1');
                 setProductsInCart(cart.items.length);
                 toastSuccess('Added to cart!');
             } catch (error) {
@@ -36,9 +36,9 @@ const ComparePage = () => {
     };
     const fetchProductsData = async (pid1: string, pid2: string) => {
         try {
-            const product1 = await productsAPI.getReviewsAndProduct(pid1);
-            const product2 = await productsAPI.getReviewsAndProduct(pid2);
-            setProducts([product1, product2]);
+            const product1 = await productsAPI.getReviewsByProductIdFromDB(pid1);
+            const product2 = await productsAPI.getReviewsByProductIdFromDB(pid2);
+            setProducts([product1[0], product2[0]]);
         } catch (error) {
             console.error('Failed to fetch');
         };

@@ -9,28 +9,23 @@ import { toastError, toastSuccess } from '../utils/toastUtils';
 import { UserContext } from '../UserContext';
 import Paypal from '../components/Paypal';
 import { v4 as uuidv4 } from 'uuid';
-
-
+// import sendCartToOms from "../api/cartsAPI";
 const CartPage = () => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [loading, setLoading] = useState(true);
     const context = useContext(UserContext)!;
     const { userInfo, setProductsInCart } = context
     const [totalAmount, setTotalAmount] = useState<number>(0);
-
     useEffect(() => {
         const fetchCart = async () => {
             try {
                 if (userInfo) {
                     console.log("hi from cartpage", userInfo);
-                    
                     const cartData = await cartsAPI.getCart(userInfo.id);
                     console.log("hi from cartData in cartpage:", cartData);
-                    
-                    setCartItems(cartData.items);
+                    setCartItems(cartData[0].items);
                 } else {
                     const localCart = cartLocalStorageUtils.getCart();
-
                     if (localCart) {
                         setCartItems(localCart);
                     } else {
@@ -43,10 +38,8 @@ const CartPage = () => {
                 setLoading(false);
             }
         };
-
         fetchCart();
     }, [userInfo]);
-
     useEffect(() => {
         if (cartItems.length !== 0) {
             const total = cartItems.reduce((sum, item) => {
@@ -55,14 +48,15 @@ const CartPage = () => {
             setTotalAmount(total);
         }
     }, [cartItems]);
-
     const removeFromCart = async (productId: string) => {
         try {
             if (userInfo) {
+                console.log("hi from cartPage, removeFromCart:", userInfo);
+                console.log("hi from cartPage, removeFromCart:", productId);
                 await cartsAPI.deleteProductFromCart(productId);
-                const newCart = await cartsAPI.getCart(userInfo.id);                
-                setProductsInCart(newCart.items.length);
-                setCartItems(newCart.items);
+                const newCart = await cartsAPI.getCart(userInfo.id);
+                setProductsInCart(newCart[0].items.length);
+                setCartItems(newCart[0].items);
             } else {
                 cartLocalStorageUtils.removeFromCart(productId);
                 const newCart = cartLocalStorageUtils.getCart();
@@ -75,7 +69,6 @@ const CartPage = () => {
             toastError('Error removing product from cart');
         }
     };
-
     const buyNow = async () => {
         if (userInfo) {
             console.log('Product purchased!');
@@ -88,23 +81,19 @@ const CartPage = () => {
             setCartItems([])
             setProductsInCart(0);
             alert(`Total Amount: $ ${totalAmount.toFixed(3)}`);
-
         };
     }
-
     const updateCartItemQuantity = (productId: string, newQuantity: number) => {
         setCartItems((prevCartItems) =>
             prevCartItems.map((item) =>
-                item.product_id._id === productId ? { ...item, quantity: newQuantity } : item
+                item.product_id.id === productId ? { ...item, quantity: newQuantity } : item
             )
         );
-
         const total = cartItems.reduce((sum, item) => {
             return sum + item.quantity * item.product_id.salePrice;
         }, 0);
         setTotalAmount(total);
     };
-
     if (loading) {
         return (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -113,15 +102,14 @@ const CartPage = () => {
         );
     }
     console.log(cartItems);
-
     if (cartItems.length === 0) {
         return <Typography variant="h2">No items in the cart</Typography>;
     }
-
     return (
         <Grid container spacing={3} style={{ display: 'flex', alignItems: 'start' }}>
             <Grid item xs={8}>
                 {cartItems.map((item) => (
+                    console.log("item.product_id", item.product_id),
                     <ProductCartCard
                         key={'ProductCartCard-' + uuidv4()}
                         product={item.product_id}
@@ -160,7 +148,6 @@ const CartPage = () => {
                                     Buy Now
                                 </Button>
                                 <Paypal />
-
                             </Container>
                         </ListItem>
                     </List>
@@ -169,5 +156,4 @@ const CartPage = () => {
         </Grid>
     );
 };
-
 export default CartPage;
