@@ -30,7 +30,11 @@ app.use('/api/users', userRoutes);
 app.use('/api/users', cartRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api', categoryRoutes);
-app.use(notFound);
+
+// =====================================================
+// app.use(notFound);    צריך בדיקה, חוסם שליחת בקשות.
+// =====================================================
+
 app.use(errorHandler);
 
 
@@ -60,9 +64,9 @@ app.post('/api/payment/check', (req, res) => {
 
 
 app.post('/api/payment/order', (req, res) => {
-  const order = req.body; 
+  const order = req.body;
   setTimeout(() => {
-  
+
     console.log(order);
     if (true) {
       res.status(200).json({ message: 'The order has been placed !' });
@@ -76,7 +80,7 @@ app.post('/api/payment/order', (req, res) => {
 
 
 
-const port = 5000 ;
+const port = 5000;
 
 //await connectDB();
 
@@ -85,6 +89,7 @@ app.listen(port, async () => {
   const pool = new Pool()
   const res = await pool.connect()
   res.release()
-  console.log(`server is running at port ${port}`);
   console.log(`Database connection test completed successfully`);
+  console.log(`\nServer is running at port ${port}...`);
+
 });

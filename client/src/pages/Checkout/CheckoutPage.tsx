@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useParams } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
@@ -11,13 +12,10 @@ import ShippingDetails from './ShippingDetails';
 import PaymentDetails from './PaymentDetails';
 import OrderSummary from './OrderSummary';
 import { CreditCardDetails } from '../../types/creditCard';
-import { ShippingDetailsType } from '../../types/sippingDetails';
 import { sendOrder } from '../../api/checkout';
 import ErrorIcon from '@mui/icons-material/Error';
 import { Box } from '@mui/material';
-import { OrderEnum, OrderInterface, OrderStatusEnum} from '../../types/order';
-import cartsAPI from '../../api/cartsAPI';
-import { Product } from '../../types/Product';
+import { Address, OrderEnum, OrderInterface, OrderStatusEnum } from '../../types/order';
 
 interface ApiResponse {
   message: string;
@@ -38,8 +36,7 @@ function Copyright() {
 
 
 const CheckoutPage = () => {
-  const [cartItems, setCartItems] = React.useState<Product[]>([]);
-  const [totalAmount, setTotalAmount] = React.useState<number>(0);
+  const { totalAmount } = useParams();
 
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -51,12 +48,13 @@ const CheckoutPage = () => {
   const [res, setRes] = React.useState<string>('')
 
   // ShippingDetails.
-  const [shippingDetails, setShippingDetails] = React.useState<ShippingDetailsType>({
+  const [shippingDetails, setShippingDetails] = React.useState<Address>({
     country: '',
     city: '',
     street: '',
-    celPhone: '',
-    zipCode: ''
+    cellPhone: '',
+    zipCode: '',
+    orderType: OrderEnum.Regular,
   });
 
   // CreditCardDetails.
@@ -70,49 +68,21 @@ const CheckoutPage = () => {
 
   // Order summary.
   const order: OrderInterface = {
-    cartItems: cartItems,
+    cartItems: [],
     orderTime: new Date(),
     userId: '12345',
-    email: 'example@example.com',
     userName: 'John Doe',
+    userEmail: 'www.@gmail.com',
     status: OrderStatusEnum.Waiting,
-    totalPrice: totalAmount,
+    totalPrice: (totalAmount && parseInt(totalAmount)) || 0,
     shippingDetails: {
       address: shippingDetails,
-      contactNumber: shippingDetails.celPhone,
-      orderType: deliveryMethod === 'pickup' ? OrderEnum.SelfCollection : OrderEnum.Regular
-    },
-    creditCardDetails: creditCardDetails
+      orderType: deliveryMethod === 'pickup' ? OrderEnum.SelfCollection : OrderEnum.Regular,
+      contactNumber: shippingDetails.cellPhone || ''
+    }
   };
 
-  
 
-
-  React.useEffect(() => {
-    const fetchCart = async () => {
-      try {
-
-        const cartData = await cartsAPI.getCart();
-        console.log(cartData);
-        
-        setCartItems(cartData);
-
-      } catch (error) {
-        console.error('Error fetching cart:', error);
-      }
-    };
-
-    fetchCart();
-  }, []);
-
-  React.useEffect(() => {
-    if (cartItems.length !== 0) {
-      const total = cartItems.reduce((sum, item) => {
-        return sum + item.quantity * item.salePrice;
-      }, 0);
-      setTotalAmount(total);
-    }
-  }, [cartItems]);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -155,8 +125,8 @@ const CheckoutPage = () => {
 
   const steps = [
     { component: <ShippingDetails deliveryMethod={{ data: deliveryMethod, setData: setDeliveryMethod }} shippingDetails={{ data: shippingDetails, setData: setShippingDetails }} onNext={handleNext} />, label: 'Shipping address' },
-    { component: <PaymentDetails totalAmount={totalAmount} creditCard={{ data: creditCardDetails, setData: setcreditCardDetails }} onNext={handleNext} onBack={handleBack} />, label: 'Payment method' },
-    { component: <OrderSummary totalAmount={totalAmount} onBack={handleBack} onPlaceOrder={handlePlaceOrder} />, label: 'Summary of order details' },
+    { component: <PaymentDetails totalAmount={totalAmount || '0'} creditCard={{ data: creditCardDetails, setData: setcreditCardDetails }} onNext={handleNext} onBack={handleBack} />, label: 'Payment method' },
+    { component: <OrderSummary totalAmount={totalAmount || '0'} onBack={handleBack} onPlaceOrder={handlePlaceOrder} />, label: 'Summary of order details' },
   ];
 
 

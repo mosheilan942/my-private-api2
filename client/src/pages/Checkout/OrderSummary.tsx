@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid';
 import { Box, Button } from '@mui/material';
 
 type Props = {
-    totalAmount: number;
+    totalAmount: string;
     onBack: Function;
     onPlaceOrder: Function;
 }

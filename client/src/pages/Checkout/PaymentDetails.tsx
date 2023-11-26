@@ -17,7 +17,7 @@ interface ApiResponse {
 }
 
 type Props = {
-    totalAmount: number;
+    totalAmount: string;
     creditCard: {data: CreditCardDetails, setData: Function};
     onNext: Function;
     onBack: Function;

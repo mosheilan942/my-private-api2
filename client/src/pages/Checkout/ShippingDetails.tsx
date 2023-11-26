@@ -9,11 +9,12 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { Box, Button, Grid } from '@mui/material';
 import ErrorIcon from '@mui/icons-material/Error';
-import { ShippingDetailsType } from '../../types/sippingDetails';
+import { Address } from '../../types/order';
+
 
 type Props = {
-    deliveryMethod: { data: string, setData: Function};
-    shippingDetails: { data: ShippingDetailsType, setData: Function };
+    deliveryMethod: { data: string, setData: Function };
+    shippingDetails: { data: Address, setData: Function };
     onNext: Function;
 }
 
@@ -23,12 +24,12 @@ const ShippingDetails = (props: Props) => {
     const setDeliveryMethod = props.deliveryMethod.setData;
 
     // CreditCardDetails.
-    const shippingDetails: ShippingDetailsType = props.shippingDetails.data;
+    const shippingDetails: Address = props.shippingDetails.data;
     const setShippingDetails: Function = props.shippingDetails.setData;
 
 
 
-    const [errors, setErrors] = useState<Partial<ShippingDetailsType>>({});
+    const [errors, setErrors] = useState<Partial<Address>>({});
 
     const [error, setError] = React.useState('');
 
@@ -61,8 +62,8 @@ const ShippingDetails = (props: Props) => {
             case 'street':
                 newErrors.street = value.trim() === '' ? 'Please enter your street' : '';
                 break;
-            case 'celPhone':
-                newErrors.celPhone = value.trim() === '' ? 'Please enter your  cel phone number' : '';
+            case 'cellPhone':
+                newErrors.cellPhone = value.trim() === '' ? 'Please enter your  cell phone number' : '';
                 break;
             case 'zipCode':
                 newErrors.zipCode = value.trim() === '' ? 'Please enter your postal code' : '';
@@ -75,39 +76,39 @@ const ShippingDetails = (props: Props) => {
 
     const handleNextClick = async () => {
         if (deliveryMethod === 'delivery') {
-        const { country, city, street, celPhone, zipCode } = shippingDetails;
+            const { country, city, street, cellPhone, zipCode } = shippingDetails;
 
-        const formErrors: Partial<ShippingDetailsType> = {};
-        if (country.trim() === '') {
-            formErrors.country = 'Please enter your country';
-        }
-        if (city.trim() === '') {
-            formErrors.city = 'Please enter your city';
-        }
-        if (street.trim() === '') {
-            formErrors.street = 'Please enter your postal code';
-        }
-        if (celPhone.trim() === '') {
-            formErrors.celPhone = 'Please enter your  cel phone number';
-        }
-        if (zipCode.trim() === '') {
-            formErrors.zipCode = 'Please enter your street';
-        }
+            const formErrors: Partial<Address> = {};
+            if (country.trim() === '') {
+                formErrors.country = 'Please enter your country';
+            }
+            if (city.trim() === '') {
+                formErrors.city = 'Please enter your city';
+            }
+            if (street.trim() === '') {
+                formErrors.street = 'Please enter your postal code';
+            }
+            if (cellPhone!.trim() === '') {
+                formErrors.cellPhone = 'Please enter your cell phone number';
+            }
+            if (zipCode.trim() === '') {
+                formErrors.zipCode = 'Please enter your street';
+            }
 
-        setErrors(formErrors);
+            setErrors(formErrors);
 
-        const isValid = Object.keys(formErrors).length === 0;
+            const isValid = Object.keys(formErrors).length === 0;
 
-        if (isValid) {
-            setError('');
-            props.onNext();
+            if (isValid) {
+                setError('');
+                props.onNext();
 
+            } else {
+                setError('Please fill in all required fields !!!');
+            }
         } else {
-            setError('Please fill in all required fields !!!');
+            props.onNext();
         }
-    } else{
-        props.onNext();
-    }
 
     };
 
@@ -185,16 +186,16 @@ const ShippingDetails = (props: Props) => {
                         <Grid item xs={12}>
                             <TextField
                                 required
-                                id="celPhone"
-                                name="celPhone"
-                                label="Cel phone"
+                                id="cellPhone"
+                                name="cellPhone"
+                                label="Cell phone"
                                 fullWidth
-                                autoComplete="celPhone"
+                                autoComplete="cellPhone"
                                 variant="standard"
-                                value={shippingDetails.celPhone}
+                                value={shippingDetails.cellPhone}
                                 onChange={handleInputChange}
-                                error={!!errors.celPhone}
-                                helperText={errors.celPhone}
+                                error={!!errors.cellPhone}
+                                helperText={errors.cellPhone}
                             />
                         </Grid>
 
