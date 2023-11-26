@@ -7,9 +7,10 @@ import * as cartLocalStorageUtils from '../utils/cartLocalStorageUtils';
 import CartItem from '../types/CartItem';
 import { toastError, toastSuccess } from '../utils/toastUtils';
 import { UserContext } from '../UserContext';
-import Paypal from '../components/Paypal';
 import { v4 as uuidv4 } from 'uuid';
 import sendCartToOms from "../api/cartsAPI";
+import { useNavigate } from 'react-router-dom';
+import ROUTES from '../routes/routesModel';
 
 
 const CartPage = () => {
@@ -19,15 +20,17 @@ const CartPage = () => {
     const { userInfo, setProductsInCart } = context
     const [totalAmount, setTotalAmount] = useState<number>(0);
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         const fetchCart = async () => {
             try {
                 if (userInfo) {
                     console.log("hi from cartpage", userInfo);
-                    
+
                     const cartData = await cartsAPI.getCart(userInfo.id);
                     console.log("hi from cartData in cartpage:", cartData);
-                    
+
                     setCartItems(cartData[0].items);
                 } else {
                     const localCart = cartLocalStorageUtils.getCart();
@@ -61,7 +64,7 @@ const CartPage = () => {
         try {
             if (userInfo) {
                 await cartsAPI.deleteProductFromCart(productId);
-                const newCart = await cartsAPI.getCart(userInfo.id);                
+                const newCart = await cartsAPI.getCart(userInfo.id);
                 setProductsInCart(newCart.items.length);
                 setCartItems(newCart.items);
             } else {
@@ -77,19 +80,28 @@ const CartPage = () => {
         }
     };
 
-    const buyNow = async () => {
-        if (userInfo) {
-            console.log('Product purchased!');
-            alert(`Total Amount: ${totalAmount.toFixed(3)}`);
-            const newCart = await cartsAPI.deleteCart();
-            setProductsInCart(newCart.items.length);
-            setCartItems(newCart.items);
-        } else {
-            cartLocalStorageUtils.clearCart();
-            setCartItems([])
-            setProductsInCart(0);
-            alert(`Total Amount: $ ${totalAmount.toFixed(3)}`);
+    // const buyNow = async () => {
+    //     if (userInfo) {
+    //         console.log('Product purchased!');
+    //         alert(`Total Amount: ${totalAmount.toFixed(3)}`);
+    //         const newCart = await cartsAPI.deleteCart();
+    //         setProductsInCart(newCart.items.length);
+    //         setCartItems(newCart.items);
+    //     } else {
+    //         cartLocalStorageUtils.clearCart();
+    //         setCartItems([])
+    //         setProductsInCart(0);
+    //         alert(`Total Amount: $ ${totalAmount.toFixed(3)}`);
 
+    //     };
+    // }
+
+    const buyNow = async () => {
+        if (!userInfo) {
+            console.log('Product purchased!');
+            navigate(`/checkout/${Math.round(totalAmount)}`);
+        } else {
+            navigate(ROUTES.LOGIN)
         };
     }
 
@@ -150,7 +162,7 @@ const CartPage = () => {
                             </ListItem>
                         ))}
                         <ListItem>
-                            <ListItemText primary="Total Amount" />
+                            <ListItemText primary={`Subtotal (items: ):`} />
                             <Typography variant="h5" sx={{ marginLeft: '1rem' }}>
                                 ${totalAmount.toFixed(3)}
                             </Typography>
@@ -158,10 +170,8 @@ const CartPage = () => {
                         <ListItem>
                             <Container>
                                 <Button sx={{ width: "100%", marginBottom: 1 }} variant="contained" onClick={buyNow}>
-                                    Buy Now
+                                    Go to the payment page
                                 </Button>
-                                <Paypal />
-
                             </Container>
                         </ListItem>
                     </List>

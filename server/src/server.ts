@@ -34,6 +34,48 @@ app.use(notFound);
 app.use(errorHandler);
 
 
+// Payment.
+// =====================================================================
+
+app.post('/api/payment/check', (req, res) => {
+  const debitCardDetails = req.body; // פרטי כרטיס האשראי מתקבלים כאן
+
+  // ניתוב לשירות או ל-API המתאים לבדיקת פרטי כרטיס האשראי
+  // כאן תוכל להשתמש בפונקציות ובשירותים המתאימים לבדיקת תקינות פרטי כרטיסי האשראי
+
+  // לדוגמה, אם קיים פונקציה שבודקת תקינות כרטיס אשראי ומחזירה תשובה ב-JSON
+  // כאן אני משתמש ב setTimeout כדי ליצור השהייה של 3 שניות לפני החזרת התשובה
+  setTimeout(() => {
+    // כאן אתה יכול להמשיך עם בדיקת תקינות ולהחזיר תשובה בהתאם
+    // const isValid = validateCreditCardDetails(debitCardDetails);
+    console.log(debitCardDetails);
+    if (true) {
+      res.status(200).json({ message: 'Credit card details are valid' });
+    } else {
+      res.status(400).json({ message: 'Invalid credit card details' });
+    }
+  }, 3000); // השהייה של 3 שניות
+});
+
+
+
+app.post('/api/payment/order', (req, res) => {
+  const order = req.body; 
+  setTimeout(() => {
+  
+    console.log(order);
+    if (true) {
+      res.status(200).json({ message: 'The order has been placed !' });
+    } else {
+      res.status(400).json({ message: 'An error occurred in the ordering process !!!' });
+    }
+  }, 3000); // השהייה של 3 שניות
+});
+
+// ======================================================================
+
+
+
 const port = 5000 ;
 
 //await connectDB();
