@@ -2,9 +2,9 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Unstable_Grid2";
-import CallRoundedIcon from "@mui/icons-material/CallRounded";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import { Link } from "react-router-dom";
+import CustomerService from "./CustomerService";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -69,11 +69,8 @@ export default function FullWidthGrid() {
               "&:hover": {
                 transform: "scale(1.03)",
               },
-            }}
-          >
-            <CallRoundedIcon />
-            <h3 style={{ color: "lightblue" }}>customer services</h3>stay in
-            conttect with us
+            }}>
+            <CustomerService/>
           </Item>
           <Item
             sx={{

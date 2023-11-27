@@ -12,7 +12,8 @@ const ROUTES = {
     SERVICE:'/service',
     ORDERS:'/orders',
     SHIPMENT:'/shipment',
-    CHECKOUT: "/checkout/:totalAmount"
+    CHECKOUT: "/checkout/:totalAmount",
+    CONNECT: "/connect",
 };
 
 export default ROUTES;
