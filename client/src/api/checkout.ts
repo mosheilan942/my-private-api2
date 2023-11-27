@@ -5,7 +5,7 @@ import handleApiRes from "./apiResHandler";
 
 
 async function checkDebitCard(debitCard: CreditCardDetails): Promise<CreditCardDetails> {
-    const response = await fetch('http://127.0.0.1:5000/api/payment/check', {
+    const response = await fetch('/api/payment/check', {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
