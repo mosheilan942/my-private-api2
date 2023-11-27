@@ -1,4 +1,3 @@
-import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -15,13 +14,14 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const style = {height: "200px",
-width: "250px",
-transition: "transform 0.3s",
-"&:hover": {
-  transform: "scale(1.03)",
-}
-}
+// const style = {height: "200px",
+// width: "250px",
+// transition: "transform 0.3s",
+// "&:hover": {
+//   transform: "scale(1.03)",
+// }
+// }
+
 export default function FullWidthGrid() {
   return (
     <Box sx={{ flexGrow: 1, paddingLeft: "100px" ,paddingTop:'35px' }}>

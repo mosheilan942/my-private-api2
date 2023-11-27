@@ -2,7 +2,7 @@ import { Typography, CardContent, Box, IconButton, Card } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Dispatch, SetStateAction, useContext, useState } from 'react';
 import cartsAPI from '../api/cartsAPI';
-import Product from '../types/Product';
+import {Product} from '../types/Product';
 import * as cartLocalStorageUtils from '../utils/cartLocalStorageUtils';
 import { toastError } from '../utils/toastUtils';
 import { UserContext } from '../UserContext';

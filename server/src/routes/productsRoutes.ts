@@ -7,6 +7,8 @@ const productRouter = express.Router();
 productRouter.get('/topFiveProducts', productcontrollers.getTop5Products);
 // productRouter.get('/', productcontrollers.getTop5Products);
 productRouter.get('/:pid', productcontrollers.getProductByID);
-productRouter.post('/:pid/review',productcontrollers.reviews)
+productRouter.get('/:pid/reviews',productcontrollers.getReviewsFromDB)
+productRouter.get('/:pid/reviews/feedback',productcontrollers.feedbackReviews)
+productRouter.post('/:pid/reviews',productcontrollers.saveReviewsToDB)
 
 export default productRouter;
