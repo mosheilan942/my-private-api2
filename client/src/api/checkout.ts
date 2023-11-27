@@ -1,7 +1,21 @@
 import { CreditCardDetails } from "../types/creditCard";
 import { OrderInterface } from "../types/order";
+import { OrderData } from "../types/orderDataPayPal";
 import handleApiRes from "./apiResHandler";
 
+
+
+async function validatesOrderPayPal(orderData: OrderData): Promise<OrderData> {
+    const response = await fetch('/api/paypal/check', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+    });
+
+    return await handleApiRes(response);
+}
 
 
 async function checkDebitCard(debitCard: CreditCardDetails): Promise<CreditCardDetails> {
@@ -29,6 +43,7 @@ async function sendOrder(order: OrderInterface): Promise<OrderInterface> {
 }
 
 export {
+    validatesOrderPayPal,
     checkDebitCard,
     sendOrder
 }

@@ -40,6 +40,7 @@ app.use(errorHandler);
 // Payment.
 // =====================================================================
 
+// Credit.
 app.post('/api/payment/check', (req, res) => {
   const debitCardDetails = req.body; // פרטי כרטיס האשראי מתקבלים כאן
 
@@ -61,14 +62,29 @@ app.post('/api/payment/check', (req, res) => {
 });
 
 
-
+// Order.
 app.post('/api/payment/order', (req, res) => {
   const order = req.body;
   setTimeout(() => {
 
     console.log(order);
     if (true) {
-      res.status(200).json({ message: 'The order has been placed !' });
+      res.status(200).json({ message: 'The order has been placed !', orderID: "876df86sfsYGUG8979" });
+    } else {
+      res.status(400).json({ message: 'An error occurred in the ordering process !!!' });
+    }
+  }, 3000); // השהייה של 3 שניות
+});
+
+
+// PayPal.
+app.post('/api/paypal/check', (req, res) => {
+  const order = req.body;
+  setTimeout(() => {
+
+    console.log(order);
+    if (true) {
+      res.status(200).json({ message: 'The order PayPal has been placed !', orderID: order.orderID });
     } else {
       res.status(400).json({ message: 'An error occurred in the ordering process !!!' });
     }
