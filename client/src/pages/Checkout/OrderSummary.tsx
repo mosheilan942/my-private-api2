@@ -44,7 +44,13 @@ export default function OrderSummary(props: Props) {
     const creditCardDetails = props.creditCardDetails;
     const address = props.shippingDetails;
 
-    const addresses = [address.street, address.city, address.country, address.zipCode];
+    const addresses = [
+        { name: 'Country:', detail: address.country },
+        { name: 'City:', detail: address.city },
+        { name: 'Street:', detail: address.street },
+        { name: 'Zip code:', detail: address.zipCode },
+        { name: 'Cell phone:', detail: address.cellPhone },
+    ];
 
     const payments = [
         { name: 'Card type:', detail: 'Visa' },
@@ -90,8 +96,18 @@ export default function OrderSummary(props: Props) {
                     <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
                         Shipping
                     </Typography>
-                    <Typography gutterBottom>John Smith</Typography>
-                    <Typography gutterBottom>{addresses.join(', ')}</Typography>
+                    <Grid container>
+                        {addresses.map((payment) => (
+                            <React.Fragment key={payment.name}>
+                                <Grid item xs={6}>
+                                    <Typography gutterBottom>{payment.name}</Typography>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <Typography gutterBottom>{payment.detail}</Typography>
+                                </Grid>
+                            </React.Fragment>
+                        ))}
+                    </Grid>
                 </Grid>
 
                 <Grid item container direction="column" xs={12}>
