@@ -285,6 +285,23 @@ const PaymentDetails = (props: Props) => {
                                 label="Remember credit card details for next time"
                             />
                         </Grid>
+                        <Grid>
+                            <Typography variant="h5" sx={{ color: "red" }}>
+                                warning!!!
+                            </Typography>
+
+                            <Typography variant="body1">
+                                The site is not secure,
+                            </Typography>
+
+                            <Typography variant="body1">
+                                You can temporarily pay via PayPal.
+                            </Typography>
+
+                            <Typography variant="body1">
+                                Forgiveness is with you.
+                            </Typography>
+                        </Grid>
                     </Grid>
                 </Collapse>
             </List>
