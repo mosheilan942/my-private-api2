@@ -1,5 +1,5 @@
 export interface Product {
-  id: string;
+  productId: string;
   name: string;
   salePrice: number;
   quantity: number;
@@ -25,3 +25,9 @@ export interface Product {
     tag1: string;
   };
 }
+interface Category {
+  _id: string;
+  name: string;
+  clicked: number;
+}
+export type { Product, Category };
