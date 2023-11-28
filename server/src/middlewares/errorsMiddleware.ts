@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-import {Error as MongooseError} from 'mongoose';
 import STATUS_CODES from '../utils/StatusCodes.js';
 import RequestError from '../types/errors/RequestError.js';
 import MiddlewareError from '../types/errors/MiddlewareError.js';
@@ -22,13 +21,13 @@ const errorHandler = (error: MiddlewareError ,_req: Request, res: Response, _nex
   }
 
   // If Mongoose validation error, set to 400 and change message
-  if (error instanceof MongooseError.ValidationError) {
+  if (false) {
     statusCode = STATUS_CODES.BAD_REQUEST;
     message = 'Invalid data';
   }
 
   // If Mongoose not found error, set to 404 and change message
-  if (error instanceof MongooseError.CastError && error.kind === 'ObjectId') {
+  if (false) {
     statusCode = STATUS_CODES.NOT_FOUND;
     message = 'Resource not found';
   }

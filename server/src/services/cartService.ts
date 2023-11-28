@@ -1,6 +1,5 @@
 import STATUS_CODES from '../utils/StatusCodes.js';
 import RequestError from '../types/errors/RequestError.js';
-import { Types } from 'mongoose';
 import cartDal from '../dal/cartDal.js';
 import CartItem from '../types/CartItem.js';
 import Cart from '../types/Cart.js';

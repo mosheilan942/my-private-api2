@@ -1,4 +1,4 @@
-import { Types } from "mongoose";
+
 import User from "../types/User.js";
 import pg from "pg";
 const { Pool } = pg;

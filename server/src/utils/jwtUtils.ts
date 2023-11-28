@@ -1,6 +1,5 @@
 import { Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { Types } from 'mongoose';
 
 const generateToken = (res: Response, userId: string) => {
     if(!process.env.JWT_SECRET) {

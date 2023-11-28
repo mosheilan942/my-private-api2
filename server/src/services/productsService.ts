@@ -1,4 +1,3 @@
-import { Types } from "mongoose";
 import productsDal from "../dal/productsDal.js";
 import RequestError from "../types/errors/RequestError.js";
 import STATUS_CODES from "../utils/StatusCodes.js";
