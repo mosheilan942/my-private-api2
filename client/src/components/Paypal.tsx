@@ -1,6 +1,6 @@
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { useState } from "react";
-import { OrderData } from "../types/orderDataPayPal";
+import { OrderInPayPal } from "../types/orderDataPayPal";
 
 type Product = {
     description: string;
@@ -20,7 +20,7 @@ export default function Paypal(props: Props): JSX.Element {
 
     const [paidFor, setPaidFor] = useState<boolean>(false);
 
-    const handleApprove = (orderData: OrderData) => {
+    const handleApprove = (orderData: OrderInPayPal) => {
         setPaidFor(true);
         console.log("orderId: ", orderData.orderID);
         console.log("orderData: ", orderData);
@@ -56,7 +56,7 @@ export default function Paypal(props: Props): JSX.Element {
                 onApprove={async (data, action) => {
                     const order = await action.order?.capture();
                     console.log(`order: ${order}`);
-                    handleApprove(data as OrderData);
+                    handleApprove(data as OrderInPayPal);
                 }}
                 onCancel={() => {
                     console.log('Payment cancelled!');

@@ -10,8 +10,8 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import { CreditCardDetails } from '../../types/creditCard';
-import { checkDebitCard, validatesOrderPayPal } from '../../api/checkout';
-import { OrderData } from '../../types/orderDataPayPal';
+import { checkDebitCard } from '../../api/checkout';
+import { OrderInPayPal } from '../../types/orderDataPayPal';
 
 interface ApiResponse {
     message: string;
@@ -19,6 +19,8 @@ interface ApiResponse {
 
 type Props = {
     totalAmount: number;
+    setOrderPayPal: Function;
+    onPlaceOrder: Function;
     creditCard: { data: CreditCardDetails, setData: Function };
     setOrderId: Function;
     onNext: Function;
@@ -29,39 +31,12 @@ const PaymentDetails = (props: Props) => {
     const [payCurrentOpen, setPayCurrentOpen] = useState(false);
 
     // PayPal.
-    const handlePayPalSuccess = async (orderData: OrderData) => {
-        setIsChecking(true);
-
-            try {
-                const data = await validatesOrderPayPal(orderData);
-
-                console.log('Response from server to paypal:', data);
-
-                setIsChecking(false);
-
-                if (typeof data === 'object' && 'message' in data) {
-                    setServerResponse((data as ApiResponse).message);
-                    props.setOrderId(data.orderID)
-                    
-                    setTimeout(() => {
-                        props.onNext(1)
-                    }, 3000);
-                } else {
-                    setError('Unknown error occurred !!!');
-                }
-            } catch (error) {
-
-                setIsChecking(false);
-                if (typeof error === 'object' && error !== null && 'message' in error) {
-                    const errorMessage = (error as ApiResponse).message || 'Unknown error occurred';
-                    setError(`Error checking card details: ${errorMessage}`);
-                    console.log(error.message);
-                } else {
-                    setError('Unknown error occurred !!!');
-                }
-            }
-            console.log("Form data :", creditCardDetails);
+    const handlePayPalSuccess = async (orderData: OrderInPayPal) => {
+        console.log("order from PayPal :", orderData);
+        await props.setOrderPayPal(orderData);
+        props.onPlaceOrder()
     };
+
 
     const handlePayPalCancel = () => {
         setError('PayPal cancel !!!');
@@ -301,7 +276,12 @@ const PaymentDetails = (props: Props) => {
                         </Grid>
                         <Grid item xs={12}>
                             <FormControlLabel
-                                control={<Checkbox color="secondary" name="saveCard" checked={creditCardDetails.saveCard} onChange={handleFormChange} />}
+                                control={
+                                    <Checkbox
+                                        color="secondary"
+                                        name="saveCard"
+                                        checked={creditCardDetails.saveCard}
+                                        onChange={handleFormChange} />}
                                 label="Remember credit card details for next time"
                             />
                         </Grid>

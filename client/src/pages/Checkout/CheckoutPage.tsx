@@ -16,6 +16,7 @@ import { sendOrder } from '../../api/checkout';
 import ErrorIcon from '@mui/icons-material/Error';
 import { Box } from '@mui/material';
 import { Address, OrderEnum, OrderInterface, OrderStatusEnum } from '../../types/order';
+import { OrderInPayPal } from '../../types/orderDataPayPal';
 
 // Interface for the response from the API
 interface ApiResponse {
@@ -64,8 +65,13 @@ const CheckoutPage = () => {
     city: '',
     street: '',
     cellPhone: '',
-    zipCode: ''
+    zipCode: '',
+    saveAddress: false
   });
+
+  // PayPal.
+  const [orderFromPayPal, setOrderFromPayPal] = React.useState<OrderInPayPal | null>(null)
+  console.log("orderFromPayPal-----:", orderFromPayPal);
 
   // State for credit card details
   const [creditCardDetails, setCreditCardDetails] = React.useState<CreditCardDetails>({
@@ -73,16 +79,13 @@ const CheckoutPage = () => {
     cardNumber: '',
     expDate: '',
     cvv: '',
-    saveCard: false,
+    saveCard: false
   });
 
   // Create order object with collected details
   const order: OrderInterface = {
-    cartItems: [],
     orderTime: new Date(),
     userId: '12345',
-    userName: 'John Doe',
-    userEmail: 'www.@gmail.com',
     status: OrderStatusEnum.Waiting,
     totalPrice: totalPrice,
     shippingDetails: {
@@ -91,15 +94,17 @@ const CheckoutPage = () => {
         city: shippingDetails.city,
         street: shippingDetails.street,
         zipCode: shippingDetails.zipCode,
+        saveAddress: shippingDetails.saveAddress
       },
       orderType: orderTypeReturn(),
       contactNumber: shippingDetails.cellPhone || '',
     },
+    paymentPayPal: orderFromPayPal
   };
 
   // Function to proceed to the next step in the checkout process
-  const handleNext = (num: number = 0) => {
-    setActiveStep(activeStep + 1 + num);
+  const handleNext = () => {
+    setActiveStep(activeStep + 1);
   };
 
   // Function to go back to the previous step in the checkout process
@@ -109,6 +114,8 @@ const CheckoutPage = () => {
 
   // Function to place the order
   const handlePlaceOrder = async () => {
+    console.log("orderFromPayPal", orderFromPayPal);
+    
     setIsChecking(true);
     try {
       const response = await sendOrder(order);
@@ -117,7 +124,7 @@ const CheckoutPage = () => {
       if (typeof response === 'object' && 'message' in response && 'orderID' in response) {
         setRes(response.message as string);
         setOrderID(response.orderID as string)
-        handleNext();
+        setActiveStep(steps.length)
       } else {
         setError('Unknown error occurred !!!');
       }
@@ -147,6 +154,8 @@ const CheckoutPage = () => {
       component:
         <PaymentDetails
           totalAmount={totalPrice}
+          setOrderPayPal={setOrderFromPayPal}
+          onPlaceOrder={handlePlaceOrder}
           creditCard={{ data: creditCardDetails, setData: setCreditCardDetails }}
           setOrderId={setOrderID}
           onNext={handleNext} 

@@ -40,13 +40,14 @@ const ShippingDetails = (props: Props) => {
         setDeliveryMethod(event.target.value);
     };
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setError('');
-        const { name, value } = event.target;
+        const { name, value, checked, type } = event.target;
+        const newValue = type === 'checkbox' ? checked : value;
 
         setShippingDetails({
             ...shippingDetails,
-            [name]: value,
+            [name]: newValue,
         });
 
         const newErrors = { ...errors };
@@ -160,7 +161,7 @@ const ShippingDetails = (props: Props) => {
                                 autoComplete="cellPhone"
                                 variant="standard"
                                 value={shippingDetails.cellPhone}
-                                onChange={handleInputChange}
+                                onChange={handleFormChange}
                                 error={!!errors.cellPhone}
                                 helperText={errors.cellPhone}
                             />
@@ -180,7 +181,7 @@ const ShippingDetails = (props: Props) => {
                                 autoComplete="shipping country"
                                 variant="standard"
                                 value={shippingDetails.country}
-                                onChange={handleInputChange}
+                                onChange={handleFormChange}
                                 error={!!errors.country}
                                 helperText={errors.country}
                             />
@@ -196,7 +197,7 @@ const ShippingDetails = (props: Props) => {
                                 autoComplete="shipping street-city"
                                 variant="standard"
                                 value={shippingDetails.city}
-                                onChange={handleInputChange}
+                                onChange={handleFormChange}
                                 error={!!errors.city}
                                 helperText={errors.city}
                             />
@@ -212,7 +213,7 @@ const ShippingDetails = (props: Props) => {
                                 autoComplete="shipping street"
                                 variant="standard"
                                 value={shippingDetails.street}
-                                onChange={handleInputChange}
+                                onChange={handleFormChange}
                                 error={!!errors.street}
                                 helperText={errors.street}
                             />
@@ -228,7 +229,7 @@ const ShippingDetails = (props: Props) => {
                                 autoComplete="cellPhone"
                                 variant="standard"
                                 value={shippingDetails.cellPhone}
-                                onChange={handleInputChange}
+                                onChange={handleFormChange}
                                 error={!!errors.cellPhone}
                                 helperText={errors.cellPhone}
                             />
@@ -244,7 +245,7 @@ const ShippingDetails = (props: Props) => {
                                 autoComplete="shipping postal-code"
                                 variant="standard"
                                 value={shippingDetails.zipCode}
-                                onChange={handleInputChange}
+                                onChange={handleFormChange}
                                 error={!!errors.zipCode}
                                 helperText={errors.zipCode}
                             />
@@ -262,6 +263,17 @@ const ShippingDetails = (props: Props) => {
                                     />
                                 }
                                 label="Express delivery"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <FormControlLabel
+                                control={
+                                <Checkbox 
+                                color="secondary" 
+                                name="saveAddress" 
+                                checked={shippingDetails.saveAddress} 
+                                onChange={handleFormChange} />}
+                                label="Remember credit card details for next time"
                             />
                         </Grid>
                     </Grid>

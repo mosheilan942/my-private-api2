@@ -1,4 +1,5 @@
 import { Product } from "./Product";
+import { OrderInPayPal } from "./orderDataPayPal";
 
 export interface Address {
     country: string;
@@ -6,6 +7,7 @@ export interface Address {
     street: string;
     cellPhone?: string;
     zipCode: string;
+    saveAddress: boolean;
 }
 
 export enum OrderStatusEnum {
@@ -33,9 +35,10 @@ export interface OrderInterface {
     cartItems?: Product[] | [];
     userId: string;
     orderTime: Date;
-    userName: string;
-    userEmail: string;
+    userName?: string;
+    userEmail?: string;
     status: OrderStatusEnum;
     totalPrice: number;
     shippingDetails: ShippingDetailsType;
+    paymentPayPal: OrderInPayPal | null;
 }
