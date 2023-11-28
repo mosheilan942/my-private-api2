@@ -7,7 +7,7 @@
   "scripts": {
     "test": "vitest",
     "build": "tsc",
-    "dev": "tsc && nodemon .", 
+    "dev": "tsc && nodemon .",
     "start": "node dist/server.js"
   },
   "keywords": [],
@@ -24,7 +24,6 @@
     "express-async-handler": "^1.2.0",
     "joi": "^17.11.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.0.0",
     "morgan": "^1.10.0",
     "nodemon": "^3.0.1",
     "pg": "^8.11.3",
