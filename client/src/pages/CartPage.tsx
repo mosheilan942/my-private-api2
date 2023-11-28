@@ -30,7 +30,7 @@ const CartPage = () => {
                     const cartData = await cartsAPI.getCart(userInfo.id);
                     console.log("hi from cartData in cartpage:", cartData);
 
-                    setCartItems(cartData.items);
+                    setCartItems(cartData[0].items);
                 } else {
                     const localCart = cartLocalStorageUtils.getCart();
 
@@ -64,8 +64,8 @@ const CartPage = () => {
             if (userInfo) {
                 await cartsAPI.deleteProductFromCart(productId);
                 const newCart = await cartsAPI.getCart(userInfo.id);
-                setProductsInCart(newCart.items.length);
-                setCartItems(newCart.items);
+                setProductsInCart(newCart[0].items.length);
+                setCartItems(newCart[0].items);
             } else {
                 cartLocalStorageUtils.removeFromCart(productId);
                 const newCart = cartLocalStorageUtils.getCart();
