@@ -14,7 +14,7 @@ import { Address } from '../../types/order';
 type Props = {
     deliveryMethod: { data: string, setData: Function };
     shippingDetails: { data: Address, setData: Function };
-    isExpressDelivery: {data: boolean, setData: Function}
+    isExpressDelivery: { data: boolean, setData: Function }
     onNext: Function;
 }
 
@@ -73,7 +73,28 @@ const ShippingDetails = (props: Props) => {
     };
 
     const handleNextClick = async () => {
-        if (deliveryMethod === 'delivery') {
+        if (deliveryMethod === 'pickup') {
+            const { cellPhone } = shippingDetails;
+
+            const formErrors: Partial<Address> = {};
+
+            if (cellPhone!.trim() === '') {
+                formErrors.cellPhone = 'Please enter your cell phone number';
+            }
+
+            setErrors(formErrors);
+
+            const isValid = Object.keys(formErrors).length === 0;
+
+            if (isValid) {
+                setError('');
+                props.onNext();
+            } else {
+                setError('Please fill in all required fields !!!');
+            }
+
+            
+        } else if (deliveryMethod === 'delivery') {
             const { country, city, street, cellPhone, zipCode } = shippingDetails;
 
             const formErrors: Partial<Address> = {};
@@ -103,8 +124,6 @@ const ShippingDetails = (props: Props) => {
             } else {
                 setError('Please fill in all required fields !!!');
             }
-        } else {
-            props.onNext();
         }
     };
 
@@ -128,6 +147,26 @@ const ShippingDetails = (props: Props) => {
                     <FormControlLabel value="pickup" control={<Radio />} label="Self Pickup" />
                     <FormControlLabel value="delivery" control={<Radio />} label="Delivery" />
                 </RadioGroup>
+
+                {deliveryMethod === 'pickup' && (
+                    <Grid container spacing={3}>
+                        <Grid item xs={12}>
+                            <TextField
+                                required
+                                id="cellPhone"
+                                name="cellPhone"
+                                label="Cell phone"
+                                fullWidth
+                                autoComplete="cellPhone"
+                                variant="standard"
+                                value={shippingDetails.cellPhone}
+                                onChange={handleInputChange}
+                                error={!!errors.cellPhone}
+                                helperText={errors.cellPhone}
+                            />
+                        </Grid>
+                    </Grid>
+                )}
 
                 {deliveryMethod === 'delivery' && (
                     <Grid container spacing={3}>

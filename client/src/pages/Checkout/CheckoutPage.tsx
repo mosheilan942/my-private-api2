@@ -40,7 +40,7 @@ function Copyright() {
 const CheckoutPage = () => {
   // Get the total amount from URL params
   const { totalAmount } = useParams();
-  const totalPrice = (totalAmount && parseFloat(totalAmount)) || 0;
+  const totalPrice = (totalAmount && parseFloat(totalAmount)) || 1.00;
 
   // State variables for checkout process management
   const [activeStep, setActiveStep] = React.useState(0);
@@ -49,6 +49,7 @@ const CheckoutPage = () => {
   const [deliveryMethod, setDeliveryMethod] = React.useState<string>('pickup');
   const [res, setRes] = React.useState<string>('');
   const [isExpressDelivery, setIsExpressDelivery] = React.useState(false);
+  const [orderID, setOrderID] = React.useState('');
 
   // Function to determine order type based on delivery method and express option
   const orderTypeReturn = () => {
@@ -97,8 +98,8 @@ const CheckoutPage = () => {
   };
 
   // Function to proceed to the next step in the checkout process
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
+  const handleNext = (num: number = 0) => {
+    setActiveStep(activeStep + 1 + num);
   };
 
   // Function to go back to the previous step in the checkout process
@@ -113,8 +114,9 @@ const CheckoutPage = () => {
       const response = await sendOrder(order);
       setIsChecking(false);
 
-      if (typeof response === 'object' && 'message' in response) {
+      if (typeof response === 'object' && 'message' in response && 'orderID' in response) {
         setRes(response.message as string);
+        setOrderID(response.orderID as string)
         handleNext();
       } else {
         setError('Unknown error occurred !!!');
@@ -146,7 +148,9 @@ const CheckoutPage = () => {
         <PaymentDetails
           totalAmount={totalPrice}
           creditCard={{ data: creditCardDetails, setData: setCreditCardDetails }}
-          onNext={handleNext} onBack={handleBack} />,
+          setOrderId={setOrderID}
+          onNext={handleNext} 
+          onBack={handleBack} />,
       label: 'Payment method'
     },
     {
@@ -194,8 +198,11 @@ const CheckoutPage = () => {
               <Typography variant="h5" gutterBottom>
                 Thank you for your order.
               </Typography>
-              <Typography variant="subtitle1">
-                Your order number is #2001539. We have emailed your order confirmation, and will send you an update when your order has shipped.
+              <Typography variant="h6">
+                Your order number is: {orderID} .
+              </Typography>
+              <Typography variant="h6">
+                We have emailed your order confirmation, and will send you an update when your order has shipped.
               </Typography>
             </React.Fragment>
 

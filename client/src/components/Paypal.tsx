@@ -1,5 +1,6 @@
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { useState } from "react";
+import { OrderData } from "../types/orderDataPayPal";
 
 type Product = {
     description: string;
@@ -8,37 +9,25 @@ type Product = {
 
 type Props = {
     product: Product;
+    onPayPalSuccess: Function;
+    onPayPalCancel: Function;
+    onPayPalError: Function;
 }
 
-type OrderData = {
-    orderID: string;
-    payerID?: string;
-    paymentID?: string;
-    billingToken?: null;
-    facilitatorAccessToken: string;
-    autoCode?: string;
-    subscriptionID?: string;
-}
 
 export default function Paypal(props: Props): JSX.Element {
     const { product } = props;
 
     const [paidFor, setPaidFor] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
 
     const handleApprove = (orderData: OrderData) => {
         setPaidFor(true);
         console.log("orderId: ", orderData.orderID);
         console.log("orderData: ", orderData);
+        props.onPayPalSuccess(orderData)
     };
 
-    if (paidFor) {
-        alert("Thank you for purchasing from Eazy2code!");
-    };
 
-    if (error) {
-        alert(error);
-    }
 
     return (
         <>
@@ -47,7 +36,6 @@ export default function Paypal(props: Props): JSX.Element {
                 onClick={(data, actions) => {
                     const hasAlreadyBoughtCourse = false;
                     if (hasAlreadyBoughtCourse) {
-                        setError("You already bough this course!");
                         return actions.reject();
                     } else {
                         return actions.resolve();
@@ -72,10 +60,11 @@ export default function Paypal(props: Props): JSX.Element {
                 }}
                 onCancel={() => {
                     console.log('Payment cancelled!');
+                    props.onPayPalCancel()
                 }}
                 onError={(err) => {
-                    setError(err.toString());
                     console.log(`PayPal Chckout onError: ${err}.`);
+                    props.onPayPalError()
                 }}
             />
         </>
