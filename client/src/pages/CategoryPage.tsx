@@ -1,15 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import {Product} from '../types/Product';
 import categoriesAPI from '../api/categoriesAPI';
 import ProductCard from '../components/ProductCard';
 import ProductCardsContainer from '../components/ProductCardsContainer';
 import { Box, CircularProgress } from '@mui/material';
 import Filter from '../components/Filter';
+import { Product } from '../types/Product';
 
 const CategoryPage = () => {
   const { cname } = useParams();
-  console.log('this is cname',cname);   
   const [products, setProducts] = useState<Product[]>([]);
 
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
@@ -21,7 +20,6 @@ const CategoryPage = () => {
     categoriesAPI
       .getProductsFromCategory(cname!)
       .then((products) => {
-        console.log('this is products',products);
         setProducts(products);
       })
       .catch((err) => {

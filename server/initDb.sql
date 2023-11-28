@@ -25,17 +25,17 @@ CREATE TABLE
         payment TEXT,
         address JSONB DEFAULT '{"country": "", "city": "", "street":"", "zip_code":""}'
     );
-
 CREATE TABLE IF NOT EXISTS cartitems (
     user_id UUID,
     product_id UUID PRIMARY KEY,
     quantity NUMERIC,
     price NUMERIC,
     UNIQUE(product_id, user_id),
-    CONSTRAINT user_id
-    FOREIGN KEY(user_id) 
-	REFERENCES users(user_id)
+    CONSTRAINT fk_user_id_cartitems
+        FOREIGN KEY(user_id) 
+        REFERENCES users(user_id)
 );
+
 
 
 

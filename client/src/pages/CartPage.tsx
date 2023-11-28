@@ -7,25 +7,33 @@ import * as cartLocalStorageUtils from '../utils/cartLocalStorageUtils';
 import CartItem from '../types/CartItem';
 import { toastError, toastSuccess } from '../utils/toastUtils';
 import { UserContext } from '../UserContext';
-import Paypal from '../components/Paypal';
 import { v4 as uuidv4 } from 'uuid';
-// import sendCartToOms from "../api/cartsAPI";
+import { useNavigate } from 'react-router-dom';
+import ROUTES from '../routes/routesModel';
+
+
 const CartPage = () => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [loading, setLoading] = useState(true);
     const context = useContext(UserContext)!;
     const { userInfo, setProductsInCart } = context
     const [totalAmount, setTotalAmount] = useState<number>(0);
+
+    const navigate = useNavigate();
+
     useEffect(() => {
         const fetchCart = async () => {
             try {
                 if (userInfo) {
                     console.log("hi from cartpage", userInfo);
+
                     const cartData = await cartsAPI.getCart(userInfo.id);
                     console.log("hi from cartData in cartpage:", cartData);
+
                     setCartItems(cartData[0].items);
                 } else {
                     const localCart = cartLocalStorageUtils.getCart();
+
                     if (localCart) {
                         setCartItems(localCart);
                     } else {
@@ -38,8 +46,10 @@ const CartPage = () => {
                 setLoading(false);
             }
         };
+
         fetchCart();
     }, [userInfo]);
+
     useEffect(() => {
         if (cartItems.length !== 0) {
             const total = cartItems.reduce((sum, item) => {
@@ -48,11 +58,10 @@ const CartPage = () => {
             setTotalAmount(total);
         }
     }, [cartItems]);
+
     const removeFromCart = async (productId: string) => {
         try {
             if (userInfo) {
-                console.log("hi from cartPage, removeFromCart:", userInfo);
-                console.log("hi from cartPage, removeFromCart:", productId);
                 await cartsAPI.deleteProductFromCart(productId);
                 const newCart = await cartsAPI.getCart(userInfo.id);
                 setProductsInCart(newCart[0].items.length);
@@ -69,31 +78,45 @@ const CartPage = () => {
             toastError('Error removing product from cart');
         }
     };
+
+    // const buyNow = async () => {
+    //     if (userInfo) {
+    //         console.log('Product purchased!');
+    //         alert(`Total Amount: ${totalAmount.toFixed(3)}`);
+    //         const newCart = await cartsAPI.deleteCart();
+    //         setProductsInCart(newCart.items.length);
+    //         setCartItems(newCart.items);
+    //     } else {
+    //         cartLocalStorageUtils.clearCart();
+    //         setCartItems([])
+    //         setProductsInCart(0);
+    //         alert(`Total Amount: $ ${totalAmount.toFixed(3)}`);
+
+    //     };
+    // }
+
     const buyNow = async () => {
-        if (userInfo) {
+        if (!userInfo) {
             console.log('Product purchased!');
-            alert(`Total Amount: ${totalAmount.toFixed(3)}`);
-            const newCart = await cartsAPI.deleteCart();
-            setProductsInCart(newCart.items.length);
-            setCartItems(newCart.items);
+            navigate(`/checkout/${totalAmount || 0}`);
         } else {
-            cartLocalStorageUtils.clearCart();
-            setCartItems([])
-            setProductsInCart(0);
-            alert(`Total Amount: $ ${totalAmount.toFixed(3)}`);
+            navigate(ROUTES.LOGIN)
         };
     }
+
     const updateCartItemQuantity = (productId: string, newQuantity: number) => {
         setCartItems((prevCartItems) =>
             prevCartItems.map((item) =>
                 item.product_id.id === productId ? { ...item, quantity: newQuantity } : item
             )
         );
+
         const total = cartItems.reduce((sum, item) => {
             return sum + item.quantity * item.product_id.salePrice;
         }, 0);
         setTotalAmount(total);
     };
+
     if (loading) {
         return (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -102,14 +125,15 @@ const CartPage = () => {
         );
     }
     console.log(cartItems);
+
     if (cartItems.length === 0) {
         return <Typography variant="h2">No items in the cart</Typography>;
     }
+
     return (
         <Grid container spacing={3} style={{ display: 'flex', alignItems: 'start' }}>
             <Grid item xs={8}>
                 {cartItems.map((item) => (
-                    console.log("item.product_id", item.product_id),
                     <ProductCartCard
                         key={'ProductCartCard-' + uuidv4()}
                         product={item.product_id}
@@ -131,23 +155,22 @@ const CartPage = () => {
                             <ListItem key={`ListItem-${uuidv4()}`}>
                                 <ListItemText
                                     primary={item.product_id.name}
-                                    secondary={`Quantity: ${item.quantity} | Total Price: $${(item.quantity * item.product_id.salePrice).toFixed(3)}`}
+                                    secondary={`Quantity: ${item.quantity} | Total Price: $ ${(item.quantity * item.product_id.salePrice).toFixed(3) || 0}`}
                                 />
                                 {/* <img src={item.product_id.image.url} alt={item.product_id.name} style={{ maxWidth: '50px', maxHeight: '50px', marginRight: '1rem' }} /> */}
                             </ListItem>
                         ))}
                         <ListItem>
-                            <ListItemText primary="Total Amount" />
+                            <ListItemText primary={`Subtotal (items: ):`} />
                             <Typography variant="h5" sx={{ marginLeft: '1rem' }}>
-                                ${totalAmount.toFixed(3)}
+                                $ {totalAmount.toFixed(3) || 0}
                             </Typography>
                         </ListItem>
                         <ListItem>
                             <Container>
                                 <Button sx={{ width: "100%", marginBottom: 1 }} variant="contained" onClick={buyNow}>
-                                    Buy Now
+                                    Go to the payment page
                                 </Button>
-                                <Paypal />
                             </Container>
                         </ListItem>
                     </List>
@@ -156,4 +179,5 @@ const CartPage = () => {
         </Grid>
     );
 };
+
 export default CartPage;

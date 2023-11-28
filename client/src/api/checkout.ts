@@ -5,7 +5,6 @@ import handleApiRes from "./apiResHandler";
 
 
 async function checkDebitCard(debitCard: CreditCardDetails): Promise<CreditCardDetails> {
-
     const response = await fetch('/api/payment/check', {
         method: "POST",
         headers: {
@@ -18,7 +17,6 @@ async function checkDebitCard(debitCard: CreditCardDetails): Promise<CreditCardD
 }
 
 async function sendOrder(order: OrderInterface): Promise<OrderInterface> {
-
     const response = await fetch('/api/payment/order', {
         method: "POST",
         headers: {
