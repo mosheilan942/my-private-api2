@@ -18,8 +18,8 @@ CREATE TABLE
 CREATE TABLE IF NOT EXISTS cartitems (
     userId UUID,
     productId UUID PRIMARY KEY,
-    quantity NUMERIC,
     storeQuantity NUMERIC,
+    quantityOfProduct NUMERIC,
     price NUMERIC,
     name TEXT,
     description TEXT,
@@ -27,10 +27,9 @@ CREATE TABLE IF NOT EXISTS cartitems (
     image TEXT,
     UNIQUE(productId, userId),
     CONSTRAINT userId
-    FOREIGN KEY(userId) 
-	REFERENCES users(userId)
+    FOREIGN KEY(userId)
+    REFERENCES users(userId)
 );
-
 
 
 
