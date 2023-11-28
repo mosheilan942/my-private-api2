@@ -21,9 +21,9 @@ const CartPage = () => {
         const fetchCart = async () => {
             try {
                 if (userInfo) {
-                    console.log("hi from cartpage", userInfo);
+                    // console.log("hi from cartpage", userInfo);
                     const cartData = await cartsAPI.getCart(userInfo.id);
-                    console.log("hi from cartData in cartpage:", cartData);
+                    // console.log("hi from cartData in cartpage:", cartData);
                     setCartItems(cartData[0].items);                
                 } else {
                     const localCart = cartLocalStorageUtils.getCart();

@@ -1,7 +1,7 @@
 import Cart from './Cart.js';
 
 type User = {
-  user_id?: string;
+  userId?: string;
   name?: string;
   email: string;
   password: string;
