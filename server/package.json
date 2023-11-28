@@ -8,7 +8,7 @@
     "test": "vitest",
     "build": "tsc",
     "dev": "tsc && nodemon .", 
-    "start": "tsc && node dist/server.js"
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
