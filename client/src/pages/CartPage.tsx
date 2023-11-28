@@ -24,8 +24,7 @@ const CartPage = () => {
                     console.log("hi from cartpage", userInfo);
                     const cartData = await cartsAPI.getCart(userInfo.id);
                     console.log("hi from cartData in cartpage:", cartData);
-
-                    setCartItems(cartData.items);
+                    setCartItems(cartData[0].items);
                 } else {
                     const localCart = cartLocalStorageUtils.getCart();
                     if (localCart) {
@@ -83,7 +82,6 @@ const CartPage = () => {
     //         alert(`Total Amount: $ ${totalAmount.toFixed(3)}`);
     //     };
     // }
-
     const buyNow = async () => {
         if (!userInfo) {
             console.log('Product purchased!');
@@ -92,7 +90,6 @@ const CartPage = () => {
             navigate(ROUTES.LOGIN)
         };
     }
-
     const updateCartItemQuantity = (productId: string, newQuantity: number) => {
         setCartItems((prevCartItems) =>
             prevCartItems.map((item) =>
@@ -165,14 +162,3 @@ const CartPage = () => {
     );
 };
 export default CartPage;
-
-
-
-
-
-
-
-
-
-    
-    
