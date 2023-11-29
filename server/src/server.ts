@@ -69,22 +69,7 @@ app.post('/api/payment/order', (req, res) => {
 
     console.log(order);
     if (true) {
-      res.status(200).json({ message: 'The order has been placed !', orderID: "876df86sfsYGUG8979" });
-    } else {
-      res.status(400).json({ message: 'An error occurred in the ordering process !!!' });
-    }
-  }, 3000); // השהייה של 3 שניות
-});
-
-
-// PayPal.
-app.post('/api/paypal/check', (req, res) => {
-  const order = req.body;
-  setTimeout(() => {
-
-    console.log(order);
-    if (true) {
-      res.status(200).json({ message: 'The order PayPal has been placed !', orderID: order.orderID });
+      res.status(200).json({ message: 'The order has been placed !', orderID: order.paymentPayPal?.orderID ? order.paymentPayPal?.orderID : "876df86sfsYGUG8979" });
     } else {
       res.status(400).json({ message: 'An error occurred in the ordering process !!!' });
     }
@@ -96,12 +81,12 @@ app.post('/api/paypal/check', (req, res) => {
 
 
 const port = 5000;
-
+export const connectionString = process.env.CONNECTION_STRING 
 //await connectDB();
 
 
 app.listen(port, async () => {
-  const pool = new Pool()
+  const pool = new Pool({connectionString: connectionString})
   const res = await pool.connect()
   res.release()
   console.log(`Database connection test completed successfully`);
