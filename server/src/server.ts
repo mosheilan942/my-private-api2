@@ -29,18 +29,13 @@ app.use('/api/users', userRoutes);
 app.use('/api/users', cartRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api', categoryRoutes);
-
-// =====================================================
-// app.use(notFound);    צריך בדיקה, חוסם שליחת בקשות.
-// =====================================================
-
+app.use(notFound);
 app.use(errorHandler);
 
 
 // Payment.
 // =====================================================================
 
-// Credit.
 app.post('/api/payment/check', (req, res) => {
   const debitCardDetails = req.body; // פרטי כרטיס האשראי מתקבלים כאן
 
@@ -62,14 +57,14 @@ app.post('/api/payment/check', (req, res) => {
 });
 
 
-// Order.
-app.post('/api/payment/order', (req, res) => {
-  const order = req.body;
-  setTimeout(() => {
 
+app.post('/api/payment/order', (req, res) => {
+  const order = req.body; 
+  setTimeout(() => {
+  
     console.log(order);
     if (true) {
-      res.status(200).json({ message: 'The order has been placed !', orderID: order.paymentPayPal?.orderID ? order.paymentPayPal?.orderID : "876df86sfsYGUG8979" });
+      res.status(200).json({ message: 'The order has been placed !' });
     } else {
       res.status(400).json({ message: 'An error occurred in the ordering process !!!' });
     }
@@ -80,16 +75,16 @@ app.post('/api/payment/order', (req, res) => {
 
 
 
-const port = 5000;
-export const connectionString = process.env.CONNECTION_STRING 
+const port = 5000 ;
+
 //await connectDB();
+export const connectionString = process.env.CONNECTION_STRING;
 
 
 app.listen(port, async () => {
   const pool = new Pool({connectionString: connectionString})
-  const res = await pool.connect()
+  const res = await pool.connect()  
   res.release()
+  console.log(`server is running at port ${port}`);
   console.log(`Database connection test completed successfully`);
-  console.log(`\nServer is running at port ${port}...`);
-
 });
