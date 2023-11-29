@@ -35,7 +35,6 @@ export default function Paypal(props: Props): JSX.Element {
                 style={{ layout: "horizontal" }}
                 onClick={(data, actions) => {
                     const hasAlreadyBoughtCourse = false;
-                    console.log("hasAlreadyBoughtCourse: ", data);
                     if (hasAlreadyBoughtCourse) {
                         return actions.reject();
                     } else {
@@ -43,7 +42,6 @@ export default function Paypal(props: Props): JSX.Element {
                     }
                 }}
                 createOrder={(data, actions) => {
-                    console.log("data: ", data);
                     return actions.order.create({
                         purchase_units: [
                             {

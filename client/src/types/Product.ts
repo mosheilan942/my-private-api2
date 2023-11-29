@@ -25,6 +25,8 @@ interface Product {
       tag1: string;
     };
   }
+
+  
   interface Category {
     _id: string;
     name: string;
