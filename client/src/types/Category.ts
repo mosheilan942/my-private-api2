@@ -1,10 +1,7 @@
-import CategoryName from "./CategoryName";
-
-type Category = {
+interface Category {
   _id: string;
-  name: CategoryName;
-  clickCount: number;
-  imageUrl: string;
-};
+  name: string;
+  clicked: number;
+}
 
 export default Category;

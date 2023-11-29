@@ -1,4 +1,4 @@
-export type OrderData = {
+export type OrderInPayPal = {
     orderID: string;
     payerID?: string;
     paymentID?: string;

@@ -28,9 +28,7 @@ const CartPage = () => {
     const context = useContext(UserContext)!;
     const { userInfo, setProductsInCart } = context;
     const [totalAmount, setTotalAmount] = useState<number>(0);
-
     const navigate = useNavigate();
-
     useEffect(() => {
         const fetchCart = async () => {
             try {
@@ -59,10 +57,8 @@ const CartPage = () => {
                 setLoading(false);
             }
         };
-
         fetchCart();
     }, [userInfo]);
-
     useEffect(() => {
         if (cartItems.length !== 0 && userInfo) {
             const total = cartItems.reduce((sum:any, item:any) => {
@@ -76,7 +72,6 @@ const CartPage = () => {
             setTotalAmount(total);
         }
     }, [cartItems]);
-
     const removeFromCart = async (productId: string) => {
         console.log("hi from removeFromCart productId:", productId)
         try {
@@ -103,7 +98,6 @@ const CartPage = () => {
             toastError("Error removing product from cart");
         }
     };
-
     // const buyNow = async () => {
     //     if (userInfo) {
     //         console.log('Product purchased!');
@@ -116,10 +110,8 @@ const CartPage = () => {
     //         setCartItems([])
     //         setProductsInCart(0);
     //         alert(`Total Amount: $ ${totalAmount.toFixed(3)}`);
-
     //     };
     // }
-
     const buyNow = async () => {
         if (!userInfo) {
             console.log("Product purchased!");
@@ -144,7 +136,6 @@ const CartPage = () => {
             })
         );
     };
-
     if (loading) {
         return (
             <Box
@@ -159,11 +150,9 @@ const CartPage = () => {
             </Box>
         );
     }
-
     if (cartItems.length === 0) {
         return <Typography variant="h2">No items in the cart</Typography>;
     }
-
     return (
         <Grid
             container
@@ -268,5 +257,4 @@ const CartPage = () => {
         </Grid>
     );
 };
-
 export default CartPage;
