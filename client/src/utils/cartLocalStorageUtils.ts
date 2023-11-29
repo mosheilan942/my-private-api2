@@ -5,6 +5,7 @@ const CART_KEY = 'cart';
 const getCart = (): CartItem[] => {
     const cart = localStorage.getItem(CART_KEY);
     if (cart) {
+        console.log("hi from cartLocalStorageUtils, getCart:", JSON.parse(cart));
         return JSON.parse(cart);
     }
     return [];
@@ -16,6 +17,7 @@ const isCartEmpty = () => {
 };
 
 const addToCart = (cartItem: CartItem) => {
+    console.log("hi from cartLocalStorageUtils, addToCart:", cartItem);
     const cart = getCart();
     const existingItemIndex = cart.findIndex(item => item.product_id.id === cartItem.product_id.id);
 

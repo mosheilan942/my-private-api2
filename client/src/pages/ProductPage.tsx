@@ -65,15 +65,15 @@ const ProductPage = () => {
             return;
         }
         if (userInfo) {
-            const userid = userInfo.id;
-            console.log("hi from productpage", product);
+            const userId = userInfo.id;
+            console.log("this i user id in product page", product);
             try {
                 const cart = await cartsAPI.addToCart(
-                    userid,
-                    product!.id,
+                    userId,
+                    product,
                     quantity.toString()
                 );
-                    console.log("hi from productpage, cart:", cart);
+                console.log("hi from productpage, cart:", cart);
                 toastSuccess("Added to cart!");
                 setQuantity(1);
                 // setProductsInCart(cart.items.length);

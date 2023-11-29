@@ -14,7 +14,7 @@ import CustomerService from "../profile/CustomerService";
 import Addrees from "../profile/Addrees";
 import { ContactUs } from "../components/Mail";
 
-import CheckoutPage from "../pages/Checkout/CheckoutPage";
+// import CheckoutPage from "../pages/Checkout/CheckoutPage";
 import CategoryPage from "../pages/CategoryPage";
 
 const Router = () => {
@@ -34,7 +34,7 @@ const Router = () => {
                 <Route path={ROUTES.SHIPMENT} element={<Shipment/>} />    
                 <Route path={ROUTES.ADDRESS} element={<Addrees/>} />
                 <Route path={ROUTES.CONNECT} element ={<ContactUs/>}/>
-                <Route path={ROUTES.CHECKOUT} element={<CheckoutPage/>} />     
+                {/* <Route path={ROUTES.CHECKOUT} element={<CheckoutPage/>} />      */}
             </Route>
             <Route path={ROUTES.DEFAULT} element={<h1>404 Not Found</h1>} />
         </Routes>

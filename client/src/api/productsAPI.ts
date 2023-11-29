@@ -33,7 +33,10 @@ async function getProductById(pid: string): Promise<Product[]> {
     const response = await fetch(`/api/products/${pid}`);
     return await handleApiRes(response);
 }
-
+async function searchProducts(searchTerm: string): Promise<Product[]> {
+    const response = await fetch(`/api/products/search?searchTerm=${searchTerm}`);
+    return await handleApiRes(response);
+}
 async function getReviewsByProductIdFromDB(pid: string): Promise<Product[]> {
     const response = await fetch(`/api/products/${pid}/reviews`);
     return await handleApiRes(response);
@@ -44,5 +47,5 @@ async function reviewFeedbackProduct(feedback:boolean){
     return await handleApiRes(response);
 }
 
-export default{ getTop5Products, getProductById, getReviewsByProductIdFromDB, reviewFeedbackProduct,sendReviewToDB};
+export default{ searchProducts,getTop5Products, getProductById, getReviewsByProductIdFromDB, reviewFeedbackProduct,sendReviewToDB};
 

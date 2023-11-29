@@ -2,9 +2,10 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Unstable_Grid2";
+import CallRoundedIcon from "@mui/icons-material/CallRounded";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import ContactsIcon from '@mui/icons-material/Contacts';
 import { Link } from "react-router-dom";
-import CustomerService from "./CustomerService";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -14,8 +15,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-// const style = {height: "200px",
-// width: "250px",
+// const style = {
 // transition: "transform 0.3s",
 // "&:hover": {
 //   transform: "scale(1.03)",
@@ -27,7 +27,7 @@ export default function FullWidthGrid() {
     <Box sx={{ flexGrow: 1, paddingLeft: "100px" ,paddingTop:'35px' }}>
       <Grid container spacing={3} sx={{ paddingLeft: "120px" }}>
         <Grid xs={3} md={3}>
-          <Link to={"/address"} style={{ color: "lightblue" }}>
+          <Link to={"/address"} style={{ color: "lightblue" ,textDecorationLine:'none'}}>
             <Item
               sx={{
                 height: "200px",
@@ -38,12 +38,13 @@ export default function FullWidthGrid() {
                   transform: "scale(1.03)",
                 },
               }}
-            >
+              >
+              <ContactsIcon></ContactsIcon>
               <h3 style={{ color: "lightblue" }}>your address</h3>information
               about your address
             </Item>
           </Link>
-          <Link to={"/orders"} style={{ textUnderlineOffset: "" }}>
+          <Link to={"/orders"} style={{ textDecorationLine:'none' }}>
             <Item
               sx={{
                 height: "200px",
@@ -60,6 +61,7 @@ export default function FullWidthGrid() {
           </Link>
         </Grid>
         <Grid xs={3} md={3}>
+        <Link to={"/service"} style={{ textDecorationLine:'none'}}>
           <Item
             sx={{
               height: "200px",
@@ -69,9 +71,14 @@ export default function FullWidthGrid() {
               "&:hover": {
                 transform: "scale(1.03)",
               },
-            }}>
-            <CustomerService/>
+            }}
+          >
+            <CallRoundedIcon />
+            <h3 style={{ color: "lightblue" }}>customer services</h3>stay in
+            conttect with us
           </Item>
+          </Link>
+          <Link to={"/address"} style={{ color: "lightblue" ,textDecorationLine:'none'}}>
           <Item
             sx={{
               height: "200px",
@@ -82,8 +89,9 @@ export default function FullWidthGrid() {
               },
             }}
           >
-            your cart
+                   <h3 style={{ color: "lightblue" }}>your cart</h3>
           </Item>
+          </Link>
         </Grid>
         <Grid xs={3} md={3}>
           <Item
@@ -103,7 +111,14 @@ export default function FullWidthGrid() {
             shipment
           </Item>
           <Item
-            sx={{
+          sx={{
+              height: "200px",
+              width: "250px",
+              marginBottom: "10px",
+              transition: "transform 0.3s",
+              "&:hover": {
+                transform: "scale(1.03)",
+              }
               
             }}
           > notes

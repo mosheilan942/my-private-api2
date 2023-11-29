@@ -1,22 +1,24 @@
 import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import cartsAPI from '../api/cartsAPI'
+// import cartsAPI from '../api/cartsAPI'
 import ROUTES from '../routes/routesModel'
 import { Link, Container, CssBaseline, Box, Avatar, Typography, TextField, Button, Grid } from '@mui/material'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import * as localStorage from '../utils/cartLocalStorageUtils'
+// import * as localStorage from '../utils/cartLocalStorageUtils'
 import { toastError, toastSuccess } from '../utils/toastUtils'
 import { UserContext } from '../UserContext'
-const sendCartToServer = () => {
-    if (localStorage.isCartEmpty()) return;
-    try {
-        const cart = localStorage.getCart();
-        cart.map((item) => { cartsAPI.addToCart(item.product_id.id, item.quantity.toString(),)})
-        localStorage.clearCart();
-    } catch (err) {
-        console.log(err);
-    }
-}
+// const sendCartToServer = () => {
+//     const context = useContext(UserContext)!;
+//     const { userInfo } = context;
+//     if (localStorage.isCartEmpty() && userInfo) return;
+//     try {
+//         const cart = localStorage.getCart();
+//         cart.map((item) => { cartsAPI.addToCart(userInfo,item.product_id, item.quantity.toString())})
+//         localStorage.clearCart();
+//     } catch (err) {
+//         console.log(err);
+//     }
+// }
 const LoginPage = () => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +38,7 @@ const LoginPage = () => {
             setIsLoading(true);
             await login(email.toString(), password.toString());
             setIsLoading(false);
-            sendCartToServer();
+            // sendCartToServer();
             toastSuccess('Login successful');
             navigate(-1);
         } catch (err) {

@@ -20,7 +20,7 @@ const ComparePage = () => {
         };
         if (userInfo) {
             try {
-                const cart = await cartsAPI.addToCart(userInfo.id ,product.id, '1');
+                const cart = await cartsAPI.addToCart(userInfo.id ,product, '1');
                 setProductsInCart(cart.items.length);
                 toastSuccess('Added to cart!');
             } catch (error) {
