@@ -48,7 +48,7 @@ const CheckoutPage = () => {
   const [isChecking, setIsChecking] = React.useState(false);
   const [error, setError] = React.useState('');
   const [deliveryMethod, setDeliveryMethod] = React.useState<string>('pickup');
-  const [res, setRes] = React.useState<string>('');
+//   const [res, setRes] = React.useState<string>('');
   const [isExpressDelivery, setIsExpressDelivery] = React.useState(false);
   const [orderID, setOrderID] = React.useState('');
 
@@ -122,7 +122,7 @@ const CheckoutPage = () => {
       setIsChecking(false);
 
       if (typeof response === 'object' && 'message' in response && 'orderID' in response) {
-        setRes(response.message as string);
+        // setRes(response.message as string);
         setOrderID(response.orderID as string)
         setActiveStep(steps.length)
       } else {

@@ -1,5 +1,5 @@
 import { PayPalButtons } from "@paypal/react-paypal-js";
-import { useState } from "react";
+// import { useState } from "react";
 import { OrderInPayPal } from "../types/orderDataPayPal";
 
 type Product = {
@@ -18,10 +18,10 @@ type Props = {
 export default function Paypal(props: Props): JSX.Element {
     const { product } = props;
 
-    const [paidFor, setPaidFor] = useState<boolean>(false);
+    // const [paidFor, setPaidFor] = useState<boolean>(false);
 
     const handleApprove = (orderData: OrderInPayPal) => {
-        setPaidFor(true);
+        // setPaidFor(true);
         console.log("orderId: ", orderData.orderID);
         console.log("orderData: ", orderData);
         props.onPayPalSuccess(orderData)
@@ -35,6 +35,7 @@ export default function Paypal(props: Props): JSX.Element {
                 style={{ layout: "horizontal" }}
                 onClick={(data, actions) => {
                     const hasAlreadyBoughtCourse = false;
+                    console.log("hasAlreadyBoughtCourse: ", data);
                     if (hasAlreadyBoughtCourse) {
                         return actions.reject();
                     } else {
@@ -42,6 +43,7 @@ export default function Paypal(props: Props): JSX.Element {
                     }
                 }}
                 createOrder={(data, actions) => {
+                    console.log("data: ", data);
                     return actions.order.create({
                         purchase_units: [
                             {
