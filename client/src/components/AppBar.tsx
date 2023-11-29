@@ -34,6 +34,7 @@ import cartsAPI from '../api/cartsAPI.ts';
 import * as cartLocalStorageUtils from '../utils/cartLocalStorageUtils.ts';
 // import productsAPI from '../api/productsAPI.ts';
 import { Product } from '../types/Product.ts';
+import productsAPI from '../api/productsAPI.ts';
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -82,16 +83,17 @@ const AppBar = () => {
 
   const handleSearch = (query:any) => {
     // Implement your search logic here
-    console.log('Search query:', query);
-    // const searchProduct = async () => { 
-    //   try {
-    //     const search = await productsAPI.searchProducts(query);
-    //     console.log(search);
-    //     setSearchQuery(search)
-    //   } catch (error) {
-    //     console.error('Error fetching cart:', error);
-    //   }
-    // }
+    const handleSearchProduct = async () => { 
+      try {
+        console.log('Search query:', query);
+        const search = await productsAPI.searchProducts(query);
+        console.log('this is search',search);
+        setSearchQuery(search)
+      } catch (error) {
+        console.error('Error fetching cart:', error);
+      }
+    }
+    handleSearchProduct();
   };
 
   useEffect(() => {

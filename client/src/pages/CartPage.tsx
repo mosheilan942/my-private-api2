@@ -112,6 +112,7 @@ const CartPage = () => {
     //         alert(`Total Amount: $ ${totalAmount.toFixed(3)}`);
     //     };
     // }
+    
     const buyNow = async () => {
         if (!userInfo) {
             console.log("Product purchased!");
