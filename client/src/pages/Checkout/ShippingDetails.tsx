@@ -273,7 +273,7 @@ const ShippingDetails = (props: Props) => {
                                 name="saveAddress" 
                                 checked={shippingDetails.saveAddress} 
                                 onChange={handleFormChange} />}
-                                label="Remember credit card details for next time"
+                                label="Remember address details for next time"
                             />
                         </Grid>
                     </Grid>
