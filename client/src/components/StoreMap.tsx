@@ -28,8 +28,6 @@ const locationsFromDataServer: Location[] = [
 
 const locations:  Location[]= await getLocationsInfo(locationsFromDataServer);
 
-
-
 const styles = [
     new Style({
         image: new Icon({

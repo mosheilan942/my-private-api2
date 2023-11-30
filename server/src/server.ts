@@ -27,6 +27,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/users', cartRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api', categoryRoutes);
+app.use('/api/payment',)
 
 // =====================================================
 // app.use(notFound);    צריך בדיקה, חוסם שליחת בקשות.
