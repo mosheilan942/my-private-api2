@@ -4,9 +4,10 @@ import { GetOrderInterface, OrderInterface } from '../types/order';
 import { Product } from '../types/Product';
 import { UserContext } from '../UserContext';
 
-export default function Orders() {
+export default function Orders()
   const [orders, setOrders] = useState<GetOrderInterface[]>(); 
   const [loading, setLoading] = useState<boolean>(false);  
+
   const context = useContext(UserContext)!;
   const { userInfo } = context;
   const userId = userInfo?.id;
@@ -19,7 +20,9 @@ export default function Orders() {
       }
       const data = await response.json();
       setOrders(data);
+
       setLoading(true);
+
     } catch (error) {
       console.error('Error fetching orders:', error);
       setOrders([]); 
@@ -63,6 +66,7 @@ export default function Orders() {
         </Card>
       ) : (
         <Typography variant="h6">No orders available</Typography>
+
       )}
     </>
   );
