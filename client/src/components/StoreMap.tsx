@@ -26,7 +26,7 @@ const locationsFromDataServer: Location[] = [
     { lon: 34.77328228161639, lat: 32.06830476724025 }
 ];
 
-const locations: any = getLocationsInfo(locationsFromDataServer);
+const locations:  Location[]= await getLocationsInfo(locationsFromDataServer);
 
 
 
