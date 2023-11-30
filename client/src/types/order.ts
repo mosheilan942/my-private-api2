@@ -1,4 +1,3 @@
-
 import { Product } from "./Product";
 import { OrderInPayPal } from "./orderDataPayPal";
 
@@ -42,4 +41,7 @@ export interface OrderInterface {
     totalPrice: number;
     shippingDetails: ShippingDetailsType;
     paymentPayPal: OrderInPayPal | null;
+}
+export interface GetOrderInterface {
+    orders : OrderInterface[];
 }
