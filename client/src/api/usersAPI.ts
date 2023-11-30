@@ -2,9 +2,8 @@ import UserInfo from "../types/UserInfo";
 import handleApiRes from "./apiResHandler";
 // import dotenv from "dotenv";
 // dotenv.config();
-
 async function loginUser(email: string, password: string): Promise<UserInfo> {
-    const response = await fetch(`/api/users/auth/login`, {
+    const response = await fetch("/api/users/auth/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -13,19 +12,16 @@ async function loginUser(email: string, password: string): Promise<UserInfo> {
     });
     return await handleApiRes(response);
 }
-
 async function logoutUser(): Promise<{message:string}> {
     const response = await fetch(`/api/users/auth/logout`, { method: "POST" });
     return await handleApiRes(response);
 }
-
 async function getUser(): Promise<UserInfo> {
     const response = await fetch( `/api/users/`);
     return await handleApiRes(response);
 }
-
 async function register(email: string, password: string):Promise<UserInfo> {
-    const response = await fetch(`/api/users/register/` ,{
+    const response = await fetch("api/users/register", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -34,6 +30,4 @@ async function register(email: string, password: string):Promise<UserInfo> {
     });
     return await handleApiRes(response);
 }
-
-
 export default { loginUser, logoutUser, getUser , register}

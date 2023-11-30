@@ -1,28 +1,22 @@
-import CategoryModel from "../models/categoryModel.js";
-import productModel from "../models/productModel.js";
-
+import axios from "axios";
+import  {categories,products}  from '../data.js'
+import { c } from "vitest/dist/reporters-5f784f42.js";
+//OMS
 const getCategories = async () => {
-    const categories = await CategoryModel.find({});
-    return categories;
+const data = categories
+return data
 };
 
+//OMS
 const getCategoryProducts = async (name: string) => {
-    const a = await productModel.find();
-    const category = await CategoryModel.findOne({ name }).populate('products').exec();
-    return category;
+    const data = products
+    return data
 };
 
+//BANNERS
 const getTop5Categories = async () => {
-    const topCategories = await CategoryModel.find({})
-        .sort({ clickCount: -1 })
-        .limit(5)
-        .exec();
-    return topCategories;
+ const data = categories
+    return data
 };
 
-const increaseClickCount = async (name: string) => {
-    return await CategoryModel.findOneAndUpdate(
-        { name: name },
-        { $inc: { clickCount: 1 } },);
-};
-export default { getCategories, getCategoryProducts, getTop5Categories, increaseClickCount};
+export default { getCategories, getCategoryProducts, getTop5Categories};

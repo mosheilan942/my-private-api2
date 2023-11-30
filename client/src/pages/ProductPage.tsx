@@ -12,7 +12,7 @@ import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
 import { useNavigate, useParams } from "react-router-dom";
 import productsAPI from "../api/productsAPI";
-import Product from "../types/Product.ts";
+import { Product } from "../types/Product.ts";
 import StoreMap from "../components/StoreMap.tsx";
 import cartsAPI from "../api/cartsAPI.ts";
 import * as localstorage from "../utils/cartLocalStorageUtils.ts";
@@ -24,29 +24,24 @@ import Rating from "../components/Rating.tsx";
 import ProductReviews from "../components/ProductReviews .tsx";
 import DialogReview from "../mui/DialogReview.tsx";
 
-const reviews = [
-    {
-        title: "Great Product",
-        author: "John Doe",
-        body: "Lorem ipsum...",
-        rating: 5,
-    },
-    // Add more reviews as needed
-];
-
 const ProductPage = () => {
     const navigate = useNavigate();
-    const [product, setProduct] = useState<null | Product>(null);
+    const [product, setProduct] = useState<null | Product | any>(null);
     const [quantity, setQuantity] = useState<number>(1);
+    const [reviews, setReviews] = useState<any>([]);
     const context = useContext(UserContext)!;
     const { userInfo, setProductsInCart } = context;
     const { pid } = useParams();
 
     //handle get product by id from server
-    const getProduct = async (pid: string) => {
+    const getProductAndReview = async (pid: string) => {
         try {
-            const product = await productsAPI.getProduct(pid!);
-            setProduct(product);
+            const data = await productsAPI.getProductById(pid!);
+            const reviews = await productsAPI.getReviewsByProductIdFromDB(pid!);
+            setProduct(data[0])
+            setReviews(reviews)
+            console.log("hi from productpage, data:", data);
+            // setProduct(data);
         } catch (error) {
             console.error("Failed to fetch");
         }
@@ -54,7 +49,7 @@ const ProductPage = () => {
 
     //get the product after the page is rendered
     useEffect(() => {
-        getProduct(pid!);
+        getProductAndReview(pid!)
     }, []);
 
     //handle decrease quantity by clicking on the minus button (when quantity shouldnt be lower then 1)
@@ -63,7 +58,6 @@ const ProductPage = () => {
             setQuantity((prevQty) => prevQty - 1);
         }
     };
-
     //handle add to cart. (if user logged in, products is being added to db at the server, else its stored in localstorage)
     const handleAddToCart = async () => {
         if (quantity > product!.quantity) {
@@ -71,16 +65,20 @@ const ProductPage = () => {
             return;
         }
         if (userInfo) {
+            const userId = userInfo.id;
+            console.log("this i user id in product page", product);
             try {
                 const cart = await cartsAPI.addToCart(
-                    product!._id,
+                    userId,
+                    product,
                     quantity.toString()
                 );
+                console.log("hi from productpage, cart:", cart);
                 toastSuccess("Added to cart!");
                 setQuantity(1);
-                setProductsInCart(cart.items.length);
+                // setProductsInCart(cart.items.length);
             } catch (error) {
-                console.error("failed to add to cart");
+                console.error("failed to add to cart, from ProductPage");
                 toastError("Failed to add");
             }
         } else {
@@ -94,12 +92,11 @@ const ProductPage = () => {
             setQuantity(1);
         }
     };
-
     //Navigate the user to choose another product to compare them
     const handleCompareProducts = () => {
         navigate(`/category/${product!.category}`, { state: product });
+        console.log('this compere',product.category)
     };
-
     //If the the product isn't loaded yet, show "Loading product..."
     if (!product) {
         return (
@@ -114,7 +111,6 @@ const ProductPage = () => {
             </Box>
         );
     }
-
     //When the product is loaded then show the component
     return (
         <>
@@ -132,7 +128,7 @@ const ProductPage = () => {
                         alignItems="center"
                     >
                         <img
-                            src={product?.imageUrl}
+                            src={product?.image.url}
                             alt={product?.name}
                             height={200}
                         />
@@ -142,7 +138,9 @@ const ProductPage = () => {
                         <Typography variant="body1">
                             {product?.description}
                         </Typography>
-                        <Typography variant="h6">${product?.price}</Typography>
+                        <Typography variant="h6">
+                            ${product?.salePrice}
+                        </Typography>
                         <div style={{ display: "flex", alignItems: "center" }}>
                             <IconButton onClick={decrementQuantity}>
                                 <RemoveCircleRoundedIcon></RemoveCircleRoundedIcon>
@@ -183,7 +181,7 @@ const ProductPage = () => {
                                     alignItems: "center",
                                 }}
                             >
-                                <DialogReview pid={pid}/>
+                                <DialogReview pid={pid} />
                                 <div style={{ margin: "20px" }}>
                                     <Rating />
                                 </div>
@@ -192,11 +190,19 @@ const ProductPage = () => {
                     </Grid>
                 </Grid>
             </Paper>
-            <Paper style={{ margin: "10px 50px", height: 'auto', maxHeight: 500, overflowY: 'auto', padding: '20px' }}>
-    <ProductReviews reviews={reviews} />
-    <br />
-</Paper>
-
+            <Paper
+                style={{
+                    margin: "10px 50px",
+                    height: "auto",
+                    maxHeight: 500,
+                    overflowY: "auto",
+                    padding: "20px",
+                }}
+            >
+                <ProductReviews reviews={reviews} />
+                <br />
+            </Paper>
+            ​
             <br />
             <Paper
                 style={{

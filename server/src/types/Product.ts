@@ -1,13 +1,25 @@
-import CategoryName from "./CategoryName.js";
-
 interface Product {
-    quantity: number;
-    price: number;
-    description: string;
-    category: CategoryName;
-    imageUrl: string;
+    id: string;
     name: string;
-    clickCount: number;
-};
-
-export default Product;
+    salePrice: number;
+    quantity: number;
+    description: string;
+    category: string;
+    discount: number;
+    rating: number;
+    click: number;
+    coordinate: {
+      longitude1: number;
+      longitude2: number;
+      longitude3: number;
+      latitude1: number;
+      latitude2: number;
+      latitude3: number;
+    };
+    image: { url: string; alt: string };
+    tags: {
+      tag: string;
+      tag2: string;
+    };
+  }
+  export default Product;

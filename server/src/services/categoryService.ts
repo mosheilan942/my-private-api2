@@ -12,10 +12,10 @@ const getCategories = async () => {
 
 const getCategoryProducts = async (req: Request) => {
     const { name } = req.params;
-    const category = await categoryDal.getCategoryProducts(name);
-    if (!category)
+    const categoryProducts = await categoryDal.getCategoryProducts(name);
+    if (!categoryProducts)
         throw new RequestError('Category not found', STATUS_CODES.NOT_FOUND);
-    return category.products;
+    return categoryProducts;
 
 }
 const getTop5Categories = async () => {
@@ -25,11 +25,5 @@ const getTop5Categories = async () => {
     return category;
 }
 
-const increaseClickCount = async (req: Request) => {
-    const { cname } = req.params;
-    const category = await categoryDal.increaseClickCount(cname);
-    if (!category)
-        throw new RequestError('Category not found', STATUS_CODES.NOT_FOUND);
-    return category;
-}
-export default { getCategories, getCategoryProducts, getTop5Categories, increaseClickCount }
+
+export default { getCategories, getCategoryProducts, getTop5Categories }

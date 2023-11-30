@@ -4,8 +4,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import { To, useNavigate } from 'react-router-dom';
-import Product from '../types/Product';
-import productsAPI from '../api/productsAPI';
+import {Product} from '../types/Product';
 
 type props = {
   product: Product;
@@ -13,11 +12,12 @@ type props = {
 };
 
 export default function ProductCard({ product, navigateToOnClick }: props) {
+  
   const navigate = useNavigate();
   const handleCLick = async () => {
     try {
-      navigate(navigateToOnClick || `/product/${product._id}`);
-      await productsAPI.patchProductClick(product._id);
+      navigate(navigateToOnClick || `/product/${product.id}`);
+      // await productsAPI.patchProductClick(product._id);
     } catch (err) {
       console.error((err as Error).message);
     }
@@ -38,7 +38,7 @@ export default function ProductCard({ product, navigateToOnClick }: props) {
       <CardActionArea >
         <CardMedia
           component="img"
-          image={product.imageUrl}
+          image={product.image.url}
           alt={product.name}
         />
         <CardContent>
@@ -50,7 +50,7 @@ export default function ProductCard({ product, navigateToOnClick }: props) {
           </Typography>
           <br />
           <Typography variant="body2" color="text.secondary">
-            price: {product.price}
+            price: {product.salePrice}
           </Typography>
         </CardContent>
       </CardActionArea>
