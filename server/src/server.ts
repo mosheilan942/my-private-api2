@@ -20,7 +20,7 @@ const app = express();
 
 // APP CONFIGS
 // console.log(process.env);
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
