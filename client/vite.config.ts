@@ -9,7 +9,7 @@ export default defineConfig({
         '/api': {
           // target: 'http://localHost:5000',
           // for dev only:
-          target: 'https://my-server-pv9y.onrender.com',
+          target: 'https://my-server-pv9y.onrender.com:5000',
           changeOrigin: true,
         }
       }
