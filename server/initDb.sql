@@ -2,19 +2,30 @@
 
 CREATE DATABASE fullstack;
 
+-- CREATE EXTENSION citext;
+
+-- CREATE DOMAIN domain_email AS citext
+
+-- CHECK(
+
+--    VALUE ~ '^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$'
+
+-- );
+
+-- SELECT 'anvesh@gmail.com'::domain_email;
 
 CREATE TABLE
     IF NOT EXISTS users(
-        userId uuid PRIMARY KEY DEFAULT gen_random_uuid (),
+        user_id uuid PRIMARY KEY DEFAULT gen_random_uuid (),
         name TEXT,
         email TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL,
-        createdAt TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+        created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
         contactNumber NUMERIC,
         payment TEXT,
         address JSONB DEFAULT '{"country": "", "city": "", "street":"", "zip_code":""}'
     );
-
+    
 CREATE TABLE IF NOT EXISTS cartitems (
     userId UUID,
     productId UUID PRIMARY KEY,
@@ -33,25 +44,26 @@ CREATE TABLE IF NOT EXISTS cartitems (
 
 
 
+
 CREATE TABLE IF NOT EXISTS reviews(
-    userId UUID NOT NULL, 
-    productId UUID NOT NULL, 
+    user_id UUID NOT NULL, 
+    product_id UUID NOT NULL, 
     author TEXT,
     title TEXT, 
     body TEXT, 
     rating NUMERIC, 
     thumbUp NUMERIC, 
     thumbDown NUMERIC,
-    CONSTRAINT userId FOREIGN KEY(userId) REFERENCES users(userId),
-    CONSTRAINT productId FOREIGN KEY(productId) REFERENCES cartitems(productId)
+    CONSTRAINT user_id FOREIGN KEY(user_id) REFERENCES users(user_id),
+    CONSTRAINT product_id FOREIGN KEY(product_id) REFERENCES cartitems(product_id)
 );
 
 DROP Table users ;
-DROP Table cartitems;
-DROP Table reviews;
+DROP Table cartitems ;
+DROP Table reviews ;
 
 INSERT INTO
-    cartitems (productId, userId, quantity)
+    cartitems (product_id, user_id, quantity)
 VALUES (
         'dbdd2ff6-c240-4e2a-b1a2-51be8724f5ca',
         'dbdd2ff6-c240-4e2a-b1a2-51be8724f0ca',
@@ -114,11 +126,11 @@ add = jsonb_set(
 
 SELECT add ->> 'country' AS Feeling FROM users;
 
-SELECT address FROM users;
+SELECT address FROM users 
 
-CREATE TABLE cartitmes;
+CREATE TABLE cartitmes 
 
 
-SELECT * FROM users; 
+SELECT * FROM users 
 
-SELECT * FROM cartitems;
+SELECT * FROM cartitems 

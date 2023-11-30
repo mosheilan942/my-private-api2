@@ -1,6 +1,6 @@
 interface Category {
-  _id: string;
-  name: string;
-  clicked: number;
-}
+    id: string;
+    name: string;
+    clicked: number;
+  };[]
 export default Category

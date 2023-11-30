@@ -34,6 +34,7 @@ export default function Paypal(props: Props): JSX.Element {
             <PayPalButtons
                 style={{ layout: "horizontal" }}
                 onClick={(data, actions) => {
+                    console.log(data);
                     const hasAlreadyBoughtCourse = false;
                     if (hasAlreadyBoughtCourse) {
                         return actions.reject();
@@ -42,6 +43,7 @@ export default function Paypal(props: Props): JSX.Element {
                     }
                 }}
                 createOrder={(data, actions) => {
+                    console.log(data);
                     return actions.order.create({
                         purchase_units: [
                             {

@@ -1,8 +1,11 @@
+import { ContactUs } from "../components/Mail"
 
 type Props = {}
 
 export default function CustomerService({}: Props) {
   return (
-    <div>CustomerService</div>
+    <div>
+      <ContactUs/>
+    </div>
   )
 }
