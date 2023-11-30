@@ -31,7 +31,6 @@ app.use('/api/products', productRoutes);
 app.use('/api/orders', ordersRouter);
 app.use('/api/banner', bannerRoutes);
 app.use('/api', categoryRoutes);
-app.use('/api/payment',)
 
 // =====================================================
 // app.use(notFound);    צריך בדיקה, חוסם שליחת בקשות.
