@@ -25,4 +25,12 @@ const getTop5Products =  async () => {
     // return res.data
 };
 
-export default {getProductByID, getTop5Products }
+const getTop5ForCategory = async (name: string) => {
+    const data = products
+    // console.log('hellow from dal', data);
+    return data 
+    // const res = await axios.get(`${process.env.BANNER_BASE_URI}/api/topFiveCategories{name}`)
+    // return res.data
+};
+
+export default {getProductByID, getTop5Products,getTop5ForCategory }
