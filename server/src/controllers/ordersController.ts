@@ -1,11 +1,13 @@
 import asyncHandler from 'express-async-handler';
 import STATUS_CODES from '../utils/StatusCodes.js';
 import ordersService from '../services/ordersService.js';
+import { c } from 'vitest/dist/reporters-5f784f42.js';
 
 
 //OMS
-const sendCart = asyncHandler(async (req, res) => {
+const sendOrderFromClient = asyncHandler(async (req, res) => {
   const { order } = req.body
+  console.log('order in dal',order);
   try {
     const data = await ordersService.sendToOms(order);
     res.status(STATUS_CODES.CREATED).json(data);
@@ -13,6 +15,18 @@ const sendCart = asyncHandler(async (req, res) => {
     console.log(error);
   }
 });
+
+const checkDebitCard = asyncHandler(async (req, res) => {
+    const debitCardDetails = req.body; 
+    setTimeout(() => {
+      console.log('credit in controler',debitCardDetails);
+      if (true) {
+        res.status(200).json({ message: 'Credit card details are valid' });
+      } else {
+        res.status(400).json({ message: 'Invalid credit card details' });
+      }
+    }, 3000);
+  });
 
 const getOrders = asyncHandler(async (req, res) => {
   const {id} = req.params
@@ -26,5 +40,5 @@ const getOrders = asyncHandler(async (req, res) => {
 
 
 export default {
-  sendCart, getOrders
+  sendOrderFromClient, getOrders,checkDebitCard
 };
