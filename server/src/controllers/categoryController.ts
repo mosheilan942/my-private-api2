@@ -1,33 +1,32 @@
 import asyncHandler from 'express-async-handler';
 import categoryService from '../services/categoryService.js';
 
-// @desc    Get all categories
-// @route   GET /api/category
-// @access  Public
 const getCategories = asyncHandler(async (_req, res) => {
-  const categories = await categoryService.getCategories();
-  res.json(categories);
-});
+  try {
+    const categories = await categoryService.getTop5Categories();
+    res.json(categories);
+  } catch (error) {
+    console.log(error);
+  }});
 
-// @desc    Get products from category
-// @route   GET /api/category/:name
-// @access  Public
 const getCategoryProducts = asyncHandler(async (req, res) => {
-  const products = await categoryService.getCategoryProducts(req);
-  res.json(products);
+  try {
+    const products = await categoryService.getCategoryProducts(req);
+    res.json(products);
+    console.log('controll');
+  } catch (error) {
+    console.log(error);
+  }
 });
 
-// @desc    Get top 5 categories
-// @route   GET /api/category/top5
-// @access  Public
 const get5Categories = asyncHandler(async (_req, res) => {
-  const categories = await categoryService.getTop5Categories();
-  res.json(categories);
+  try {
+    const categories = await categoryService.getCategories();
+    res.json(categories);
+  } catch (error) {
+    console.log(error);
+  }
 });
-
-// @desc    Increase clicked count
-// @route   PATCH /api/category/:name/click
-// @access  Public
 
 export default {
   getCategories,

@@ -12,10 +12,10 @@ const getCategories = async () => {
 
 const getCategoryProducts = async (req: Request) => {
     const { name } = req.params;
-    const category = await categoryDal.getCategoryProducts(name);
-    if (!category)
+    const categoryProducts = await categoryDal.getCategoryProducts(name);
+    if (!categoryProducts)
         throw new RequestError('Category not found', STATUS_CODES.NOT_FOUND);
-    return category
+    return categoryProducts;
 
 }
 const getTop5Categories = async () => {
