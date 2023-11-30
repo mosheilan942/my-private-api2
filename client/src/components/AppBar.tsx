@@ -55,7 +55,7 @@ const AppBar = () => {
   const [searchQuery, setSearchQuery] = React.useState<Product[]>([]);
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    navigate('/Account');
+    navigate('/store/Account');
     setAnchorElUser(event.currentTarget);
   };
 
@@ -125,7 +125,7 @@ const AppBar = () => {
   return (
     <MUIAppBar position="static">
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Box onClick={() => navigate('/')} sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+        <Box onClick={() => navigate('/store')} sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
           <StorefrontIcon sx={{ marginRight: 2 }} />
           <Typography variant="h6" component="div" sx={{ marginRight: 2 }}>
             Demo Store

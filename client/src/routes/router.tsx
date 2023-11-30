@@ -15,11 +15,12 @@ import Addrees from "../profile/Addrees";
 import { ContactUs } from "../components/Mail";
 import CheckoutPage from "../pages/Checkout/CheckoutPage";
 import CategoryPage from "../pages/CategoryPage";
+import WishList from "../profile/WishList";
 
 const Router = () => {
     return (
         <Routes>
-            <Route path={'/'} element={<App />}>
+            <Route path={'/store'} element={<App />}>
                 <Route index={true} path={ROUTES.HOME} element={<HomePage/>} />
                 <Route path={ROUTES.LOGIN} element={<LoginPage/>} />
                 <Route path={ROUTES.REGISTER} element={<RegisterPage/>} />
@@ -34,6 +35,7 @@ const Router = () => {
                 <Route path={ROUTES.ADDRESS} element={<Addrees/>} />
                 <Route path={ROUTES.CONNECT} element ={<ContactUs/>}/>
                 <Route path={ROUTES.CHECKOUT} element={<CheckoutPage/>} />     
+                <Route path={ROUTES.WISHLIST} element={<WishList/>} />     
             </Route>
             <Route path={ROUTES.DEFAULT} element={<h1>404 Not Found</h1>} />
         </Routes>

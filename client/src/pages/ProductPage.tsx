@@ -23,6 +23,7 @@ import Rating from "../components/Rating.tsx";
 // import DialogReview from "../mui/DialogReview.tsx";
 import ProductReviews from "../components/ProductReviews .tsx";
 import DialogReview from "../mui/DialogReview.tsx";
+import BannerSide from "../banners/BannerSide.tsx";
 
 const ProductPage = () => {
     const navigate = useNavigate();
@@ -94,7 +95,7 @@ const ProductPage = () => {
     };
     //Navigate the user to choose another product to compare them
     const handleCompareProducts = () => {
-        navigate(`/category/${product!.category}`, { state: product });
+        navigate(`/store/category/${product!.category}`, { state: product });
         console.log('this compere',product.category)
     };
     //If the the product isn't loaded yet, show "Loading product..."
@@ -114,6 +115,7 @@ const ProductPage = () => {
     //When the product is loaded then show the component
     return (
         <>
+        <BannerSide/>
             <Paper style={{ margin: 50 }}>
                 <Grid
                     container

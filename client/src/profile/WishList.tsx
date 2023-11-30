@@ -5,7 +5,7 @@ import { UserContext } from '../UserContext';
 
 
 
-export default function Orders() {
+export default function WishList() {
 
   const [wishList, setWishList] = useState<Product[]>()
   const context = useContext(UserContext)!;

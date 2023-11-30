@@ -18,19 +18,27 @@ const getProductByID = async (id:string) => {
 
 
 const getTop5Products =  async () => {
-    const data = products
-    // console.log('hellow from dal', data);
-    return data 
-    // const res = await axios.get(`${process.env.BANNER_BASE_URI}/api/topFiveCategories`)
-    // return res.data
+    let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: `https://banners-deshbord-doker.onrender.com/banners/api/ext/bannersProduct/top5/products`,
+        headers: { 
+          'Content-Type': 'application/json'
+        },
+      };
+
+        console.log(config);
+        const res = await axios.request(config)
+        console.log(res.status);
+        console.log(res.data);
+        return res.data.data
+              
+    
 };
 
 const getTop5ForCategory = async (name: string) => {
-    const data = products
-    // console.log('hellow from dal', data);
-    return data 
-    // const res = await axios.get(`${process.env.BANNER_BASE_URI}/api/topFiveCategories{name}`)
-    // return res.data
+    const res = await axios.get(`${process.env.BANNER_BASE_URI}/api/topFiveCategories{name}`)
+    return res.data
 };
 
 export default {getProductByID, getTop5Products,getTop5ForCategory }

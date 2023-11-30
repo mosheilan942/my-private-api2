@@ -11,10 +11,11 @@ const erp = process.env.ERP_BASE_URL
 
 const getSideFromBanners=  async () => {
     console.log("msho ichoodi0");
-    const res = await fetch('https://banners-deshbord-doker.onrender.com/api/bannersImage/ext/?limit=1&size=side&')    
-    if (res.ok) {
+    const res = await fetch('https://banners-deshbord-doker.onrender.com/banners/api/bannersImage/ext/?limit=1&size=side&')    
+    const data = await  res.json()   
+    if (data.ok) {
         console.log('msho ichoodi');  
-        return res.body
+        return data.body.data
     }
     throw new Error("error");
 };
