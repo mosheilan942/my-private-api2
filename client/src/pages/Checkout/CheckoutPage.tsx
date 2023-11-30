@@ -51,6 +51,8 @@ const CheckoutPage = () => {
   const [res, setRes] = React.useState<string>('');
   const [isExpressDelivery, setIsExpressDelivery] = React.useState(false);
   const [orderID, setOrderID] = React.useState('');
+  console.log(res);
+  
 
   // Function to determine order type based on delivery method and express option
   const orderTypeReturn = () => {

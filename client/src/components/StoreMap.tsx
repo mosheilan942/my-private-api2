@@ -26,7 +26,7 @@ const locationsFromDataServer: Location[] = [
     { lon: 34.77328228161639, lat: 32.06830476724025 }
 ];
 
-const locations: Location[] = await getLocationsInfo(locationsFromDataServer);
+const locations: any = getLocationsInfo(locationsFromDataServer);
 
 
 
@@ -43,7 +43,7 @@ const styles = [
     })
 ];
 
-const features = locations.map((location) => {
+const features = locations.map((location: any) => {
     return new Feature({
         geometry: new Point(fromLonLat([location.lon, location.lat])),
         name: location.name,
@@ -52,7 +52,7 @@ const features = locations.map((location) => {
     });
 });
 
-features.forEach(feature => feature.setStyle(styles[0]));
+features.forEach((feature: any) => feature.setStyle(styles[0]));
 
 
 const map = new Map({

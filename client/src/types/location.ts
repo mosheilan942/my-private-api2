@@ -186,4 +186,6 @@ const locationRes = {
         }
     ],
     status: 'OK'
+    
 }
+console.log(locationRes);
