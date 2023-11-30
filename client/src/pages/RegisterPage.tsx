@@ -1,11 +1,32 @@
-import { Avatar, Box, Button, Container, CssBaseline, Grid, Link, TextField, Typography } from '@mui/material';
+import { Avatar, Box, Button, Container, CssBaseline, Grid, Link, LinkTypeMap, TextField, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import ROUTES from '../routes/routesModel';
 import { FormEvent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link as routerLink } from 'react-router-dom';
 import { isValidEmail, isValidPassword } from '../utils/validationUtils';
 import userAPI from '../api/usersAPI';
 import { toastError, toastSuccess } from '../utils/toastUtils';
+import emailjs from '@emailjs/browser';
+import { link } from 'fs/promises';
+import { OverridableComponent } from '@mui/material/OverridableComponent';
+
+type templateEmail = {
+  email: string,
+  contact: JSX.Element,
+};
+
+
+const sendEmail = (templateParams: templateEmail) => {
+  emailjs.send('service_d2uwcc5', 'template_oty3bz9', templateParams, '4p9BnZQHweWrwmlDw', )
+    .then(function (response) {
+      console.log('SUCCESS!', response.status, response.text);
+    }, function (err) {
+      console.log('FAILED...', err);
+    });
+}
+
+// const storeEmail = 
+
 const RegisterPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEmailError, setEmailError] = useState(false);
@@ -37,23 +58,29 @@ const RegisterPage = () => {
     const email = data.get('email') || '';
     const password = data.get('password') || '';
     const confirmPassword = data.get('confirmPassword') || '';
-    if(password !== confirmPassword){
+    if (password !== confirmPassword) {
       toastError("Passwords do not match");
       return
     }
-    if(!isValidEmail(email.toString())){
+    if (!isValidEmail(email.toString())) {
       toastError("Email must be a valid email");
       return
     }
-    if(!isValidPassword(password.toString())){
+    if (!isValidPassword(password.toString())) {
       toastError("Password must be a valid password")
       return
     }
     try {
       setIsLoading(true);
-      await userAPI.register(email.toString(), password.toString() );
+      await userAPI.register(email.toString(), password.toString());
       setIsLoading(false);
       toastSuccess("Register success");
+      console.log(email);
+      const templateParams = {
+        email: String(email),
+        "contact": <Link href={"class4store@gmail.com"}>contact us</Link>
+      };
+      sendEmail(templateParams)
       navigate(ROUTES.LOGIN);
     } catch (err) {
       setIsLoading(false);
@@ -61,6 +88,7 @@ const RegisterPage = () => {
     }
   };
   return (
+    <>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -127,7 +155,7 @@ const RegisterPage = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-             Register
+              Register
             </Button>
             {isLoading && <p>Loading...</p>}
             <Grid container justifyContent="flex-end">
@@ -140,6 +168,7 @@ const RegisterPage = () => {
           </Box>
         </Box>
       </Container>
+    </>
   );
 }
 export default RegisterPage;
