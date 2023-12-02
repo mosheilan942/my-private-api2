@@ -8,9 +8,9 @@ import Product from '../types/Product.js';
 const sendToOmsAndDB = async ( order:OrderInterface) => {
     const ordersToDb = await ordersDal.sendToDB(order);
     const userProducts =await cartDal.getCart(order.userId);
-    order.cartItems = userProducts as any;
+    order.cartItems = userProducts.items as any;
     console.log('order in service',order);
-    const ordersToOms = await ordersDal.sendToOms(order);
+    // const ordersToOms = await ordersDal.sendToOms(order);
   if (!ordersToDb)
   throw new RequestError('Categorys not found', STATUS_CODES.NOT_FOUND);
   return ordersToDb;
