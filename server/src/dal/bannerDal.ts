@@ -4,14 +4,13 @@ config();
 
 const banner = process.env.BANNER_BASE_URL
 
-const erp = process.env.ERP_BASE_URL
 
 
 
 
 const getSideFromBanners=  async () => {
     console.log("msho ichoodi0");
-    const res = await fetch('https://banners-deshbord-doker.onrender.com/api/bannersImage/ext/?limit=1&size=side&')    
+    const res = await fetch(`${banner}/bannersImage/ext/?limit=1&size=side&`)    
     if (res.ok) {
         console.log('msho ichoodi');  
         return res.body
@@ -20,7 +19,7 @@ const getSideFromBanners=  async () => {
 };
 
 const getTopFromBanners = async () => {
-    const res = await axios.get(`${banner}/api/bannersImage/ext/?size={top}&userID`)
+    const res = await axios.get(`${banner}/bannersImage/ext/?size={top}&userID`)
     if (res.status === 200) {
         return res.data.data;
         }
@@ -28,7 +27,7 @@ const getTopFromBanners = async () => {
     };
 
 const getAllFromBanners=  async (userID:string) => {
-    const res = await axios.get(`${banner}/api/bannersImage/ext/?size={allscreen}`)
+    const res = await axios.get(`${banner}/bannersImage/ext/?size={allscreen}`)
     if (res.status === 200) {
         return res.data;
         }

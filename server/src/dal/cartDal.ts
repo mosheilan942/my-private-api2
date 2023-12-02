@@ -6,10 +6,12 @@ import pg, { QueryResult } from "pg";
 import { string } from 'joi';
 const { Pool } = pg;
 import { connectionString } from "../server.js";
+import { config } from 'dotenv';
 // const b = productModel.find();
 const createCart = async (userId: string) => {
   // return await cartModel.create({ user: userId });
 };
+config()
 const getCart = async (userId: string) => {
   const query = 'SELECT * FROM cartitems WHERE userid ::text = $1';
   const values = [userId];
@@ -125,7 +127,7 @@ const decAmount = async (userId: string, productid: string) => {
   return rows;
 };
 const sendQueryToDatabase = async (query: string, values: any[]): Promise<any> => {
-  const pool = new Pool({connectionString: connectionString})
+  const pool = new Pool()
   const res = await pool.connect()
   const data = await res.query(query, values).catch(err => console.log(err));
   res.release()

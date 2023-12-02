@@ -2,13 +2,14 @@ import axios from "axios";
 import { OrderInterface } from "../types/order.js";
 import pg from "pg";
 const { Pool } = pg;
-import { connectionString } from "../server.js";
+import { config } from "dotenv";
+config()
 const banner = process.env.BANNER_BASE_URL;
 const erp = process.env.ERP_BASE_URL;
 const oms = process.env.OMS_BASE_URL;
 
 const sendToOms = async (order: OrderInterface) => {
-  const res = await axios.post(`${oms}api/orders`, order);
+  const res = await axios.post(`${oms}/orders`, order);
   return res.data.data;
 };
 
@@ -48,7 +49,7 @@ const sendToOms = async (order: OrderInterface) => {
 };
 
 const sendQueryToDatabase = async (query: string, values: any[]): Promise<any> => {
-    const pool = new Pool({ connectionString: connectionString });
+    const pool = new Pool();
     const client = await pool.connect();
 
     try {
