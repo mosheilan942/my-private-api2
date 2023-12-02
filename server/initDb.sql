@@ -16,7 +16,7 @@ CREATE DATABASE fullstack;
 
 CREATE TABLE
     IF NOT EXISTS users(
-        user_id uuid PRIMARY KEY DEFAULT gen_random_uuid (),
+        userid uuid PRIMARY KEY DEFAULT gen_random_uuid (),
         name TEXT,
         email TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL,

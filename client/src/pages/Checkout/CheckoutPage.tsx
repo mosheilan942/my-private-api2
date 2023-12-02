@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useContext} from "react";
+
 import { useParams } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
@@ -22,6 +24,7 @@ import {
     OrderStatusEnum,
 } from "../../types/order";
 import { OrderInPayPal } from "../../types/orderDataPayPal";
+import { UserContext } from "../../UserContext";
 
 // Interface for the response from the API
 interface ApiResponse {
@@ -44,6 +47,8 @@ function Copyright() {
 
 // Checkout page component
 const CheckoutPage = () => {
+    const context = useContext(UserContext)!;
+    const { userInfo } = context;
     // Get the total amount from URL params
     const { totalAmount } = useParams();
     const totalPrice = (totalAmount && parseFloat(totalAmount)) || 1.0;
@@ -90,7 +95,7 @@ const CheckoutPage = () => {
     const prepareOrderData = (orderInPayPal: OrderInPayPal | null = null) => {
         const orderData: OrderInterface = {
             orderTime: new Date(),
-            userId: "12345",
+            userId: userInfo?.id || "",
             status: OrderStatusEnum.Waiting,
             totalPrice: totalPrice,
             shippingDetails: {
