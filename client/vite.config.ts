@@ -7,9 +7,9 @@ export default defineConfig({
       port: 5173,
       proxy: {
         '/api': {
-          // target: 'http://localHost:5000',
+          target: 'http://localHost:5000',
           // for dev only:
-          target: 'https://my-server-pv9y.onrender.com',
+        //   target: 'https://my-server-pv9y.onrender.com',
           changeOrigin: true,
         }
       }
