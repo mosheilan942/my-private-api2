@@ -1,9 +1,10 @@
 import STATUS_CODES from '../utils/StatusCodes.js';
 import RequestError from '../types/errors/RequestError.js';
 import { OrderInterface } from '../types/order.js';
-import ordersDal from '../dal/ordersDal.js';
+
 import cartDal from '../dal/cartDal.js';
 import Product from '../types/Product.js';
+import ordersDal from '../dal/ordersDal.js';
 
 const sendToOmsAndDB = async ( order:OrderInterface) => {
     const ordersToDb = await ordersDal.sendToDB(order);
