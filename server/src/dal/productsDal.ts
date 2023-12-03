@@ -9,13 +9,10 @@ const getProductByID = async (id:string) => {
     // console.log('hellow from dal', data);
     //add function to get reviews 
     return data
-
     // const res = await axios.get(`https://dummyjson.com/products${id}`)
     // console.log(await res.data)
     // return res.data
 }
-
-
 
 const getTop5Products =  async () => {
     let config = {
@@ -27,10 +24,7 @@ const getTop5Products =  async () => {
         },
       };
 
-        console.log(config);
         const res = await axios.request(config)
-        console.log(res.status);
-        console.log(res.data);
         return res.data.data
               
     

@@ -6,6 +6,24 @@ import { useNavigate } from 'react-router-dom';
 import { isValidEmail, isValidPassword } from '../utils/validationUtils';
 import userAPI from '../api/usersAPI';
 import { toastError, toastSuccess } from '../utils/toastUtils';
+import emailjs from '@emailjs/browser';
+
+
+type templateEmail = {
+  email: string,
+  contact: JSX.Element,
+};
+
+
+const sendEmail = (templateParams: templateEmail) => {
+  emailjs.send('service_d2uwcc5', 'template_oty3bz9', templateParams, '4p9BnZQHweWrwmlDw', )
+    .then(function (response) {
+      console.log('SUCCESS!', response.status, response.text);
+    }, function (err) {
+      console.log('FAILED...', err);
+    });
+}
+
 const RegisterPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEmailError, setEmailError] = useState(false);
@@ -54,6 +72,11 @@ const RegisterPage = () => {
       await userAPI.register(email.toString(), password.toString() );
       setIsLoading(false);
       toastSuccess("Register success");
+      const templateParams = {
+        email: String(email),
+        "contact": <link href={"class4store@gmail.com"}>contact us</link>
+      };
+      sendEmail(templateParams)
       navigate(ROUTES.LOGIN);
     } catch (err) {
       setIsLoading(false);

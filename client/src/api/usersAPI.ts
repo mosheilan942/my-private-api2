@@ -21,7 +21,7 @@ async function getUser(): Promise<UserInfo> {
     return await handleApiRes(response);
 }
 async function register(email: string, password: string):Promise<UserInfo> {
-    const response = await fetch("api/users/register", {
+    const response = await fetch("/api/users/register", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

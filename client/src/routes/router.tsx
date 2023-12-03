@@ -16,6 +16,7 @@ import { ContactUs } from "../components/Mail";
 import CheckoutPage from "../pages/Checkout/CheckoutPage";
 import CategoryPage from "../pages/CategoryPage";
 import WishList from "../profile/WishList";
+import Profile from "../profile/Profile";
 
 const Router = () => {
     return (
@@ -36,6 +37,7 @@ const Router = () => {
                 <Route path={ROUTES.CONNECT} element ={<ContactUs/>}/>
                 <Route path={ROUTES.CHECKOUT} element={<CheckoutPage/>} />     
                 <Route path={ROUTES.WISHLIST} element={<WishList/>} />     
+                <Route path={ROUTES.PROFILE} element={<Profile/>} />     
             </Route>
             <Route path={ROUTES.DEFAULT} element={<h1>404 Not Found</h1>} />
         </Routes>

@@ -15,6 +15,7 @@ const ROUTES = {
     CHECKOUT: "/store/checkout/:totalAmount",
     CONNECT: "/store/connect",
     WISHLIST: "/store/wishlist",
+    PROFILE: "/store/profile",
 };
 
 export default ROUTES;

@@ -141,7 +141,7 @@ const ProductPage = () => {
                             {product?.description}
                         </Typography>
                         <Typography variant="h6">
-                            ${product?.salePrice}
+                            ${product?.saleprice}
                         </Typography>
                         <div style={{ display: "flex", alignItems: "center" }}>
                             <IconButton onClick={decrementQuantity}>
@@ -204,7 +204,7 @@ const ProductPage = () => {
                 <ProductReviews reviews={reviews} />
                 <br />
             </Paper>
-            ​
+            
             <br />
             <Paper
                 style={{

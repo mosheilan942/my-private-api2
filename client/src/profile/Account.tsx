@@ -30,7 +30,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function FullWidthGrid() {
   return (
-    <Box sx={{ flexGrow: 1, paddingLeft: "100px", paddingTop: '35px' }}>
+    <Box sx={{ flexGrow: 1, paddingLeft: "100px", paddingTop: '35px' }} >
       <Grid container spacing={3} sx={{ paddingLeft: "120px" }}>
         <Grid xs={3} md={3}>
           <Link to={"/store/address"} style={{ color: "lightblue", textDecorationLine: 'none' }}>
@@ -43,14 +43,7 @@ export default function FullWidthGrid() {
           </Link>
           <Link to={"/store/orders"} style={{ textDecorationLine: 'none' }}>
             <Item
-              sx={{
-                height: "200px",
-                width: "250px",
-                transition: "transform 0.3s",
-                "&:hover": {
-                  transform: "scale(1.03)",
-                },
-              }}
+             
             >
               <LocalShippingIcon />
               <h3 style={{ color: "lightblue" }}>Your Orders</h3>All of your

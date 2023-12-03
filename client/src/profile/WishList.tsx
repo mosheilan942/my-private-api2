@@ -7,26 +7,26 @@ import { UserContext } from '../UserContext';
 
 export default function WishList() {
 
-  const [wishList, setWishList] = useState<Product[]>()
+  const [addreeses, setAddreeses] = useState<Product[]>()
   const context = useContext(UserContext)!;
   const { userInfo } = context;
   const userId = userInfo?.id;
 
-  async function getWishList(userId: string | undefined) {
-    const response = await fetch(`http://localhost:3000/${userId}`);
+  async function getAddreeses(userId: string | undefined) {
+    const response = await fetch(`http://localhost:5000/api/wishlist/${userId}`);
     const data = await response.json();
-    setWishList(data);
+    setAddreeses(data);
   }
 
   useEffect(() => {
-    getWishList(userId)
+    getAddreeses(userId)
   }, [])
 
   return (
     <>
       <div>
         <Card sx={{ margin: 2, padding: 1 }}>
-          {wishList?.map((product: Product) => (
+          {addreeses?.map((product: Product) => (
             <Box
               key={product.name}
               display="flex"
