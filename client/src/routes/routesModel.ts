@@ -14,6 +14,7 @@ const ROUTES = {
     SHIPMENT:'/store/shipment',
     CHECKOUT: "/store/checkout/:totalAmount",
     CONNECT: "/store/connect",
+    SEARCH: "/store/search"
 };
 
 export default ROUTES;

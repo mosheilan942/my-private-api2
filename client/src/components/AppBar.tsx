@@ -88,7 +88,7 @@ const AppBar = () => {
         console.log('Search query:', query);
         const search = await productsAPI.searchProducts(query);
         console.log('this is search',search);
-        setSearchQuery(search)
+        navigate('/store/search',{ state: search });
       } catch (error) {
         console.error('Error fetching cart:', error);
       }

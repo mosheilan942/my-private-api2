@@ -15,6 +15,7 @@ import Addrees from "../profile/Addrees";
 import { ContactUs } from "../components/Mail";
 import CheckoutPage from "../pages/Checkout/CheckoutPage";
 import CategoryPage from "../pages/CategoryPage";
+import SearchProducts from "../pages/Checkout/SearchProducts";
 
 const Router = () => {
     return (
@@ -34,6 +35,7 @@ const Router = () => {
                 <Route path={ROUTES.ADDRESS} element={<Addrees/>} />
                 <Route path={ROUTES.CONNECT} element ={<ContactUs/>}/>
                 <Route path={ROUTES.CHECKOUT} element={<CheckoutPage/>} />     
+                <Route path={ROUTES.SEARCH} element={<SearchProducts/>} />     
             </Route>
             <Route path={ROUTES.DEFAULT} element={<h1>404 Not Found</h1>} />
         </Routes>
