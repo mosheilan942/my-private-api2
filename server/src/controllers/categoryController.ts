@@ -21,7 +21,7 @@ const getCategoryProducts = asyncHandler(async (req, res) => {
 
 const get5Categories = asyncHandler(async (_req, res) => {
   try {
-    const categories = await categoryService.getCategories();
+    const categories = await categoryService.getTop5Categories();
     res.json(categories);
   } catch (error) {
     console.log(error);

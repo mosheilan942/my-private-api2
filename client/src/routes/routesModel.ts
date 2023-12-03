@@ -14,6 +14,8 @@ const ROUTES = {
     SHIPMENT:'/store/shipment',
     CHECKOUT: "/store/checkout/:totalAmount",
     CONNECT: "/store/connect",
+    WISHLIST: "/store/wishlist",
+    PROFILE: "/store/profile",
     SEARCH: "/store/search"
 };
 

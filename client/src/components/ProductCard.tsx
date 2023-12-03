@@ -50,7 +50,7 @@ export default function ProductCard({ product, navigateToOnClick }: props) {
           </Typography>
           <br />
           <Typography variant="body2" color="text.secondary">
-            price: {product.salePrice}
+            price: {product.saleprice}
           </Typography>
         </CardContent>
       </CardActionArea>

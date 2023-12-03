@@ -1,32 +1,35 @@
 import { useEffect, useState } from 'react';
 import BannerInterface  from '../types/Banner';
+import {useNavigate}  from 'react-router-dom';
+
 
 export default function BannerSide() {
-  const [banner, setBanner] = useState<BannerInterface | null>(null); 
-
+  const [banner, setBanner] = useState<BannerInterface | null>(); 
+const Navigate = useNavigate()
   async function getProducts() {
     try {
-      const response = await fetch('api/banners/sideBanners');
+      const response = await fetch('/api/banner/sideBanners');
       if (!response.ok) {
         throw new Error('Failed to fetch banner');
       }
       const data = await response.json();
-      console.log(data[0]);
-      setBanner(data[0]);
+      console.log(data);
+      console.log(data.message);
+      setBanner(data.data[0]);
     } catch (error) {
       console.error('Error fetching banner:', error);
       setBanner(null); 
     }
   }
-
   useEffect(() => {
-    getProducts();
+    getProducts()
   }, []);
 
   return (
     <>
       {banner ? (
-        <div style={{ position: 'fixed', height: '500px', left: 0, top: 75, zIndex: 1000 }}>
+
+        <div onClick={()=>{Navigate(`store/product/${banner.productID}`)}} style={{ position: 'fixed', height: '500px', left: 0, top: 75, zIndex: 1000 }}>
           <img src={banner?.image.url} alt={banner?.image.alt} style={{ width: '100px' }} />
         </div>
       ) : (

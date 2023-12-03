@@ -8,4 +8,4 @@ bannerRoutes.get('/sideBanners', bannerontroller.getBannersSide);
 bannerRoutes.get('/topBanners', bannerontroller.getBannersTop);
 bannerRoutes.get('/allBanners', bannerontroller.getBannersAll);
 
-export default bannerRoutes;
+export default bannerRoutes; 

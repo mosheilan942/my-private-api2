@@ -15,7 +15,7 @@ if(res.ok){
 return data
 };
 
-//OMS
+// OMS 
 const getCategoryProducts = async (name: string) => {
     const data = products
     const res = await fetch(`${erp}/shopInventory?category=${name}`)
@@ -27,10 +27,15 @@ const getCategoryProducts = async (name: string) => {
     return data
 };
 
-//BANNERS
+// BANNERS 
 const getTop5Categories = async () => {
- const data = categories
-    return data
+    const res = await axios.get(`https://banners-deshbord-doker.onrender.com/banners/api/ext/bannersProduct/top5/categories`)
+    console.log('top 5 categories', res.status);
+    console.log('top 5 categories res', res.data.data);
+    if (res.status >= 200 && res.status < 400) {
+        return res.data.data;
+    }
+    throw new Error("Error fetching top 5 categories");
 };
 
-export default { getCategories, getCategoryProducts, getTop5Categories};
+export default { getCategories, getCategoryProducts, getTop5Categories };

@@ -23,6 +23,7 @@ import Rating from "../components/Rating.tsx";
 // import DialogReview from "../mui/DialogReview.tsx";
 import ProductReviews from "../components/ProductReviews .tsx";
 import DialogReview from "../mui/DialogReview.tsx";
+import BannerSide from "../banners/BannerSide.tsx";
 
 const ProductPage = () => {
     const navigate = useNavigate();
@@ -114,6 +115,7 @@ const ProductPage = () => {
     //When the product is loaded then show the component
     return (
         <>
+        <BannerSide/>
             <Paper style={{ margin: 50 }}>
                 <Grid
                     container
@@ -139,7 +141,7 @@ const ProductPage = () => {
                             {product?.description}
                         </Typography>
                         <Typography variant="h6">
-                            ${product?.salePrice}
+                            ${product?.saleprice}
                         </Typography>
                         <div style={{ display: "flex", alignItems: "center" }}>
                             <IconButton onClick={decrementQuantity}>
@@ -202,7 +204,7 @@ const ProductPage = () => {
                 <ProductReviews reviews={reviews} />
                 <br />
             </Paper>
-            ​
+            
             <br />
             <Paper
                 style={{

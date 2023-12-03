@@ -22,13 +22,25 @@ const getProductByID = async (id:string) => {
 
 
 const getTop5Products =  async () => {
-    const data = products
-    // console.log('hellow from dal', data);
-    return data 
-    // const res = await axios.get(`${process.env.BANNER_BASE_URI}/api/topFiveCategories`)
-    // return res.data
+    let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: `https://banners-deshbord-doker.onrender.com/banners/api/ext/bannersProduct/top5/products`,
+        headers: { 
+          'Content-Type': 'application/json'
+        },
+      };
+
+        const res = await axios.request(config)
+        return res.data.data
+              
+    
 };
 
+const getTop5ForCategory = async (name: string) => {
+    const res = await axios.get(`${process.env.BANNER_BASE_URI}/api/topFiveCategories{name}`)
+    return res.data
+};
 const saveReviewsToDB = async (reviews: any, pid: string) => {
     console.log('hellow from dal', reviews,pid);
     return null
@@ -61,4 +73,5 @@ const getProductBySearch = async (search: string) => {
     const data = products 
     console.log('hellow from dal search data', data); 
 return data}
-export default {getProductByID, getTop5Products, saveReviewsToDB, getReviewsFromDB, feedbackReviews, getProductBySearch}
+
+export default {getProductByID, getTop5Products, saveReviewsToDB, getReviewsFromDB, feedbackReviews, getProductBySearch,getTop5ForCategory}

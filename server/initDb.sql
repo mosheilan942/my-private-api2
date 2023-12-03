@@ -1,19 +1,11 @@
 -- Active: 1700477906003@@127.0.0.1@5432@fullstack
-
 CREATE DATABASE fullstack;
-
 -- CREATE EXTENSION citext;
-
 -- CREATE DOMAIN domain_email AS citext
-
 -- CHECK(
-
 --    VALUE ~ '^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$'
-
 -- );
-
 -- SELECT 'anvesh@gmail.com'::domain_email;
-
 CREATE TABLE
     IF NOT EXISTS users(
         userid uuid PRIMARY KEY DEFAULT gen_random_uuid (),
@@ -25,7 +17,6 @@ CREATE TABLE
         payment TEXT,
         address JSONB DEFAULT '{"country": "", "city": "", "street":"", "zip_code":""}'
     );
-    
 CREATE TABLE IF NOT EXISTS cartitems (
     userId UUID,
     productId UUID PRIMARY KEY,
@@ -40,27 +31,21 @@ CREATE TABLE IF NOT EXISTS cartitems (
     FOREIGN KEY(userId)
     REFERENCES users(userId)
 );
-
-
-
-
 CREATE TABLE IF NOT EXISTS reviews(
-    user_id UUID NOT NULL, 
-    product_id UUID NOT NULL, 
+    userid UUID NOT NULL,
+    productid UUID NOT NULL,
     author TEXT,
-    title TEXT, 
-    body TEXT, 
-    rating NUMERIC, 
-    thumbUp NUMERIC, 
+    title TEXT,
+    body TEXT,
+    rating NUMERIC,
+    thumbUp NUMERIC,
     thumbDown NUMERIC,
-    CONSTRAINT user_id FOREIGN KEY(user_id) REFERENCES users(user_id),
-    CONSTRAINT product_id FOREIGN KEY(product_id) REFERENCES cartitems(product_id)
+    CONSTRAINT userid FOREIGN KEY(userid) REFERENCES users(userid),
+    CONSTRAINT productid FOREIGN KEY(productid) REFERENCES cartitems(productid)
 );
-
 DROP Table users ;
 DROP Table cartitems ;
 DROP Table reviews ;
-
 INSERT INTO
     cartitems (product_id, user_id, quantity)
 VALUES (
@@ -68,7 +53,6 @@ VALUES (
         'dbdd2ff6-c240-4e2a-b1a2-51be8724f0ca',
         '11'
     )
-
     INSERT INTO
     users (name, email, password)
 VALUES (
@@ -76,7 +60,6 @@ VALUES (
         'ilan',
         '11'
     )
-
 UPDATE users
 SET
 add = jsonb_set(
@@ -85,7 +68,6 @@ add = jsonb_set(
             '{country}',
             '"israel"'
     );
-
 jsonb_set(
     add
         jsonb,
@@ -94,7 +76,6 @@ jsonb_set(
         '"israel"' jsonb [,
         create_missing FALSE]
 );
-
 UPDATE users
 SET
 add = jsonb_set(
@@ -104,7 +85,6 @@ add = jsonb_set(
             '"israel"',
             false
     );
-
 INSERT INTO
     cartitems (name, email, password, payment)
 VALUES (
@@ -113,7 +93,6 @@ VALUES (
         '11',
         'Payment Method'
     )
-
 UPDATE users
 SET
 add = jsonb_set(
@@ -122,14 +101,29 @@ add = jsonb_set(
             '{country}',
             '"israel"'
     );
-
 SELECT add ->> 'country' AS Feeling FROM users;
+SELECT address FROM users
+CREATE TABLE cartitmes
+SELECT * FROM users
+SELECT * FROM cartitems
 
-SELECT address FROM users 
-
-CREATE TABLE cartitmes 
 
 
-SELECT * FROM users 
 
-SELECT * FROM cartitems 
+
+
+
+
+
+
+
+Message משה אילן
+
+
+
+
+
+
+
+
+
