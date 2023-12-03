@@ -92,6 +92,7 @@ const AppBar = () => {
       } catch (error) {
         console.error('Error fetching cart:', error);
       }
+      
     }
     handleSearchProduct();
   };

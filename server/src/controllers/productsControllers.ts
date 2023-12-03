@@ -76,8 +76,8 @@ const feedbackReviews = asyncHandler(async (req: Request, res: Response) => {
 
 const getProductBySearch = asyncHandler(async (req: Request, res: Response) => {
     try{
-        console.log('this is search', req.params.searchItem)
-        const {searchItem} = req.params
+        console.log('this is search', req.body)
+        const {searchItem} = req.body
         const result = await productsService.getProductBySearch(searchItem)
         res.json(result)
     }

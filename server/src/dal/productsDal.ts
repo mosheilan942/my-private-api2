@@ -51,12 +51,14 @@ const feedbackReviews = async (pid: string, reviewId: string, feedback: string) 
 
 }
 const getProductBySearch = async (search: string) => {
-    const res = await fetch(`${erp}/shopInventotory/?search=${search}`) 
-    console.log('hellow from dal search', res);
+    const res = await fetch(`${erp}/shopInventory/?search=${search}`) 
+    const resConverted = await res.json()
+    console.log('hellow from dal search', resConverted);
 
-    if(res.ok){
-        return res.body
+    if(res.ok && resConverted.length>0){
+        return resConverted
     }
-    const data = products.filter((item:Product) => item.name===search)  
+    const data = products 
+    console.log('hellow from dal search data', data); 
 return data}
 export default {getProductByID, getTop5Products, saveReviewsToDB, getReviewsFromDB, feedbackReviews, getProductBySearch}
