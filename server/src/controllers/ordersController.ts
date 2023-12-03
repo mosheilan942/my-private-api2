@@ -5,11 +5,11 @@ import { c } from 'vitest/dist/reporters-5f784f42.js';
 
 
 //OMS
-const sendOrderFromClient = asyncHandler(async (req, res) => {
+const getOrderFromClient = asyncHandler(async (req, res) => {
   const { order } = req.body
-  console.log('order in dal',order);
+  console.log('order in controler',order);
   try {
-    const data = await ordersService.sendToOms(order);
+    const data = await ordersService.sendToOmsAndDB(order);
     res.status(STATUS_CODES.CREATED).json(data);
     } catch (error) {
     console.log(error);
@@ -18,8 +18,9 @@ const sendOrderFromClient = asyncHandler(async (req, res) => {
 
 const checkDebitCard = asyncHandler(async (req, res) => {
     const debitCardDetails = req.body; 
+    console.log('credit in controler',debitCardDetails);
+
     setTimeout(() => {
-      console.log('credit in controler',debitCardDetails);
       if (true) {
         res.status(200).json({ message: 'Credit card details are valid' });
       } else {
@@ -28,7 +29,7 @@ const checkDebitCard = asyncHandler(async (req, res) => {
     }, 3000);
   });
 
-const getOrders = asyncHandler(async (req, res) => {
+const getOrdersFromServer = asyncHandler(async (req, res) => {
   const {id} = req.params
   try {
     const data = await ordersService.getOrdersFromOms(id);
@@ -40,5 +41,5 @@ const getOrders = asyncHandler(async (req, res) => {
 
 
 export default {
-  sendOrderFromClient, getOrders,checkDebitCard
+    getOrderFromClient, getOrdersFromServer,checkDebitCard
 };

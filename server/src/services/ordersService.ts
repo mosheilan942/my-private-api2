@@ -1,13 +1,21 @@
 import STATUS_CODES from '../utils/StatusCodes.js';
 import RequestError from '../types/errors/RequestError.js';
 import { OrderInterface } from '../types/order.js';
+
+import cartDal from '../dal/cartDal.js';
+import Product from '../types/Product.js';
 import ordersDal from '../dal/ordersDal.js';
 
-const sendToOms = async ( order:OrderInterface) => {
-  const orders = await ordersDal.sendToOms(order);
-  if (!orders)
+const sendToOmsAndDB = async ( order:OrderInterface) => {
+    const ordersToDb = await ordersDal.sendToDB(order);
+    const userProducts =await cartDal.getCart(order.userId);
+    order.cartItems = userProducts.items as any;
+    console.log('order in service',order);
+    const ordersToOms = await ordersDal.sendToOms(order);
+  if (!ordersToDb)
   throw new RequestError('Categorys not found', STATUS_CODES.NOT_FOUND);
-  return orders;
+  return (ordersToOms);
+  
 };
 
 const getOrdersFromOms = async (req: any) => {
@@ -22,4 +30,4 @@ return orders;
 
 
 
-export default { sendToOms ,getOrdersFromOms};
+export default { sendToOmsAndDB ,getOrdersFromOms};

@@ -35,7 +35,7 @@ export default function CategoryNav() {
     >
       {categories.map((category) => (
         <Link
-          href={`/category/${category.name}`}
+          href={`/store/category/${category.name}`}
           underline="none"
           key={category._id}
           sx={{

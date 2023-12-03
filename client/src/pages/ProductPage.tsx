@@ -38,7 +38,7 @@ const ProductPage = () => {
         try {
             const data = await productsAPI.getProductById(pid!);
             const reviews = await productsAPI.getReviewsByProductIdFromDB(pid!);
-            setProduct(data[0])
+            setProduct(data)
             setReviews(reviews)
             console.log("hi from productpage, data:", data);
             // setProduct(data);
@@ -94,7 +94,7 @@ const ProductPage = () => {
     };
     //Navigate the user to choose another product to compare them
     const handleCompareProducts = () => {
-        navigate(`/category/${product!.category}`, { state: product });
+        navigate(`/store/category/${product!.category}`, { state: product });
         console.log('this compere',product.category)
     };
     //If the the product isn't loaded yet, show "Loading product..."
