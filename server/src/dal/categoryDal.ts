@@ -20,7 +20,7 @@ const getCategoryProducts = async (name: string) => {
     const data = products
     const res = await fetch(`${erp}/shopInventory?category=${name}`)
     const resConverted = await res.json()
-    console.log('res categorybyproducts',resConverted);
+    // console.log('res categorybyproducts',resConverted);
     if(res.ok){
         return resConverted
     }

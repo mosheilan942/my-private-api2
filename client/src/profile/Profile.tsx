@@ -12,9 +12,9 @@ import {
 import { UserContext } from "../UserContext";
 import UserInfo from "../types/UserInfo";
 import axios from "axios";
-import PersonIcon from '@mui/icons-material/Person';
-import Circle from '@mui/icons-material/accountcircle';
-import Personface from '@mui/icons-material/face';
+// import PersonIcon from '@mui/icons-material/Person';
+// import Circle from '@mui/icons-material/accountcircle';
+// import Personface from '@mui/icons-material/face';
 
 
 
@@ -22,10 +22,10 @@ export default function Profile() {
   const [user, setUser] = useState<UserInfo | undefined>(undefined);
   const [editName, setEditName] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
-  const [editIcon, setEditIcon] = useState(false);
+//   const [editIcon, setEditIcon] = useState(false);
   const [newName, setNewName] = useState("");
   const [newEmail, setNewEmail] = useState("");
-  const [newIcon, setNewIcon] = useState();
+//   const [newIcon, setNewIcon] = useState();
   const context = useContext(UserContext)!;
   const { userInfo } = context;
 

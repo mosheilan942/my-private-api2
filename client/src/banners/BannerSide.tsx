@@ -8,7 +8,7 @@ export default function BannerSide() {
 const Navigate = useNavigate()
   async function getProducts() {
     try {
-      const response = await fetch('/api/banner/sideBanners');
+      const response = await fetch('/api/banner/sideBanner');
       if (!response.ok) {
         throw new Error('Failed to fetch banner');
       }

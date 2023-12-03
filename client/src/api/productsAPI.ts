@@ -28,7 +28,7 @@ async function sendReviewToDB(pid: string, title: string, review: string, rating
 }
 
 
-async function getProductById(pid: string): Promise<Product[]> {
+async function getProductById(pid: string): Promise<Product> {
     console.log('hello from apiProduct',pid);
     const response = await fetch(`/api/products/${pid}`);
     return await handleApiRes(response);

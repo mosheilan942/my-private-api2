@@ -42,8 +42,8 @@ const getTop5Products = async (_req: Request, res: Response) => {
 const saveReviewsToDB = asyncHandler(async (req: Request, res: Response) => {
   try{
     const pid = req.params.pid
-    const {reviews} = req.body
-    const result = await productsService.saveReviewsToDB( reviews,pid)
+    console.log('this is reviews', req.body)
+    const result = await productsService.saveReviewsToDB( req.body,pid)
     res.json(result)
 }
 catch(error){

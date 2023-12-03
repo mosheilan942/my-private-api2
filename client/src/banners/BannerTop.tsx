@@ -7,7 +7,7 @@ export default function BannerTop() {
 
   async function getProducts() {
     try {
-      const response = await fetch('/api/banner/topBanners');
+      const response = await fetch('/api/banner/topBanner');
       if (!response.ok) {
         throw new Error('Failed to fetch banner');
       }
