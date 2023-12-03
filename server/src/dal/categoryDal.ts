@@ -7,11 +7,11 @@ const getCategories = async () => {
     const data = categories
 const res = await fetch(`${erp}/shopInventory/categories`)
 const resConverted = await res.json()
-console.log('res categories in dal ',resConverted);
+// console.log('res categories in dal ',resConverted);
 if(res.ok){
     return resConverted
 }
-console.log('data in dal in get categories',data);
+// console.log('data in dal in get categories',data);
 return data
 };
 

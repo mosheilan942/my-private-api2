@@ -13,7 +13,7 @@ const getCategoryProducts = asyncHandler(async (req, res) => {
   try {
     const products = await categoryService.getCategoryProducts(req);
     res.json(products);
-    console.log('controll');
+    // console.log('controll');
   } catch (error) {
     console.log(error);
   }

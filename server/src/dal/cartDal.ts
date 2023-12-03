@@ -19,7 +19,7 @@ const getCart = async (userId: string) => {
   // console.log("hi from gatcart in Dal:", userId);
   const { rows } = res
   const cart = {"items":rows}
-  console.log('Query result from getCart dal:', cart);
+//   console.log('Query result from getCart dal:', cart);
   return cart;
 };
 const getCartProducts = async (userId: string, itemId: string):Promise<Product[]> => {
@@ -27,7 +27,7 @@ const getCartProducts = async (userId: string, itemId: string):Promise<Product[]
   const values = [userId, itemId];
   const res = await sendQueryToDatabase(query, values)
   const { rows } = res
-  console.log('Query result from getCartProducts:', rows);
+//   console.log('Query result from getCartProducts:', rows);
   return rows;
 };
 

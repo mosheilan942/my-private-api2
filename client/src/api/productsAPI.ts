@@ -40,7 +40,8 @@ async function getReviewsByProductIdFromDB(pid: string): Promise<Product[]> {
 }
 
 async function searchProducts(searchTerm: string): Promise<Product[]> {
-    const response = await fetch(`api/products/search`,{
+    console.log('hello from apiProduct: search',searchTerm);
+    const response = await fetch(`/api/products/search`,{
         method: "POST",
         headers: {
             "Content-Type": "application/json",
