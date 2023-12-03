@@ -11,10 +11,11 @@ const sendToOmsAndDB = async ( order:OrderInterface) => {
     const userProducts =await cartDal.getCart(order.userId);
     order.cartItems = userProducts.items as any;
     console.log('order in service',order);
-    // const ordersToOms = await ordersDal.sendToOms(order);
+    const ordersToOms = await ordersDal.sendToOms(order);
   if (!ordersToDb)
   throw new RequestError('Categorys not found', STATUS_CODES.NOT_FOUND);
-  return ordersToDb;
+  return (ordersToOms);
+  
 };
 
 const getOrdersFromOms = async (req: any) => {

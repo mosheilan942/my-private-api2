@@ -36,13 +36,13 @@ const updateCart = async (userId: string, product: Product, quantityOfProduct: n
     console.log("hi from dal updatecart");
     const query = `INSERT
     INTO cartitems
-    (userId, productId, quantityOfProduct, storeQuantity, price, name, description, discount, image)
+    (userId, productId, quantityOfProduct, quantity, salePrice, name, description, discount, image)
     VALUES
     ($1, $2, $3, $4, $5, $6, $7, $8, $9)
     ON CONFLICT (userid, productid) DO UPDATE
     SET quantityOfProduct = cartitems.quantityOfProduct + $3
     RETURNING *`
-    const values = [userId, product.id, Number(quantityOfProduct), product.quantity, product.salePrice, product.name, product.description, product.discount, product.image.url];
+    const values = [userId, product.id, Number(quantityOfProduct), product.quantity, product.salePrice, product.name, product.description, product.discount, product.image];
     // console.log("values in dal:", values);
     const res = await sendQueryToDatabase(query, values)
     const { rows } = res
@@ -147,3 +147,11 @@ export default {
 };
 
 // a86eaf9c-9ebe-4393-a52f-82c142cc1afe
+///change need 
+
+//storequantity: quantity,
+//price: salePrice,
+//image: image:{url:stirng}
+
+//from server
+//orderTime: orderTime{$date: string},

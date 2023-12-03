@@ -8,10 +8,25 @@ const banner = process.env.BANNER_BASE_URL;
 const erp = process.env.ERP_BASE_URL;
 const oms = process.env.OMS_BASE_URL;
 
+
 const sendToOms = async (order: OrderInterface) => {
-  const res = await axios.post(`${oms}/orders`, order);
-  return res.data.data;
-};
+    console.log("order in sendToOms", order);
+  
+    const res = await fetch(`${oms}/api/orders`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(order),
+    });
+  
+    const data = await res.json();
+  
+    console.log("res in sendToOms", data);
+  
+    return data.data;
+  };
+  
 
     const sendToDB = async (order:OrderInterface) => {
         console.log("order in sendToDB",order);
