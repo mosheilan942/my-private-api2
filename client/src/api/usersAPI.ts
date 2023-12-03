@@ -21,6 +21,9 @@ async function getUser(): Promise<UserInfo> {
     return await handleApiRes(response);
 }
 async function register(email: string, password: string):Promise<UserInfo> {
+
+    console.log('hello from register api',email,password)
+
     const response = await fetch("/api/users/register", {
         method: "POST",
         headers: {

@@ -17,6 +17,7 @@ import CheckoutPage from "../pages/Checkout/CheckoutPage";
 import CategoryPage from "../pages/CategoryPage";
 import WishList from "../profile/WishList";
 import Profile from "../profile/Profile";
+import SearchProducts from "../pages/Checkout/SearchProducts";
 
 const Router = () => {
     return (
@@ -36,8 +37,12 @@ const Router = () => {
                 <Route path={ROUTES.ADDRESS} element={<Addrees/>} />
                 <Route path={ROUTES.CONNECT} element ={<ContactUs/>}/>
                 <Route path={ROUTES.CHECKOUT} element={<CheckoutPage/>} />     
+
                 <Route path={ROUTES.WISHLIST} element={<WishList/>} />     
                 <Route path={ROUTES.PROFILE} element={<Profile/>} />     
+
+                <Route path={ROUTES.SEARCH} element={<SearchProducts/>} />     
+
             </Route>
             <Route path={ROUTES.DEFAULT} element={<h1>404 Not Found</h1>} />
         </Routes>

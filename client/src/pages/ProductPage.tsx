@@ -39,7 +39,7 @@ const ProductPage = () => {
         try {
             const data = await productsAPI.getProductById(pid!);
             const reviews = await productsAPI.getReviewsByProductIdFromDB(pid!);
-            setProduct(data[0])
+            setProduct(data)
             setReviews(reviews)
             console.log("hi from productpage, data:", data);
             // setProduct(data);

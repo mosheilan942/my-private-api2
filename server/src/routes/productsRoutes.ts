@@ -10,5 +10,6 @@ productRouter.get('/:pid', productcontrollers.getProductByID);
 productRouter.get('/:pid/reviews',productcontrollers.getReviewsFromDB)
 productRouter.get('/:pid/reviews/feedback',productcontrollers.feedbackReviews)
 productRouter.post('/:pid/reviews',productcontrollers.saveReviewsToDB)
+productRouter.post('/search',productcontrollers.getProductBySearch)
 
 export default productRouter;

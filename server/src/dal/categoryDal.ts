@@ -1,25 +1,30 @@
 import axios from "axios";
-import { categories, products } from '../data.js'
-
-// Consider using environment variables directly or ensure these constants have valid URLs
-const banner = process.env.BANNER_BASE_URL
-const erp = process.env.ERP_BASE_URL
-
-// OMS - Modify this function to fetch categories from the appropriate API endpoint using Axios
+import  {categories,products}  from '../data.js'
+import { c } from "vitest/dist/reporters-5f784f42.js";
+const erp = process.env.ERP_BASE_URL;
 const getCategories = async () => {
-    // Example returning local data - Replace with Axios GET request
+
     const data = categories
-    return data
+const res = await fetch(`${erp}/shopInventory/categories`)
+const resConverted = await res.json()
+console.log('res categories in dal ',resConverted);
+if(res.ok){
+    return resConverted
+}
+console.log('data in dal in get categories',data);
+return data
 };
 
 // OMS 
 const getCategoryProducts = async (name: string) => {
-    const res = await axios.get(`https://banners-deshbord-doker.onrender.com/banners/api/ext/bannersProduct/top5/categories`)
-    console.log('category error', res.status);
-    if (res.status >= 200 && res.status < 400) {
-        return res.data;
+    const data = products
+    const res = await fetch(`${erp}/shopInventory?category=${name}`)
+    const resConverted = await res.json()
+    console.log('res categorybyproducts',resConverted);
+    if(res.ok){
+        return resConverted
     }
-    throw new Error("Error fetching category products");
+    return data
 };
 
 // BANNERS 

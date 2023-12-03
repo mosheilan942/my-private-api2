@@ -4,7 +4,6 @@ config();
 
 const banner = process.env.BANNER_BASE_URL
 
-const erp = process.env.ERP_BASE_URL
 
 
 

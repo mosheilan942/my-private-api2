@@ -2,8 +2,8 @@ import { Types } from "mongoose";
 import User from "../types/User.js";
 import pg from "pg";
 const { Pool } = pg;
-import { connectionString } from "../server.js";
-
+import { config } from "dotenv";
+config()
 const addUser = async (user: User) => {
     const query = `INSERT INTO
     users (email, password)
@@ -31,7 +31,7 @@ const getUserByEmail = async (email: string): Promise<User[]> => {
     return rows;
 }
 const sendQueryToDatabase = async (query: string, values: any[]): Promise<any> => {
-    const pool = new Pool({connectionString: connectionString})
+    const pool = new Pool()
     const res = await pool.connect()
     // console.log("hi from userDal, sendQueryToDatabase:", values);
     const data = await res.query(query, values).catch(err => console.log(err));

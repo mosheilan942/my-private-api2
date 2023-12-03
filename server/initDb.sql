@@ -20,13 +20,12 @@ CREATE TABLE
 CREATE TABLE IF NOT EXISTS cartitems (
     userId UUID,
     productId UUID PRIMARY KEY,
-    storeQuantity NUMERIC,
-    quantityOfProduct NUMERIC,
-    price NUMERIC,
+    quantity NUMERIC,
+    salePrice NUMERIC,
     name TEXT,
     description TEXT,
     discount NUMERIC,
-    image TEXT,
+    image {url: TEXT},
     UNIQUE(productId, userId),
     CONSTRAINT userId
     FOREIGN KEY(userId)

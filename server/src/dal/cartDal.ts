@@ -6,10 +6,12 @@ import pg, { QueryResult } from "pg";
 import { string } from 'joi';
 const { Pool } = pg;
 import { connectionString } from "../server.js";
+import { config } from 'dotenv';
 // const b = productModel.find();
 const createCart = async (userId: string) => {
   // return await cartModel.create({ user: userId });
 };
+config()
 const getCart = async (userId: string) => {
   const query = 'SELECT * FROM cartitems WHERE userid ::text = $1';
   const values = [userId];
@@ -34,13 +36,13 @@ const updateCart = async (userId: string, product: Product, quantityOfProduct: n
     console.log("hi from dal updatecart");
     const query = `INSERT
     INTO cartitems
-    (userId, productId, quantityOfProduct, storeQuantity, price, name, description, discount, image)
+    (userId, productId, quantityOfProduct, quantity, salePrice, name, description, discount, image)
     VALUES
     ($1, $2, $3, $4, $5, $6, $7, $8, $9)
     ON CONFLICT (userid, productid) DO UPDATE
     SET quantityOfProduct = cartitems.quantityOfProduct + $3
     RETURNING *`
-    const values = [userId, product.id, Number(quantityOfProduct), product.quantity, product.salePrice, product.name, product.description, product.discount, product.image.url];
+    const values = [userId, product.id, Number(quantityOfProduct), product.quantity, product.salePrice, product.name, product.description, product.discount, product.image];
     // console.log("values in dal:", values);
     const res = await sendQueryToDatabase(query, values)
     const { rows } = res
@@ -125,7 +127,7 @@ const decAmount = async (userId: string, productid: string) => {
   return rows;
 };
 const sendQueryToDatabase = async (query: string, values: any[]): Promise<any> => {
-  const pool = new Pool({connectionString: connectionString})
+  const pool = new Pool()
   const res = await pool.connect()
   const data = await res.query(query, values).catch(err => console.log(err));
   res.release()
@@ -145,3 +147,11 @@ export default {
 };
 
 // a86eaf9c-9ebe-4393-a52f-82c142cc1afe
+///change need 
+
+//storequantity: quantity,
+//price: salePrice,
+//image: image:{url:stirng}
+
+//from server
+//orderTime: orderTime{$date: string},

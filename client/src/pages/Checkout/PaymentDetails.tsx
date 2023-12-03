@@ -10,7 +10,7 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import { CreditCardDetails } from '../../types/creditCard';
-import { checkDebitCard } from '../../api/checkout';
+import { checkDebitCard } from '../../api/ordersApi';
 import { OrderInPayPal } from '../../types/orderDataPayPal';
 
 interface ApiResponse {
