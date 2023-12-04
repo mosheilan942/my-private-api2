@@ -10,7 +10,7 @@ const banner = process.env.BANNER_BASE_URL
 
 const getSideFromBanners=  async () => {
     console.log("msho ichoodi0");
-    const res = await axios.get('https://banners-deshbord-doker.onrender.com/banners/api/bannersImage/ext/?limit=1&size=side&')    
+    const res = await axios.get('https://banners-deshbord-doker.onrender.com/bannersImage/ext/?limit=1&size=side&')    
     if (res.statusText) {
         console.log('msho ichoodi',res.data);  
         return res.data
@@ -20,7 +20,7 @@ const getSideFromBanners=  async () => {
 };
 
 const getTopFromBanners = async () => {
-    const res = await axios.get(`https://banners-deshbord-doker.onrender.com/banners/api/bannersImage/ext/?limit=1&size=side&`)
+    const res = await axios.get(`https://banners-deshbord-doker.onrender.com/bannersImage/ext/?limit=1&size=side&`)
     if (res.status >= 200 && res.status < 400) {
         return res.data;
         }

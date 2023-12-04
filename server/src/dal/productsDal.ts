@@ -26,7 +26,7 @@ const getTop5Products =  async () => {
     let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: `https://banners-deshbord-doker.onrender.com/banners/api/ext/bannersProduct/top5/products`,
+        url: `https://banners-deshbord-doker.onrender.com/ext/bannersProduct/top5/products`,
         headers: { 
           'Content-Type': 'application/json'
         },
